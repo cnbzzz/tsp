@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepDatauploadsumMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepDatauploadsum">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="totalColData" jdbcType="BIGINT" property="totalColData" />
+    <result column="succColData" jdbcType="BIGINT" property="succColData" />
+    <result column="totalUpData" jdbcType="BIGINT" property="totalUpData" />
+    <result column="succUpData" jdbcType="BIGINT" property="succUpData" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

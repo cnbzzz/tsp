@@ -1,0 +1,262 @@
+package cn.spacewalker.tsp.bg.tbox.client;
+
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import cn.spacewalker.tsp.bg.pojo.utils.Gbt32960WriteByteBuf;
+import cn.spacewalker.tsp.bg.tbox.constant.ActionConstant;
+import cn.spacewalker.tsp.bg.tbox.simulator.message.UploadRealTimeMsg;
+import cn.spacewalker.tsp.bg.tbox.simulator.message.VehSignInMsg;
+import cn.spacewalker.tsp.bg.tbox.simulator.message.VehSignOutMsg;
+import cn.spacewalker.tsp.bg.tbox.simulator.model.Vehicle;
+import cn.spacewalker.tsp.bg.tbox.simulator.service.ScriptService;
+import cn.spacewalker.tsp.bg.tbox.simulator.service.impl.ManyVehServiceImpl;
+import cn.spacewalker.tsp.bg.tbox.simulator.service.impl.OneVehServiceImpl;
+import cn.spacewalker.tsp.bg.tbox.simulator.service.impl.SendByFileServiceImpl;
+import cn.spacewalker.tsp.common.util.CommUtils;
+import com.alibaba.fastjson.JSON;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerAdapter;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLDecoder;
+import java.util.Arrays;
+import java.util.Random;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/10 17:16
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public class TBoxClientHandler extends ChannelHandlerAdapter {
+
+    private Logger log = LogManager.getLogger(this.getClass().getName());
+
+    //执行剧本(剧本可换)
+    //@Resource (name = "manyVehServiceImpl")
+    //@Resource (name = "oneVehServiceImpl")
+    //@Resource (name = "sendByFileServiceImpl")
+    @Resource (name = "${simulator.service}")
+    private ScriptService scriptService ;
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
+            throws Exception{
+        log.error("触发事件");
+        if (evt instanceof IdleStateEvent) {
+            IdleStateEvent e = (IdleStateEvent) evt;
+            if (e.state() == IdleState.READER_IDLE) {
+                ctx.close();
+                log.error("READER_IDLE 读超时");
+            } else if (e.state() == IdleState.WRITER_IDLE) {
+                ByteBuf buff = ctx.alloc().buffer();
+                buff.writeBytes("mayi test".getBytes());
+                ctx.writeAndFlush(buff);
+                log.error("WRITER_IDLE 写超时");
+            }
+            else {
+                log.error("其他超时");
+            }
+        }
+    }
+
+
+    public void exceptionCaught(ChannelHandlerContext var1, Throwable var2) throws Exception {
+        log.error(var2.getMessage(), var2);
+        var2.printStackTrace();
+        var1.close();
+    }
+
+
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+//        String path = this.getClass().getClassLoader().getResource("gbt32960/veh.txt").getPath();
+//        path = CommUtils.urlParamDecode(path);
+//        File file = new File(path);
+//        String json = FileUtils.readFileToString(file, "UTF-8");
+//        Gbt32960Msg gbt32960Msg = JSON.parseObject(json, Gbt32960Msg.class);
+//        ctx.writeAndFlush(gbt32960Msg);
+//        log.info(String.format("[%s] channelInactive...", ctx.name()));
+//
+        //开始表演，执行剧本(剧本可换)
+//        @Resource()
+//        ScriptService scriptService = new ManyVehServiceImpl();
+        //ScriptService scriptService = new SendByFileServiceImpl();
+        scriptService.action(ctx);
+
+        //关闭链接，退出程序
+        ctx.close();
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        log.info(String.format("[%s] channelInactive...", ctx.name()));
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+        super.close(ctx, promise);
+        log.info("[%s] close...", ctx.name());
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg)
+            throws Exception {
+        log.info(String.format("[%s] channelRead...", ctx.name()));
+        ByteBuf buf = (ByteBuf) msg;
+        byte[] req = new byte[buf.readableBytes()];
+        buf.readBytes(req);
+        String body = new String(req, "UTF-8");
+        System.out.println("Now is : " + body);
+    }
+
+
+    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+        super.write(ctx, msg, promise);
+    }
+
+    public void flush(ChannelHandlerContext ctx) throws Exception {
+        log.error("flush");
+        super.flush(ctx);
+    }
+
+    public static Gbt32960Msg getGbt32960Msg(int commandSymbol, byte[] bytes) throws Exception {
+        String path = "/gbt32960/gbt32960.json";
+        String json = readFile(path);
+        Gbt32960Msg msg = JSON.parseObject(json, Gbt32960Msg.class);
+        msg.setCommandSymbol(commandSymbol);
+        msg.setContent(bytes);
+        return msg;
+    }
+
+    private byte[] getSignInData() throws Exception {
+        return readJsonToBytes("/gbt32960/vehSignIn/vehSignIn.json");
+    }
+
+    public byte[] getUploadRealTimeData() throws Exception {
+        byte[] bytes = readJsonToBytes("/gbt32960/uploadRealTime/uploadRealTime.json");
+        bytes = ArrayUtils.addAll(bytes, getVehData());
+        bytes = ArrayUtils.addAll(bytes, getDriveMotorData());
+        bytes = ArrayUtils.addAll(bytes, getFuelCellData());
+        bytes = ArrayUtils.addAll(bytes, getEngineData());
+        bytes = ArrayUtils.addAll(bytes, getVehPositionData());
+        bytes = ArrayUtils.addAll(bytes, getVehLimitData());
+        bytes = ArrayUtils.addAll(bytes, getErrorData());
+        return bytes;
+    }
+
+    private byte[] getVehData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/veh.json");
+    }
+
+    private byte[] getDriveMotorData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/driveMotor.json");
+    }
+
+    public byte[] getFuelCellData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/fuelCell.json");
+    }
+
+    public byte[] getEngineData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/engine.json");
+    }
+
+
+    public byte[] getVehPositionData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/vehPosition.json");
+    }
+
+    public byte[] getVehLimitData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/vehLimit.json");
+    }
+
+    public byte[] getErrorData() throws Exception {
+        return readJsonToBytes("/gbt32960/uploadRealTime/error.json");
+    }
+
+    public byte[] getVehSignOutData() throws Exception {
+        return readJsonToBytes("/gbt32960/vehSignOut/vehSignOut.json");
+    }
+
+    public byte[] getPlatformSignInData() throws Exception {
+        return readJsonToBytes("/gbt32960/platformSignIn/platformSignIn.json");
+    }
+
+    public byte[] getPlatformSignOutData() throws Exception {
+        return readJsonToBytes("/gbt32960/platformSignOut/platformSignOut.json");
+    }
+
+    public static byte[] readJsonToBytes(String path) throws Exception {
+        String json = readFile(path);
+        JSONObject jsonObject = new JSONObject(json);
+        JSONArray data = jsonObject.getJSONArray("data");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject o = data.getJSONObject(i);
+            String type = o.getString("type");
+
+            if ("byte".equals(type)) {
+                buf.writeByte((byte) o.getInt("val"));
+            }
+
+            if ("byteArray".equals(type)) {
+                JSONArray val = o.getJSONArray("val");
+                for (int j = 0; j < val.length(); j++) {
+                    buf.writeByte((byte) val.getInt(j));
+                }
+            }
+
+            if ("word".equals(type)) {
+                buf.writeWord(o.getInt("val"));
+            }
+
+            if ("string".equals(type)) {
+                buf.writeString(o.getString("val"), "GBK");
+            }
+
+            if ("dword".equals(type)) {
+                buf.writeDword(o.getLong("val"));
+            }
+        }
+
+        return buf.getBytes();
+    }
+
+    public static String readFile(String path) throws IOException {
+        path = TBoxClientHandler.class.getResource(path).getFile();
+        path = URLDecoder.decode(path,"utf-8");
+        File file = new File(path);
+        return FileUtils.readFileToString(file, "UTF-8");
+    }
+
+    public static void main(String[] args) throws Exception {
+        int len = 10;
+        byte[] bytes = new byte[len];
+        Random random = new Random();
+        byte xorByte = 0;
+        for (int i = 0; i < len; i++) {
+            int tmp = random.nextInt(126) + 1;
+            bytes[i] = (byte) tmp;
+            xorByte = (byte) (xorByte ^ bytes[i]);
+        }
+        String str = Arrays.toString(bytes);
+        System.err.println(String.format("arrays is [%s], last bcc bit is [%s]", str, xorByte));
+    }
+}

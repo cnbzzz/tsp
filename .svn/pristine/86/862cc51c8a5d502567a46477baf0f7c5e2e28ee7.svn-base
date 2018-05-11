@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepPositionsumMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepPositionsum">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="vehStatus" jdbcType="INTEGER" property="vehStatus" />
+    <result column="num" jdbcType="BIGINT" property="num" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+    <result column="updatTime" jdbcType="TIMESTAMP" property="updatTime" />
+  </resultMap>
+</mapper>

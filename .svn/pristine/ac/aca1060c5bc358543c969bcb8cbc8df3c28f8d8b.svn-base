@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepDrivingcalcMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepDrivingcalc">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="drivingMile" jdbcType="BIGINT" property="drivingMile" />
+    <result column="calcMin" jdbcType="VARCHAR" property="calcMin" />
+    <result column="calcHour" jdbcType="VARCHAR" property="calcHour" />
+    <result column="calcDay" jdbcType="VARCHAR" property="calcDay" />
+    <result column="calcMonth" jdbcType="VARCHAR" property="calcMonth" />
+    <result column="calcYear" jdbcType="VARCHAR" property="calcYear" />
+    <result column="calcFormnum" jdbcType="VARCHAR" property="calcFormnum" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+  </resultMap>
+</mapper>

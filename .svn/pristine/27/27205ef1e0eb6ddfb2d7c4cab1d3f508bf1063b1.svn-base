@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepChargelogMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepChargelog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="startTime" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="preSoc" jdbcType="BIGINT" property="preSoc" />
+    <result column="sufSoc" jdbcType="BIGINT" property="sufSoc" />
+    <result column="chargeSecond" jdbcType="BIGINT" property="chargeSecond" />
+    <result column="preMile" jdbcType="BIGINT" property="preMile" />
+    <result column="sufMile" jdbcType="BIGINT" property="sufMile" />
+    <result column="chargeMile" jdbcType="BIGINT" property="chargeMile" />
+    <result column="avgSpeed" jdbcType="BIGINT" property="avgSpeed" />
+    <result column="intervalSecond" jdbcType="BIGINT" property="intervalSecond" />
+    <result column="chargeDate" jdbcType="DATE" property="chargeDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="calcFormnum" jdbcType="BIGINT" property="calcFormnum" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+  </resultMap>
+</mapper>

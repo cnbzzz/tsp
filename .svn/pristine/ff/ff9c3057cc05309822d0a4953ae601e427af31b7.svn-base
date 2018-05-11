@@ -1,0 +1,266 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_chargingintervalsum")
+public class MRepChargingintervalsum extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private Integer interval2day;
+
+    private Integer interval2dayCount;
+
+    private Integer interval3day;
+
+    private Integer interval3dayCount;
+
+    private Integer interval4day;
+
+    private Integer interval4dayCount;
+
+    private Integer interval5day;
+
+    private Integer interval5dayCount;
+
+    private Integer interval6day;
+
+    private Integer interval6dayCount;
+
+    private Integer interval7day;
+
+    private Integer interval7dayCount;
+
+    private Long calcFormnum;
+
+    private Date calcDate;
+
+    private Date updateTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return interval2day
+     */
+    public Integer getInterval2day() {
+        return interval2day;
+    }
+
+    /**
+     * @param interval2day
+     */
+    public void setInterval2day(Integer interval2day) {
+        this.interval2day = interval2day;
+    }
+
+    /**
+     * @return interval2dayCount
+     */
+    public Integer getInterval2dayCount() {
+        return interval2dayCount;
+    }
+
+    /**
+     * @param interval2dayCount
+     */
+    public void setInterval2dayCount(Integer interval2dayCount) {
+        this.interval2dayCount = interval2dayCount;
+    }
+
+    /**
+     * @return interval3day
+     */
+    public Integer getInterval3day() {
+        return interval3day;
+    }
+
+    /**
+     * @param interval3day
+     */
+    public void setInterval3day(Integer interval3day) {
+        this.interval3day = interval3day;
+    }
+
+    /**
+     * @return interval3dayCount
+     */
+    public Integer getInterval3dayCount() {
+        return interval3dayCount;
+    }
+
+    /**
+     * @param interval3dayCount
+     */
+    public void setInterval3dayCount(Integer interval3dayCount) {
+        this.interval3dayCount = interval3dayCount;
+    }
+
+    /**
+     * @return interval4day
+     */
+    public Integer getInterval4day() {
+        return interval4day;
+    }
+
+    /**
+     * @param interval4day
+     */
+    public void setInterval4day(Integer interval4day) {
+        this.interval4day = interval4day;
+    }
+
+    /**
+     * @return interval4dayCount
+     */
+    public Integer getInterval4dayCount() {
+        return interval4dayCount;
+    }
+
+    /**
+     * @param interval4dayCount
+     */
+    public void setInterval4dayCount(Integer interval4dayCount) {
+        this.interval4dayCount = interval4dayCount;
+    }
+
+    /**
+     * @return interval5day
+     */
+    public Integer getInterval5day() {
+        return interval5day;
+    }
+
+    /**
+     * @param interval5day
+     */
+    public void setInterval5day(Integer interval5day) {
+        this.interval5day = interval5day;
+    }
+
+    /**
+     * @return interval5dayCount
+     */
+    public Integer getInterval5dayCount() {
+        return interval5dayCount;
+    }
+
+    /**
+     * @param interval5dayCount
+     */
+    public void setInterval5dayCount(Integer interval5dayCount) {
+        this.interval5dayCount = interval5dayCount;
+    }
+
+    /**
+     * @return interval6day
+     */
+    public Integer getInterval6day() {
+        return interval6day;
+    }
+
+    /**
+     * @param interval6day
+     */
+    public void setInterval6day(Integer interval6day) {
+        this.interval6day = interval6day;
+    }
+
+    /**
+     * @return interval6dayCount
+     */
+    public Integer getInterval6dayCount() {
+        return interval6dayCount;
+    }
+
+    /**
+     * @param interval6dayCount
+     */
+    public void setInterval6dayCount(Integer interval6dayCount) {
+        this.interval6dayCount = interval6dayCount;
+    }
+
+    /**
+     * @return interval7day
+     */
+    public Integer getInterval7day() {
+        return interval7day;
+    }
+
+    /**
+     * @param interval7day
+     */
+    public void setInterval7day(Integer interval7day) {
+        this.interval7day = interval7day;
+    }
+
+    /**
+     * @return interval7dayCount
+     */
+    public Integer getInterval7dayCount() {
+        return interval7dayCount;
+    }
+
+    /**
+     * @param interval7dayCount
+     */
+    public void setInterval7dayCount(Integer interval7dayCount) {
+        this.interval7dayCount = interval7dayCount;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+
+    /**
+     * @return calcDate
+     */
+    public Date getCalcDate() {
+        return calcDate;
+    }
+
+    /**
+     * @param calcDate
+     */
+    public void setCalcDate(Date calcDate) {
+        this.calcDate = calcDate;
+    }
+
+    /**
+     * @return updateTime
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}

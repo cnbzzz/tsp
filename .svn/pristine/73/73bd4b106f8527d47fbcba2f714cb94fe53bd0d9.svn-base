@@ -1,0 +1,15 @@
+tspserver:
+  ip: 127.0.0.1
+  port: 9103
+
+simulator:
+  service: manyVehServiceImpl  #选择要执行哪个剧本(oneVehServiceImpl,manyVehServiceImpl,sendByFileServiceImpl)
+  many_veh:
+    vehCont: 1          #模拟车辆个数
+    packagePerHour: 1   #每小时发包数量
+    startTime: "2017-08-28 14:00:00"   #开始模型时间
+
+
+
+
+

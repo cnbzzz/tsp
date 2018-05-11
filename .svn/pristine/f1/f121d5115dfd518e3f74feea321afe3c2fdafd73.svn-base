@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepDrivinglogMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepDrivinglog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="drivingStartTime" jdbcType="TIMESTAMP" property="drivingStartTime" />
+    <result column="drivingEndTime" jdbcType="TIMESTAMP" property="drivingEndTime" />
+    <result column="preMile" jdbcType="BIGINT" property="preMile" />
+    <result column="sufMile" jdbcType="BIGINT" property="sufMile" />
+    <result column="drivingMile" jdbcType="BIGINT" property="drivingMile" />
+    <result column="drivingSecond" jdbcType="BIGINT" property="drivingSecond" />
+    <result column="avgSpeed" jdbcType="BIGINT" property="avgSpeed" />
+    <result column="intervalSecond" jdbcType="BIGINT" property="intervalSecond" />
+    <result column="driveDate" jdbcType="DATE" property="driveDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="calcFormnum" jdbcType="VARCHAR" property="calcFormnum" />
+    <result column="calcDate" jdbcType="DATE" property="calcDate" />
+  </resultMap>
+
+  <select id="queryDriveTimes" resultType="Long">
+    SELECT
+        COALESCE (sum(drivingSecond), 0) AS driveTimes
+    FROM
+        m_rep_drivingLog
+    WHERE
+        vin = #{vin}
+  </select>
+
+  <select id="queryVehsum" resultType="cn.spacewalker.tsp.ft.pojo.model.MRepVehsum">
+SELECT
+	count(t2.vin) AS vehCount,
+	IFNULL(sum(t2.accMile), 0) AS accMile,
+	IFNULL(sum(t2.driveTimes), 0) AS drivedSeconds,
+	count(
+
+		IF (
+			t2. STATUS = '行驶中',
+			TRUE,
+			NULL
+		)
+	) AS drvingVehCount,
+	count(
+
+		IF (
+			t2. STATUS = '停车充电',
+			TRUE,
+			NULL
+		)
+	) AS charingVehCount,
+	count(
+
+		IF (
+			t2. STATUS = '离线',
+			TRUE,
+			NULL
+		)
+	) AS offlineVehCount,
+	count(
+
+		IF (
+			t2.model = '5座'
+			AND t2. STATUS = '行驶中',
+			TRUE,
+			NULL
+		)
+	) AS model1OnlineCount,
+	count(
+
+		IF (
+			t2.model = '5座'
+			AND t2. STATUS = '行驶中',
+			TRUE,
+			NULL
+		)
+	) AS model2OnlineCount,
+	count(
+
+		IF (
+			t2.model = '5座'
+			AND t2. STATUS = '行驶中',
+			TRUE,
+			NULL
+		)
+	) AS model3OnlineCount
+FROM
+	(
+		SELECT
+			*
+		FROM
+			m_rep_vehInfo t1
+		WHERE
+			t1.calcFormnum = (
+				SELECT
+					max(calcFormnum)
+				FROM
+					m_rep_vehInfo
+				WHERE
+					t1.vin = vin
+			)
+		GROUP BY
+			t1.vin
+	) t2
+  </select>
+  <select id="countErrorsum" resultType="cn.spacewalker.tsp.ft.pojo.model.MRepErrorsum">
+SELECT
+	count(t2.vin) AS totalErrorCount,
+	count(if(t2.errorType = '可充电储能装置', true, null)) as charingError,
+	count(if(t2.errorType = '驱动电机故障', true, null)) as driveMotorError,
+	count(if(t2.errorType = '发动机故障', true, null)) as engineError,
+	count(if(t2.errorType = '其他故障', true, null)) as otherError
+FROM
+	(
+		SELECT
+			*
+		FROM
+			m_rep_errorLog t1
+		WHERE
+			t1.calcFormnum = (
+				SELECT
+					max(calcFormnum)
+				FROM
+					m_rep_vehInfo
+				WHERE
+					t1.vin = vin
+			)
+		GROUP BY
+			t1.vin
+	) t2
+  </select>
+	<select id="countBatterysum" resultType="cn.spacewalker.tsp.ft.pojo.model.MRepBatterysum">
+<![CDATA[
+SELECT
+	count(IF(t2.soc > 80, TRUE, NULL)) AS percent80,
+	count(
+
+		IF (
+			t2.soc BETWEEN 60
+			AND 80,
+			TRUE,
+			NULL
+		)
+	) AS percent6080,
+	count(
+
+		IF (
+			t2.soc BETWEEN 40
+			AND 60,
+			TRUE,
+			NULL
+		)
+	) AS percent4060,
+	count(IF(t2.soc < 40, TRUE, NULL)) AS percent40
+FROM
+	(
+		SELECT
+			*
+		FROM
+			m_rep_vehInfo t1
+		WHERE
+			t1.calcFormnum = (
+				SELECT
+					max(calcFormnum)
+				FROM
+					m_rep_vehInfo
+				WHERE
+					t1.vin = vin
+			)
+		GROUP BY
+			t1.vin
+	) t2
+]]>
+	</select>
+	<select id="countChargingIntervalsum" resultType="cn.spacewalker.tsp.ft.pojo.model.MRepChargingintervalsum">
+<![CDATA[
+SELECT
+	count(
+
+		IF (
+			ceil(
+				(t2.intervalSecond / 3600 / 24)
+			) = 2,
+			TRUE,
+			NULL
+		)
+	) AS interval2dayCount,
+	count(
+
+		IF (
+			ceil(
+				(t2.intervalSecond / 3600 / 24)
+			) = 3,
+			TRUE,
+			NULL
+		)
+	) AS interval3dayCount,
+	count(
+
+		IF (
+			ceil(
+				(t2.intervalSecond / 3600 / 24)
+			) = 4,
+			TRUE,
+			NULL
+		)
+	) AS interval4dayCount,
+	count(
+
+		IF (
+			ceil(
+				(t2.intervalSecond / 3600 / 24)
+			) = 5,
+			TRUE,
+			NULL
+		)
+	) AS interval5dayCount,
+	count(
+
+		IF (
+			ceil(
+				(t2.intervalSecond / 3600 / 24)
+			) = 6,
+			TRUE,
+			NULL
+		)
+	) AS interval6dayCount,
+	count(
+
+		IF (
+			ceil(
+				(t2.intervalSecond / 3600 / 24)
+			) = 7,
+			TRUE,
+			NULL
+		)
+	) AS interval7dayCount
+FROM
+	(
+		SELECT
+			*
+		FROM
+			m_rep_chargeLog t1
+		WHERE
+			t1.calcFormnum = (
+				SELECT
+					max(calcFormnum)
+				FROM
+					m_rep_chargeLog
+				WHERE
+					t1.endTime IS NOT NULL
+				AND t1.vin = vin
+			)
+		GROUP BY
+			t1.vin
+	) t2
+]]>
+	</select>
+	<select id="countPositionsum" resultType="cn.spacewalker.tsp.ft.pojo.model.MRepPositionsum">
+SELECT
+	t2.city as city,
+	count(if(t2.status = '行驶中', true, NULL)) as drivingCount,
+	count(if(t2.status = '停车充电', true, NULL)) as chargingCount,
+	count(if(t2.status = '离线', true, NULL)) as offlineCount,
+	count(1) as totalCount,
+	t2.region as region
+FROM
+	(
+		SELECT
+			*
+		FROM
+			m_rep_vehInfo t1
+		WHERE
+			t1.calcFormnum = (
+				SELECT
+					max(calcFormnum)
+				FROM
+					m_rep_vehInfo
+				WHERE
+					t1.vin = vin
+			)
+		GROUP BY
+			t1.vin
+	) t2 group by city
+	</select>
+	<select id="queryErrorlogByVin" resultType="cn.spacewalker.tsp.ft.pojo.model.MRepErrorlog">
+SELECT
+	*
+FROM
+	m_rep_errorlog t1
+WHERE
+	t1.calcFormnum = (
+		SELECT
+			max(calcFormnum)
+		FROM
+			m_rep_vehInfo
+		WHERE
+			t1.vin = vin
+		GROUP BY
+			t1.vin,
+			t1.errorDate,
+			t1.errorType
+	)
+AND t1.vin = #{vin}
+AND t1.errorDate BETWEEN #{startDate}
+AND #{endDate}
+<if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(errorType)">
+	AND t1.errorType = #{errorType}
+</if>
+LIMIT #{limit}
+	</select>
+	<insert id="insertDrivingCalcByMinute">
+INSERT INTO m_rep_drivingCalc (
+	oid,
+	vin,
+	drivingMile,
+	calcMin,
+	calcHour,
+	calcDay,
+	calcMonth,
+	calcYear,
+	calcFormnum,
+	calcDate
+) SELECT
+	(SELECT UUID()),
+	t1.vin,
+	0,
+	CONCAT(
+		DATE_FORMAT(#{gatherTime}, '%H:%i'),
+		':00'
+	),
+	CONCAT(
+		DATE_FORMAT(#{gatherTime}, '%H'),
+		':00:00'
+	),
+	DATE_FORMAT(#{gatherTime}, '%Y-%m-%d'),
+	DATE_FORMAT(#{gatherTime}, '%Y-%m'),
+	DATE_FORMAT(#{gatherTime}, '%Y'),
+	NULL,
+	#{gatherTime}
+FROM
+	m_rep_lastVehinfo t1
+	</insert>
+</mapper>

@@ -1,0 +1,156 @@
+package cn.spacewalker.tsp.bg.tbox.simulator.service.impl;
+
+import cn.spacewalker.tsp.bg.tbox.config.SimulatorConfig;
+import cn.spacewalker.tsp.bg.tbox.constant.ActionConstant;
+import cn.spacewalker.tsp.bg.tbox.simulator.model.Vehicle;
+import cn.spacewalker.tsp.bg.tbox.simulator.service.ScriptService;
+import cn.spacewalker.tsp.bg.tbox.util.RandomStringUtil;
+import cn.spacewalker.tsp.bg.tbox.util.TimeFormatUtil;
+import io.netty.channel.ChannelHandlerContext;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by steven ma
+ * 2017/8/24 9:40
+ */
+
+public class ManyVehServiceImpl implements ScriptService {
+
+    private Logger log = LogManager.getLogger(this.getClass().getName());
+
+    //配置信息
+    private SimulatorConfig config = new SimulatorConfig();
+
+    //车辆列表
+    private List<Vehicle> vehicleList = new ArrayList<>();
+
+
+    //初始化所有车辆
+    private void initVehList(ChannelHandlerContext ctx) {
+
+        for (int i = 0; i < config.getVehCont(); i++) {
+            String vin = RandomStringUtil.getVin();
+            String iccid = RandomStringUtil.getIccid();
+            Date date = new Date();
+            String time = TimeFormatUtil.tboxDate2Str(date);
+
+            Vehicle veh = new Vehicle(vin, iccid, time, ctx);
+            vehicleList.add(veh);
+        }
+    }
+
+    //打印所有辆信息
+    private void showVeh() {
+        int num = 0;
+        log.info("---------show veh-------------");
+        for(Vehicle veh: vehicleList) {
+            log.info("[" + num + "]: " + veh);
+            num ++;
+        }
+        log.info("---------show veh-------------");
+    }
+
+
+    @Override
+    public void action(ChannelHandlerContext ctx) {
+        log.info("Run:ManyVehServiceImpl....");
+        //初始化辆
+        initVehList(ctx);
+
+        //打印车辆
+        showVeh();
+
+        try {
+            runByDate(config.getStartTime(), config.getEndTime());
+        } catch (ParseException e) {
+            log.error("action: {}", e);
+        }
+
+
+    }
+
+    //根据 "开始时间" 至 "结束时间" 按频率进行发送
+    public  void runByDate(String begin, String end) throws ParseException {
+        String parsePatterns = "yyyy-MM-dd HH:mm:ss";
+        Date beginDate = DateUtils.parseDate(begin, parsePatterns);
+        Date endDate = DateUtils.parseDate(end, parsePatterns);
+        Date currDate = beginDate;
+
+        int runCnt = 0;
+
+        //当“当前时间”早于结束时间
+        while (currDate.compareTo(endDate) < 0) {
+            //发车
+            log.info("date:" + currDate);
+
+            randomGetVehSend(TimeFormatUtil.tboxDate2Str(currDate));
+
+            //当前时间往后移动(按频率计算出来的时间间隔)
+            currDate = DateUtils.addSeconds(currDate, config.getIntervalTime());
+
+            runCnt ++;
+        }
+
+        log.info("Total Run: {}", runCnt);
+    }
+    //随机取得车辆进行发送
+    private void randomGetVehSend(String time) {
+
+        //随机从列表里取一辆车进行发送
+        int vehNum = (int) (Math.random() * vehicleList.size());
+        //log.info("size: " + vehicleList.size());
+
+        Vehicle vehicle = vehicleList.get(vehNum);
+        log.info("[" + vehNum + "] Veh Run.....\n" + vehicle);
+
+        vehicle.setGatherTime(time);
+        doVehSolo(vehicle);
+    }
+
+
+    //取一个小时级别的随机时间
+    private int randomHours() {
+        return  (int) (Math.random() * 3600 * 5);
+    }
+
+    //取一个分钟级别的随机时间
+    private int randomMin() {
+        return  (int) (Math.random() * 3600 );
+    }
+
+
+
+    //单辆车进行solo
+    private void doVehSolo(Vehicle vehicle) {
+
+        vehicle.addTimeBySec(randomHours());
+        vehicle.login();
+        vehicle.doAction(ActionConstant.START);
+
+        vehicle.addTimeBySec(randomMin());
+        vehicle.doAction(ActionConstant.STOP_AND_CHARGE);
+
+        vehicle.addTimeBySec(randomHours());
+        vehicle.doAction(ActionConstant.CHARGE_DONE);
+
+        vehicle.addTimeBySec(randomHours());
+        vehicle.doAction(ActionConstant.MOVE);
+
+        vehicle.addTimeBySec(randomHours());
+        vehicle.doAction(ActionConstant.MOVE);
+
+        vehicle.addTimeBySec(randomHours());
+        vehicle.doAction(ActionConstant.STOP);
+
+        vehicle.logout();
+    }
+
+
+}

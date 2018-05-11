@@ -1,0 +1,202 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_chargelog")
+public class MRepChargelog extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private Integer vin;
+
+    private Date chargeStartTime;
+
+    private Date chargeEndTime;
+
+    private Long chargePreSOC;
+
+    private Long chargeSufSOC;
+
+    private Long chargeMile;
+
+    private Long avgSpeed;
+
+    private Long intervalSecond;
+
+    private Date chargeDate;
+
+    private Date updateTime;
+
+    private Long calcFormnum;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public Integer getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(Integer vin) {
+        this.vin = vin;
+    }
+
+    /**
+     * @return chargeStartTime
+     */
+    public Date getChargeStartTime() {
+        return chargeStartTime;
+    }
+
+    /**
+     * @param chargeStartTime
+     */
+    public void setChargeStartTime(Date chargeStartTime) {
+        this.chargeStartTime = chargeStartTime;
+    }
+
+    /**
+     * @return chargeEndTime
+     */
+    public Date getChargeEndTime() {
+        return chargeEndTime;
+    }
+
+    /**
+     * @param chargeEndTime
+     */
+    public void setChargeEndTime(Date chargeEndTime) {
+        this.chargeEndTime = chargeEndTime;
+    }
+
+    /**
+     * @return chargePreSOC
+     */
+    public Long getChargePreSOC() {
+        return chargePreSOC;
+    }
+
+    /**
+     * @param chargePreSOC
+     */
+    public void setChargePreSOC(Long chargePreSOC) {
+        this.chargePreSOC = chargePreSOC;
+    }
+
+    /**
+     * @return chargeSufSOC
+     */
+    public Long getChargeSufSOC() {
+        return chargeSufSOC;
+    }
+
+    /**
+     * @param chargeSufSOC
+     */
+    public void setChargeSufSOC(Long chargeSufSOC) {
+        this.chargeSufSOC = chargeSufSOC;
+    }
+
+    /**
+     * @return chargeMile
+     */
+    public Long getChargeMile() {
+        return chargeMile;
+    }
+
+    /**
+     * @param chargeMile
+     */
+    public void setChargeMile(Long chargeMile) {
+        this.chargeMile = chargeMile;
+    }
+
+    /**
+     * @return avgSpeed
+     */
+    public Long getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    /**
+     * @param avgSpeed
+     */
+    public void setAvgSpeed(Long avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
+    /**
+     * @return intervalSecond
+     */
+    public Long getIntervalSecond() {
+        return intervalSecond;
+    }
+
+    /**
+     * @param intervalSecond
+     */
+    public void setIntervalSecond(Long intervalSecond) {
+        this.intervalSecond = intervalSecond;
+    }
+
+    /**
+     * @return chargeDate
+     */
+    public Date getChargeDate() {
+        return chargeDate;
+    }
+
+    /**
+     * @param chargeDate
+     */
+    public void setChargeDate(Date chargeDate) {
+        this.chargeDate = chargeDate;
+    }
+
+    /**
+     * @return updateTime
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+}

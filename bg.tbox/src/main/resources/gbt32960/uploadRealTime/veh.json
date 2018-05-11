@@ -1,0 +1,69 @@
+{
+  "data": [
+    {
+      "note": "整车数据",
+      "type": "byte",
+      "val": "1"
+    }
+    ,{
+      "note": "车辆状态",
+      "type": "byte",
+      "val": "1"
+    }
+    ,{
+      "note": "充电状态",
+      "type": "byte",
+      "val": "1"
+    }
+    ,{
+      "note": "运行模式",
+      "type": "byte",
+      "val": "1"
+    }
+    ,{
+      "note": "车速",
+      "type": "word",
+      "val": "2200"
+    }
+    ,{
+      "note": "累积里程",
+      "type": "dword",
+      "val": "9999999"
+    }
+    ,{
+      "note": "总电压",
+      "type": "word",
+      "val": "10000"
+    }
+    ,{
+      "note": "总电流",
+      "type": "word",
+      "val": "20000"
+    }
+    ,{
+      "note": "soc",
+      "type": "byte",
+      "val": "255"
+    }
+    ,{
+      "note": "dc状态",
+      "type": "byte",
+      "val": "254"
+    }
+    ,{
+      "note": "档位",
+      "type": "byte",
+      "val": "1"
+    }
+    ,{
+      "note": "绝缘电阻",
+      "type": "word",
+      "val": "60000"
+    }
+    ,{
+      "note": "预留",
+      "type": "word",
+      "val": "60000"
+    }
+  ]
+}

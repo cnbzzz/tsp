@@ -1,0 +1,48 @@
+package cn.spacewalker.tsp.ft.bigscreen.index.service;
+
+import cn.spacewalker.tsp.common.base.BaseResp;
+import cn.spacewalker.tsp.ft.bigscreen.launch.BigScreenLauncher;
+import cn.spacewalker.tsp.ft.pojo.dto.IndexDto;
+import cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto;
+import cn.spacewalker.tsp.ft.pojo.model.MRepVehsum;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/15 15:29
+ * Copyright (c) 2017 www.space-walker.cn
+ */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = BigScreenLauncher.class)
+@WebAppConfiguration
+public class IndexServiceImplTest {
+
+    Logger log = LogManager.getLogger(this.getClass().getName());
+
+    @Resource
+    private IIndexService indexService;
+
+    @Test
+    public void test1(){
+        BaseResp<IndexDto> resp = indexService.queryIndex();
+        log.info(resp);
+    }
+
+    @Test
+    public void test2(){
+        String startDatetime = "2017-08-14 00:00:00";
+        Integer interval = 5;
+        BaseResp<List<OnlineVehDto>> resp = indexService.listVehsumByTime(startDatetime, interval);
+        log.info(resp);
+    }
+}

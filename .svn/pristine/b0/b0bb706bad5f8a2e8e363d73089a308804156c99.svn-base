@@ -1,0 +1,122 @@
+package cn.spacewalker.tsp.bg.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "t_veh_position")
+public class TVehPosition extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String posStatus;
+
+    private Long longitude;
+
+    private Long latitude;
+
+    private String vin;
+
+    private String formnum;
+
+    private Date uploadTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return posStatus
+     */
+    public String getPosStatus() {
+        return posStatus;
+    }
+
+    /**
+     * @param posStatus
+     */
+    public void setPosStatus(String posStatus) {
+        this.posStatus = posStatus == null ? null : posStatus.trim();
+    }
+
+    /**
+     * @return longitude
+     */
+    public Long getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * @param longitude
+     */
+    public void setLongitude(Long longitude) {
+        this.longitude = longitude;
+    }
+
+    /**
+     * @return latitude
+     */
+    public Long getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * @param latitude
+     */
+    public void setLatitude(Long latitude) {
+        this.latitude = latitude;
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return formnum
+     */
+    public String getFormnum() {
+        return formnum;
+    }
+
+    /**
+     * @param formnum
+     */
+    public void setFormnum(String formnum) {
+        this.formnum = formnum == null ? null : formnum.trim();
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+}

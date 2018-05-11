@@ -1,0 +1,46 @@
+package cn.spacewalker.tsp.ft.bigscreen.index.service;
+
+import cn.spacewalker.tsp.common.base.BaseResp;
+import cn.spacewalker.tsp.ft.pojo.dto.ColCurveDto;
+import cn.spacewalker.tsp.ft.pojo.dto.IndexDto;
+import cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto;
+import cn.spacewalker.tsp.ft.pojo.dto.VehRegionPercentDto;
+import cn.spacewalker.tsp.ft.pojo.model.*;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/14 20:29
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public interface IIndexService {
+
+    BaseResp<IndexDto> queryIndex();
+
+    BaseResp<List<OnlineVehDto>> listVehsumByTime(String startDatetime, Integer interval);
+
+    BaseResp<List<ColCurveDto>> listColCurve(String startDatetime, Integer interval);
+
+    BaseResp<MRepErrorsum> queryErrorsum();
+
+    BaseResp<List<MRepPositionsum>> listPositionsum();
+
+    BaseResp<List<VehRegionPercentDto>> listVehRegionPercent();
+
+    BaseResp<MRepErrorsum> queryBatterysum();
+
+    BaseResp<MRepChargingintervalsum> queryChargingintervalsum();
+
+    BaseResp<List<MRepVehinfo>> listVehinfo(String status);
+
+    BaseResp<MRepVehinfo> queryVehinfo(String vin);
+
+    BaseResp<List<MRepErrorlog>> listErrorlog(String errorType, String errorGrade);
+
+    BaseResp<List<Map<String, String>>> listVehinfoCurve(String startDatetime, Integer interval);
+
+    BaseResp<List<MRepChargelog>> listChargelog();
+}

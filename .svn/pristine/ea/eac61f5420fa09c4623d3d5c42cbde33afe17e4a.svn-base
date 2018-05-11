@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehErrorMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehError">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="maxErrorLevel" jdbcType="INTEGER" property="maxErrorLevel" />
+    <result column="currencyErrorLevel" jdbcType="DECIMAL" property="currencyErrorLevel" />
+    <result column="fullCellErrorCount" jdbcType="INTEGER" property="fullCellErrorCount" />
+    <result column="driveMotorErrorCount" jdbcType="INTEGER" property="driveMotorErrorCount" />
+    <result column="engineErrorCount" jdbcType="INTEGER" property="engineErrorCount" />
+    <result column="otherErrorCount" jdbcType="INTEGER" property="otherErrorCount" />
+    <result column="etlStatus" jdbcType="INTEGER" property="etlStatus" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formnum" jdbcType="VARCHAR" property="formnum" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+  </resultMap>
+</mapper>

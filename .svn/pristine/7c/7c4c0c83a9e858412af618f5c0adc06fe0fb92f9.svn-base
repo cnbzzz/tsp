@@ -1,0 +1,13 @@
+package cn.spacewalker.tsp.ft.pojo.mapper;
+
+import cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto;
+import cn.spacewalker.tsp.ft.pojo.model.MRepVehsum;
+import org.apache.ibatis.annotations.Param;
+import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+
+public interface MRepVehsumMapper extends Mapper<MRepVehsum> {
+
+    List<OnlineVehDto> listOnlineVeh(@Param("startDatetime") String startDatetime, @Param("interval") Integer interval);
+}

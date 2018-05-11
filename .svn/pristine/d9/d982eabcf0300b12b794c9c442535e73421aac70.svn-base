@@ -1,0 +1,90 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_chargingintervalsum")
+public class MRepChargingintervalsum extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private Integer intervalType;
+
+    private Integer num;
+
+    private Date calcDate;
+
+    private Date updateTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return intervalType
+     */
+    public Integer getIntervalType() {
+        return intervalType;
+    }
+
+    /**
+     * @param intervalType
+     */
+    public void setIntervalType(Integer intervalType) {
+        this.intervalType = intervalType;
+    }
+
+    /**
+     * @return num
+     */
+    public Integer getNum() {
+        return num;
+    }
+
+    /**
+     * @param num
+     */
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
+    /**
+     * @return calcDate
+     */
+    public Date getCalcDate() {
+        return calcDate;
+    }
+
+    /**
+     * @param calcDate
+     */
+    public void setCalcDate(Date calcDate) {
+        this.calcDate = calcDate;
+    }
+
+    /**
+     * @return updateTime
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}

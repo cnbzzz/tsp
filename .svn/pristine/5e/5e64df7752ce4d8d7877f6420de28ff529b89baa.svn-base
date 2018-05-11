@@ -1,0 +1,154 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_errorsum")
+public class MRepErrorsum extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private Integer charingError;
+
+    private Integer driveMotorError;
+
+    private Integer engineError;
+
+    private Integer otherError;
+
+    private Integer totalErrorCount;
+
+    private Long calcFormnum;
+
+    private Date calcDate;
+
+    private Date updateTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return charingError
+     */
+    public Integer getCharingError() {
+        return charingError;
+    }
+
+    /**
+     * @param charingError
+     */
+    public void setCharingError(Integer charingError) {
+        this.charingError = charingError;
+    }
+
+    /**
+     * @return driveMotorError
+     */
+    public Integer getDriveMotorError() {
+        return driveMotorError;
+    }
+
+    /**
+     * @param driveMotorError
+     */
+    public void setDriveMotorError(Integer driveMotorError) {
+        this.driveMotorError = driveMotorError;
+    }
+
+    /**
+     * @return engineError
+     */
+    public Integer getEngineError() {
+        return engineError;
+    }
+
+    /**
+     * @param engineError
+     */
+    public void setEngineError(Integer engineError) {
+        this.engineError = engineError;
+    }
+
+    /**
+     * @return otherError
+     */
+    public Integer getOtherError() {
+        return otherError;
+    }
+
+    /**
+     * @param otherError
+     */
+    public void setOtherError(Integer otherError) {
+        this.otherError = otherError;
+    }
+
+    /**
+     * @return totalErrorCount
+     */
+    public Integer getTotalErrorCount() {
+        return totalErrorCount;
+    }
+
+    /**
+     * @param totalErrorCount
+     */
+    public void setTotalErrorCount(Integer totalErrorCount) {
+        this.totalErrorCount = totalErrorCount;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+
+    /**
+     * @return calcDate
+     */
+    public Date getCalcDate() {
+        return calcDate;
+    }
+
+    /**
+     * @param calcDate
+     */
+    public void setCalcDate(Date calcDate) {
+        this.calcDate = calcDate;
+    }
+
+    /**
+     * @return updateTime
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}

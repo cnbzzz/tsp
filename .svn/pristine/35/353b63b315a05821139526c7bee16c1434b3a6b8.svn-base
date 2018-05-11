@@ -1,0 +1,330 @@
+package cn.spacewalker.tsp.bg.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "t_rep_vehinfo")
+public class TRepVehinfo extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String iccid;
+
+    private String vin;
+
+    private String model;
+
+    private String driveMotorPos;
+
+    private Integer maxSpeed;
+
+    private Integer powerMileage;
+
+    private String gearDrivePercent;
+
+    private Integer batteryCount;
+
+    private String batteryParam;
+
+    private Integer driveMotorCount;
+
+    private String driveMotorParam;
+
+    private Integer errorVal;
+
+    private Integer accMile;
+
+    private Integer driveTimes;
+
+    private Date lastLoginTime;
+
+    private Integer isOnline;
+
+    private Integer isDriving;
+
+    private Integer isCharging;
+
+    private String currLoc;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return iccid
+     */
+    public String getIccid() {
+        return iccid;
+    }
+
+    /**
+     * @param iccid
+     */
+    public void setIccid(String iccid) {
+        this.iccid = iccid == null ? null : iccid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return model
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * @param model
+     */
+    public void setModel(String model) {
+        this.model = model == null ? null : model.trim();
+    }
+
+    /**
+     * @return driveMotorPos
+     */
+    public String getDriveMotorPos() {
+        return driveMotorPos;
+    }
+
+    /**
+     * @param driveMotorPos
+     */
+    public void setDriveMotorPos(String driveMotorPos) {
+        this.driveMotorPos = driveMotorPos == null ? null : driveMotorPos.trim();
+    }
+
+    /**
+     * @return maxSpeed
+     */
+    public Integer getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    /**
+     * @param maxSpeed
+     */
+    public void setMaxSpeed(Integer maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    /**
+     * @return powerMileage
+     */
+    public Integer getPowerMileage() {
+        return powerMileage;
+    }
+
+    /**
+     * @param powerMileage
+     */
+    public void setPowerMileage(Integer powerMileage) {
+        this.powerMileage = powerMileage;
+    }
+
+    /**
+     * @return gearDrivePercent
+     */
+    public String getGearDrivePercent() {
+        return gearDrivePercent;
+    }
+
+    /**
+     * @param gearDrivePercent
+     */
+    public void setGearDrivePercent(String gearDrivePercent) {
+        this.gearDrivePercent = gearDrivePercent == null ? null : gearDrivePercent.trim();
+    }
+
+    /**
+     * @return batteryCount
+     */
+    public Integer getBatteryCount() {
+        return batteryCount;
+    }
+
+    /**
+     * @param batteryCount
+     */
+    public void setBatteryCount(Integer batteryCount) {
+        this.batteryCount = batteryCount;
+    }
+
+    /**
+     * @return batteryParam
+     */
+    public String getBatteryParam() {
+        return batteryParam;
+    }
+
+    /**
+     * @param batteryParam
+     */
+    public void setBatteryParam(String batteryParam) {
+        this.batteryParam = batteryParam == null ? null : batteryParam.trim();
+    }
+
+    /**
+     * @return driveMotorCount
+     */
+    public Integer getDriveMotorCount() {
+        return driveMotorCount;
+    }
+
+    /**
+     * @param driveMotorCount
+     */
+    public void setDriveMotorCount(Integer driveMotorCount) {
+        this.driveMotorCount = driveMotorCount;
+    }
+
+    /**
+     * @return driveMotorParam
+     */
+    public String getDriveMotorParam() {
+        return driveMotorParam;
+    }
+
+    /**
+     * @param driveMotorParam
+     */
+    public void setDriveMotorParam(String driveMotorParam) {
+        this.driveMotorParam = driveMotorParam == null ? null : driveMotorParam.trim();
+    }
+
+    /**
+     * @return errorVal
+     */
+    public Integer getErrorVal() {
+        return errorVal;
+    }
+
+    /**
+     * @param errorVal
+     */
+    public void setErrorVal(Integer errorVal) {
+        this.errorVal = errorVal;
+    }
+
+    /**
+     * @return accMile
+     */
+    public Integer getAccMile() {
+        return accMile;
+    }
+
+    /**
+     * @param accMile
+     */
+    public void setAccMile(Integer accMile) {
+        this.accMile = accMile;
+    }
+
+    /**
+     * @return driveTimes
+     */
+    public Integer getDriveTimes() {
+        return driveTimes;
+    }
+
+    /**
+     * @param driveTimes
+     */
+    public void setDriveTimes(Integer driveTimes) {
+        this.driveTimes = driveTimes;
+    }
+
+    /**
+     * @return lastLoginTime
+     */
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    /**
+     * @param lastLoginTime
+     */
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    /**
+     * @return isOnline
+     */
+    public Integer getIsOnline() {
+        return isOnline;
+    }
+
+    /**
+     * @param isOnline
+     */
+    public void setIsOnline(Integer isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    /**
+     * @return isDriving
+     */
+    public Integer getIsDriving() {
+        return isDriving;
+    }
+
+    /**
+     * @param isDriving
+     */
+    public void setIsDriving(Integer isDriving) {
+        this.isDriving = isDriving;
+    }
+
+    /**
+     * @return isCharging
+     */
+    public Integer getIsCharging() {
+        return isCharging;
+    }
+
+    /**
+     * @param isCharging
+     */
+    public void setIsCharging(Integer isCharging) {
+        this.isCharging = isCharging;
+    }
+
+    /**
+     * @return currLoc
+     */
+    public String getCurrLoc() {
+        return currLoc;
+    }
+
+    /**
+     * @param currLoc
+     */
+    public void setCurrLoc(String currLoc) {
+        this.currLoc = currLoc == null ? null : currLoc.trim();
+    }
+}

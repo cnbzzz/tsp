@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepBatterysumMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepBatterysum">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="percent80" jdbcType="INTEGER" property="percent80" />
+    <result column="percent6080" jdbcType="INTEGER" property="percent6080" />
+    <result column="percent4060" jdbcType="INTEGER" property="percent4060" />
+    <result column="percent40" jdbcType="INTEGER" property="percent40" />
+    <result column="calcFormnum" jdbcType="VARCHAR" property="calcFormnum" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>

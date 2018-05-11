@@ -1,0 +1,92 @@
+package cn.spacewalker.tsp.bg.receiver.server;
+
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import cn.spacewalker.tsp.bg.pojo.utils.Gbt32960WriteByteBuf;
+import com.google.common.base.Preconditions;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.util.ReferenceCountUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/12 11:09
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ * Best wishes to little ranran
+ */
+public class Gbt32960MsgDecoder extends LengthFieldBasedFrameDecoder {
+
+    private Logger log = LogManager.getLogger(this.getClass().getName());
+
+    public Gbt32960MsgDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip, boolean failFast) {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip, failFast);
+    }
+
+
+    @Override
+    protected Object decode(ChannelHandlerContext ctx, ByteBuf byteBuf) throws Exception{
+        Gbt32960Msg gbt32960Msg = null;
+        try {
+            ByteBuf in = (ByteBuf)super.decode(ctx, byteBuf);
+//            ByteBuf in = byteBuf;
+
+            if(in == null){
+                log.info("in is null");
+                return null;
+            }
+
+            log.info(String.format("readableBytes is [%s]", in.readableBytes()));
+
+            Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+
+            String startSymbol = getString(in, 2);
+            buf.writeString(startSymbol, null);
+
+            int commandSymbol = in.readByte() & 0xFF; //hex
+            buf.writeByte((byte) commandSymbol);
+
+            int responseSymbol = in.readByte() & 0xFF; //hex
+            buf.writeByte((byte) responseSymbol);
+
+            String vin = getString(in, 17); //vin
+            buf.writeString(vin, null);
+
+            int encryptWay = in.readByte() & 0xFF; //hex
+            buf.writeByte((byte) encryptWay);
+
+            int contentLength = in.readShort();
+            buf.writeShort((byte) contentLength);
+
+            Preconditions.checkState(in.readableBytes() >= contentLength, "消息体长度不够[%s]字节，只有[%s]字节", contentLength, in.readableBytes());
+
+            ByteBuf readBuf = in.readBytes(contentLength);
+            byte[] content = new byte[readBuf.readableBytes()];
+            readBuf.readBytes(content);
+//            ReferenceCountUtil.release(readBuf);//防止内存泄漏
+//            ReferenceCountUtil.release(in);//防止内存泄漏
+            buf.writeBytes(content);
+
+            int checkPoint = byteBuf.readByte() & 0xFF; //由于LengthFieldBasedFrameDecoder只会分割到body的长度，最后一位也从源数据拿
+            buf.writeByte((byte) checkPoint);
+
+//            System.err.println(Arrays.toString(buf.getBytes()));
+            gbt32960Msg = new Gbt32960Msg(startSymbol, commandSymbol, responseSymbol, vin, encryptWay, contentLength, content, checkPoint, buf.getBytes());
+        } catch (Throwable e) {
+            log.error(e.getMessage(), e);
+        }
+        return gbt32960Msg;
+    }
+
+    private String getString(ByteBuf in, int size) throws UnsupportedEncodingException {
+        ByteBuf buf = in.readBytes(size);
+        byte[] req = new byte[buf.readableBytes()];
+        buf.readBytes(req);
+        return new String(req, "gbk");
+    }
+}

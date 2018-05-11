@@ -1,0 +1,105 @@
+package cn.spacewalker.tsp.bg.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "t_veh_uploadrealtime")
+public class TVehUploadrealtime extends BaseDto {
+    @Id
+    private String oid;
+
+    private String gatherTime;
+
+    private String vin;
+
+    private String formnum;
+
+    private Integer etlStatus;
+
+    private Date uploadTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return gatherTime
+     */
+    public String getGatherTime() {
+        return gatherTime;
+    }
+
+    /**
+     * @param gatherTime
+     */
+    public void setGatherTime(String gatherTime) {
+        this.gatherTime = gatherTime == null ? null : gatherTime.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return formnum
+     */
+    public String getFormnum() {
+        return formnum;
+    }
+
+    /**
+     * @param formnum
+     */
+    public void setFormnum(String formnum) {
+        this.formnum = formnum == null ? null : formnum.trim();
+    }
+
+    /**
+     * @return etlStatus
+     */
+    public Integer getEtlStatus() {
+        return etlStatus;
+    }
+
+    /**
+     * @param etlStatus
+     */
+    public void setEtlStatus(Integer etlStatus) {
+        this.etlStatus = etlStatus;
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+}

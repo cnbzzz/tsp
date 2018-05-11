@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+ http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="ft-spring-mybatis.xml"/>
+
+    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="ftDataSource"></property>-->
+    <!--</bean>-->
+
+    <!--<tx:advice id="transactionAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="add*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="append*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="insert*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="modify*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="edit*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="remove*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="repair" propagation="REQUIRED"/>-->
+            <!--<tx:method name="delAndRepair" propagation="REQUIRED"/>-->
+            <!--<tx:method name="service*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="send*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="found*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="create*" propagation="REQUIRED"/>-->
+
+            <!--<tx:method name="get*" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="find*" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="load*" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="search*" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="list*" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="one*" propagation="SUPPORTS"/>-->
+
+            <!--<tx:method name="*" propagation="REQUIRED"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="transactionPointcut" expression="execution(* cn.spacewalker.tsp.ft.bigscreen.*.service.impl.*Impl.*(..))"/>-->
+        <!--<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>-->
+    <!--</aop:config>-->
+
+</beans>

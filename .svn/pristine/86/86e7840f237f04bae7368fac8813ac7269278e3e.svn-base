@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehSigninMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehSignin">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="gatherTime" jdbcType="VARCHAR" property="gatherTime" />
+    <result column="signInFormNum" jdbcType="INTEGER" property="signInFormNum" />
+    <result column="iccid" jdbcType="VARCHAR" property="iccid" />
+    <result column="chargeNum" jdbcType="INTEGER" property="chargeNum" />
+    <result column="systemCodeLength" jdbcType="INTEGER" property="systemCodeLength" />
+    <result column="systemCode" jdbcType="VARCHAR" property="systemCode" />
+    <result column="etlStatus" jdbcType="INTEGER" property="etlStatus" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formNum" jdbcType="VARCHAR" property="formNum" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+  </resultMap>
+</mapper>

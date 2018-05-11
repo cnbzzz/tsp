@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bg.etl/bg.etl.iml" filepath="$PROJECT_DIR$/bg.etl/bg.etl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bg.pojo/bg.pojo.iml" filepath="$PROJECT_DIR$/bg.pojo/bg.pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bg.receiver/bg.receiver.iml" filepath="$PROJECT_DIR$/bg.receiver/bg.receiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bg.sender/bg.sender.iml" filepath="$PROJECT_DIR$/bg.sender/bg.sender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bg.tbox/bg.tbox.iml" filepath="$PROJECT_DIR$/bg.tbox/bg.tbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ft.bigscreen/ft.bigscreen.iml" filepath="$PROJECT_DIR$/ft.bigscreen/ft.bigscreen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ft.pojo/ft.pojo.iml" filepath="$PROJECT_DIR$/ft.pojo/ft.pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tsp.iml" filepath="$PROJECT_DIR$/.idea/tsp.iml" />
+    </modules>
+  </component>
+</project>

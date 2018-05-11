@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TRepVehinfoMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TRepVehinfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="iccid" jdbcType="VARCHAR" property="iccid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="driveMotorPos" jdbcType="VARCHAR" property="driveMotorPos" />
+    <result column="maxSpeed" jdbcType="INTEGER" property="maxSpeed" />
+    <result column="powerMileage" jdbcType="INTEGER" property="powerMileage" />
+    <result column="gearDrivePercent" jdbcType="VARCHAR" property="gearDrivePercent" />
+    <result column="batteryCount" jdbcType="INTEGER" property="batteryCount" />
+    <result column="batteryParam" jdbcType="VARCHAR" property="batteryParam" />
+    <result column="driveMotorCount" jdbcType="INTEGER" property="driveMotorCount" />
+    <result column="driveMotorParam" jdbcType="VARCHAR" property="driveMotorParam" />
+    <result column="errorVal" jdbcType="INTEGER" property="errorVal" />
+    <result column="accMile" jdbcType="INTEGER" property="accMile" />
+    <result column="driveTimes" jdbcType="INTEGER" property="driveTimes" />
+    <result column="lastLoginTime" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="isOnline" jdbcType="INTEGER" property="isOnline" />
+    <result column="isDriving" jdbcType="INTEGER" property="isDriving" />
+    <result column="isCharging" jdbcType="INTEGER" property="isCharging" />
+    <result column="currLoc" jdbcType="VARCHAR" property="currLoc" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,92 @@
+package cn.spacewalker.tsp.bg.receiver.service.impl;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960MsgDto;
+import cn.spacewalker.tsp.bg.pojo.dto.UploadRealTimeDto;
+import cn.spacewalker.tsp.bg.pojo.mapper.TVehRawdataMapper;
+import cn.spacewalker.tsp.bg.pojo.model.*;
+import cn.spacewalker.tsp.bg.pojo.utils.SnowflakeIdWorker;
+import cn.spacewalker.tsp.bg.receiver.service.ICommandService;
+import cn.spacewalker.tsp.bg.receiver.service.IGbt32960ServerService;
+import com.google.common.base.Preconditions;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Resource;
+
+import java.util.Date;
+
+import static org.apache.commons.beanutils.BeanUtils.*;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/27 16:51
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public class Gbt32960ServerServiceImpl implements IGbt32960ServerService {
+
+    private Logger log = LogManager.getLogger(this.getClass().getName());
+
+    @Resource
+    private CommandHandlerFactory factory;
+
+    @Resource
+    private TVehRawdataMapper vehRawdataMapper;
+
+    public Gbt32960MsgDto execute(Gbt32960Msg msg){
+
+        int commandSymbol = msg.getCommandSymbol();
+
+        ICommandService commandHandler = factory.getCommandHandler(commandSymbol);
+
+        Preconditions.checkArgument(commandHandler != null, "无效命令[%s]", commandSymbol);
+
+        String formNum = SnowflakeIdWorker.genId();
+        msg.setFormNum(formNum);
+
+        long l1 = System.currentTimeMillis();
+        log.info(String.format("command[%s] start...",  commandSymbol));
+        BaseDto baseDto = commandHandler.handler(msg);
+        long l2 = System.currentTimeMillis();
+        log.info(String.format("command[%s] end...cost [%s] ms", commandSymbol, l2 - l1));
+
+        TVehRawdata data = new TVehRawdata();
+        data.setInputTime(new Date());
+        data.setRawData(msg.getRawData());
+        data.setFormnum(msg.getFormNum());
+        data.setVin(msg.getVin());
+        data.setCommond(msg.getCommandSymbol());
+        data.setOid(formNum);
+
+        vehRawdataMapper.insertSelective(data);
+
+        Gbt32960MsgDto dto = new Gbt32960MsgDto();
+
+        try {
+            copyProperties(dto, msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(baseDto instanceof TVehSignin){
+            dto.setVehSignin((TVehSignin) baseDto);
+        }
+        if(baseDto instanceof TVehSignout){
+            dto.setVehSignout((TVehSignout) baseDto);
+        }
+        if(baseDto instanceof UploadRealTimeDto){
+            dto.setUploadRealTimeDto((UploadRealTimeDto) baseDto);
+        }
+        if(baseDto instanceof TPlatformSignin){
+            dto.setPlatformSignin((TPlatformSignin) baseDto);
+        }
+        if(baseDto instanceof TPlatformSignout){
+            dto.setPlatformSignout((TPlatformSignout) baseDto);
+        }
+
+        return dto;
+    }
+
+
+}

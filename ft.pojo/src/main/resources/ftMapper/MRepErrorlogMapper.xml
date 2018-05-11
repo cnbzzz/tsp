@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepErrorlogMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepErrorlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="errorType" jdbcType="VARCHAR" property="errorType" />
+    <result column="errorGrade" jdbcType="VARCHAR" property="errorGrade" />
+    <result column="errorName" jdbcType="VARCHAR" property="errorName" />
+    <result column="status" jdbcType="BIGINT" property="status" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="errorDate" jdbcType="DATE" property="errorDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="calcFormnum" jdbcType="VARCHAR" property="calcFormnum" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+  </resultMap>
+</mapper>

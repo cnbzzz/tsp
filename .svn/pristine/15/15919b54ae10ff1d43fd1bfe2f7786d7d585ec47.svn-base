@@ -1,0 +1,50 @@
+a<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>电池实时监控</title>
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+   	</head>
+	<style type="text/css">
+		#log {
+			font-size: 18px;
+			color: #333333;
+			width: 100px;
+			height: 100px;
+			background-color: #F0AD4E;
+			margin:0 auto;a
+		}
+		#log span{
+			/*padding: 15px;*/
+			display: inline-block;
+			animation: my .5s;
+		}
+		@-moz-keyframes my{
+			0% {transform:translateY(-100%);opacity: 0;}
+			10%{transform:translateY(-90%);opacity: 0.1;}
+			20%{transform:translateY(-80%);opacity: 0.1;}
+			30%{transform:translateY(-70%);opacity: 0.3;}
+			40%{transform:translateY(-60%);opacity: 0.3;}
+			50%{transform:translateY(-50%);opacity: 0.5;}
+			60%{transform:translateY(-40%);opacity: 0.5;}
+			70%{transform:translateY(-30%);opacity: 0.7;}
+			80%{transform:translateY(-20%);opacity: 0.8;}
+			90%{transform:translateY(-10%);opacity: 0.9;}
+			100%{transform:translateY(0);opacity: 1;}
+			
+		} 
+	</style>
+	<body>
+    	<div id="log">
+    		<span>33</span>
+    	</div>
+	<script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			
+		});
+	
+	</script>
+</html>

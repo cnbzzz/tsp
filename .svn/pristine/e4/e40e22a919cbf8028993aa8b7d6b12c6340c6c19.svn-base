@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehDataMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehData">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vehStatus" jdbcType="INTEGER" property="vehStatus" />
+    <result column="chargeStatus" jdbcType="INTEGER" property="chargeStatus" />
+    <result column="runMode" jdbcType="INTEGER" property="runMode" />
+    <result column="speed" jdbcType="INTEGER" property="speed" />
+    <result column="accMile" jdbcType="DECIMAL" property="accMile" />
+    <result column="totalVoltage" jdbcType="INTEGER" property="totalVoltage" />
+    <result column="totalCurrent" jdbcType="INTEGER" property="totalCurrent" />
+    <result column="soc" jdbcType="INTEGER" property="soc" />
+    <result column="dcStatus" jdbcType="INTEGER" property="dcStatus" />
+    <result column="gear" jdbcType="INTEGER" property="gear" />
+    <result column="insRes" jdbcType="INTEGER" property="insRes" />
+    <result column="blank" jdbcType="INTEGER" property="blank" />
+    <result column="accePedalVal" jdbcType="INTEGER" property="accePedalVal" />
+    <result column="brakePedalStatus" jdbcType="INTEGER" property="brakePedalStatus" />
+    <result column="etlStatus" jdbcType="INTEGER" property="etlStatus" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formnum" jdbcType="VARCHAR" property="formnum" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+  </resultMap>
+</mapper>

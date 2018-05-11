@@ -1,0 +1,90 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_veh_engine")
+public class MVehEngine extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String vin;
+
+    private Integer engineStatus;
+
+    private Integer crankshaftSpeed;
+
+    private Date uploadTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return engineStatus
+     */
+    public Integer getEngineStatus() {
+        return engineStatus;
+    }
+
+    /**
+     * @param engineStatus
+     */
+    public void setEngineStatus(Integer engineStatus) {
+        this.engineStatus = engineStatus;
+    }
+
+    /**
+     * @return crankshaftSpeed
+     */
+    public Integer getCrankshaftSpeed() {
+        return crankshaftSpeed;
+    }
+
+    /**
+     * @param crankshaftSpeed
+     */
+    public void setCrankshaftSpeed(Integer crankshaftSpeed) {
+        this.crankshaftSpeed = crankshaftSpeed;
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+}

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepVehsumMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepVehsum">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vehCount" jdbcType="BIGINT" property="vehCount" />
+    <result column="accMile" jdbcType="BIGINT" property="accMile" />
+    <result column="drivedSeconds" jdbcType="BIGINT" property="drivedSeconds" />
+    <result column="drvingVehCount" jdbcType="BIGINT" property="drvingVehCount" />
+    <result column="charingVehCount" jdbcType="BIGINT" property="charingVehCount" />
+    <result column="offlineVehCount" jdbcType="BIGINT" property="offlineVehCount" />
+    <result column="model1OnlineCount" jdbcType="BIGINT" property="model1OnlineCount" />
+    <result column="model2OnlineCount" jdbcType="BIGINT" property="model2OnlineCount" />
+    <result column="model3OnlineCount" jdbcType="BIGINT" property="model3OnlineCount" />
+    <result column="calcFormnum" jdbcType="BIGINT" property="calcFormnum" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+
+    <select id="listOnlineVeh" resultType="cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto">
+<![CDATA[
+SELECT
+	t3.datetime,
+	IFNULL(t4.model1OnlineCount, 0) AS model1OnlineCount,
+	IFNULL(t4.model2OnlineCount, 0) AS model2OnlineCount,
+	IFNULL(t4.model3OnlineCount, 0) AS model3OnlineCount,
+	IFNULL(t4.onlineVehCount, 0) AS onlineVehCount,
+	ifnull(t4.accMile, 0) AS accMile
+FROM
+	(
+		SELECT
+			FROM_UNIXTIME(
+				(
+					FLOOR(
+						UNIX_TIMESTAMP(t2.tdate) / #{interval}
+					)
+				) * #{interval},
+				'%Y-%m-%d %H:%i:%s'
+			) AS datetime
+		FROM
+			(
+				SELECT
+					@cdate := date_add(@cdate, INTERVAL - #{interval} SECOND) tdate
+				FROM
+					(
+						SELECT
+							@cdate := STR_TO_DATE(
+								#{startDatetime},
+								'%Y-%m-%d %H:%i:%s'
+							)
+						FROM
+							calendar
+						LIMIT #{limit}
+					) t1
+			) t2
+	) t3
+LEFT JOIN (
+	SELECT
+		FROM_UNIXTIME(
+			(
+				FLOOR(
+					UNIX_TIMESTAMP(calcDate) / #{interval}
+				)
+			) * #{interval},
+			'%Y-%m-%d %H:%i:%s'
+		) datetime,
+		model1OnlineCount AS model1OnlineCount,
+		model2OnlineCount AS model2OnlineCount,
+		model3OnlineCount AS model3OnlineCount,
+		drvingVehCount AS onlineVehCount,
+		accMile AS accMile
+	FROM
+		m_rep_vehsum
+	WHERE
+		UNIX_TIMESTAMP(calcDate) < UNIX_TIMESTAMP(#{startDatetime})
+	AND UNIX_TIMESTAMP(calcDate) > UNIX_TIMESTAMP(
+		date_add(
+			STR_TO_DATE(
+				#{startDatetime},
+				'%Y-%m-%d %H:%i:%s'
+			),
+			INTERVAL - (#{interval} * 10) SECOND
+		)
+	)
+	GROUP BY
+		FROM_UNIXTIME(
+			(
+				FLOOR(
+					UNIX_TIMESTAMP(calcDate) / #{interval}
+				)
+			) * #{interval},
+			'%Y-%m-%d %H:%i:%s'
+		)
+) t4 ON t3.datetime = t4.datetime
+ORDER BY
+	t3.datetime
+]]>
+    </select>
+
+    <select id="listColCurve" resultType="cn.spacewalker.tsp.ft.pojo.dto.ColCurveDto">
+<![CDATA[
+SELECT
+	t3.datetime,
+	IFNULL(t4.currColData, 0) AS currColData
+FROM
+	(
+		SELECT
+			FROM_UNIXTIME(
+				(
+					FLOOR(
+						UNIX_TIMESTAMP(t2.tdate) / #{interval}
+					)
+				) * #{interval},
+				'%Y-%m-%d %H:%i:%s'
+			) AS datetime
+		FROM
+			(
+				SELECT
+					@cdate := date_add(@cdate, INTERVAL - #{interval} SECOND) tdate
+				FROM
+					(
+						SELECT
+							@cdate := STR_TO_DATE(
+								#{startDatetime},
+								'%Y-%m-%d %H:%i:%s'
+							)
+						FROM
+							calendar
+						LIMIT #{limit}
+					) t1
+			) t2
+	) t3
+LEFT JOIN (
+	SELECT
+		FROM_UNIXTIME(
+			(
+				FLOOR(
+					UNIX_TIMESTAMP(calcDate) / #{interval}
+				)
+			) * #{interval},
+			'%Y-%m-%d %H:%i:%s'
+		) datetime,
+		currColData
+	FROM
+		m_rep_dataUploadSum
+	WHERE
+		UNIX_TIMESTAMP(calcDate) < UNIX_TIMESTAMP(#{startDatetime})
+	AND UNIX_TIMESTAMP(calcDate) > UNIX_TIMESTAMP(
+		date_add(
+			STR_TO_DATE(
+				#{startDatetime},
+				'%Y-%m-%d %H:%i:%s'
+			),
+			INTERVAL - (#{interval} * 10) SECOND
+		)
+	)
+	GROUP BY
+		FROM_UNIXTIME(
+			(
+				FLOOR(
+					UNIX_TIMESTAMP(calcDate) / #{interval}
+				)
+			) * #{interval},
+			'%Y-%m-%d %H:%i:%s'
+		)
+) t4 ON t3.datetime = t4.datetime
+ORDER BY
+	t3.datetime
+]]>
+  </select>
+
+    <select id="listVehRegionPercent" resultType="cn.spacewalker.tsp.ft.pojo.dto.VehRegionPercentDto">
+SELECT
+	t1.region,
+	IFNULL(sum(t2.drivingCount), 0) AS drivingCount,
+	IFNULL(sum(t2.chargingCount), 0) AS chargingCount,
+	IFNULL(sum(t2.offlineCount), 0) AS offlineCount,
+	IFNULL(sum(t2.totalCount), 0) AS totalCount
+FROM
+	(
+		SELECT
+			'华东' AS region
+		UNION
+			SELECT
+				'华南' AS region
+			UNION
+				SELECT
+					'华北' AS region
+				UNION
+					SELECT
+						'华中' AS region
+					UNION
+						SELECT
+							'东北' AS region
+						UNION
+							SELECT
+								'西南' AS region
+							UNION
+								SELECT
+									'西北' AS region
+								UNION
+									SELECT
+										'港澳台' AS region
+	) t1
+LEFT JOIN (
+	SELECT
+		region,
+		SUM(drivingCount) AS drivingCount,
+		SUM(chargingCount) AS chargingCount,
+		SUM(offlineCount) AS offlineCount,
+		SUM(totalCount) AS totalCount
+	FROM
+		m_rep_positionSum
+	WHERE
+		calcFormnum = (
+			SELECT
+				max(calcFormnum)
+			FROM
+				m_rep_positionsum
+		)
+	GROUP BY
+		region
+) t2 ON t1.region = t2.region
+GROUP BY
+	t1.region
+  </select>
+    
+  <select id="listVehHeatMapData" resultType="cn.spacewalker.tsp.common.dto.NameValDto">
+<![CDATA[
+SELECT
+	city AS `name`,
+	SUM(totalCount) AS `value`
+FROM
+	m_rep_positionSum
+WHERE
+	calcFormnum = (
+		SELECT
+			max(calcFormnum)
+		FROM
+			m_rep_positionsum
+	)
+GROUP BY
+	city
+]]>
+  </select>
+
+
+    <select id="listVehinfoCurve" resultType="Map">
+<![CDATA[
+SELECT
+	t3.datetime,
+	IFNULL(t4.accMile, 0) AS accMile,
+	IFNULL(t4.vehCount, 0) AS vehCount
+FROM
+	(
+		SELECT
+			t2.tdate AS datetime
+		FROM
+			(
+				SELECT
+					@cdate := date_add(
+						@cdate,
+						INTERVAL - #{interval} SECOND
+					) tdate
+				FROM
+					(
+						SELECT
+							@cdate := STR_TO_DATE(
+								#{startDatetime},
+								'%Y-%m-%d %H:%i:%s'
+							)
+						FROM
+							calendar
+						LIMIT #{limit}
+					) t1
+			) t2
+	) t3
+LEFT JOIN (
+	SELECT
+		now() - INTERVAL (
+			TIME_TO_SEC(calcDate) MOD #{interval}
+		) SECOND AS datetime,
+		SUM(accMile) AS accMile,
+		count(*) AS vehCount
+	FROM
+		m_rep_vehinfo
+	WHERE
+		UNIX_TIMESTAMP(calcDate) < UNIX_TIMESTAMP(#{startDatetime})
+	AND UNIX_TIMESTAMP(calcDate) > UNIX_TIMESTAMP(
+		date_add(
+			STR_TO_DATE(
+				#{startDatetime},
+				'%Y-%m-%d %H:%i:%s'
+			),
+			INTERVAL - (#{interval} * 30) SECOND
+		)
+	)
+	GROUP BY
+		datetime
+) t4 ON t3.datetime = t4.datetime
+ORDER BY
+	t3.datetime
+]]>
+    </select>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+       <import resource="bg-spring-db.xml" />
+
+       <bean id="bgSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+              <property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+              <property name="dataSource" ref="bgDataSource"/>
+              <!--<property name="typeAliasesPackage" value="cn.jufangbao.house.shhouse.dto"/>-->
+              <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+              <property name="plugins">
+                     <array>
+                            <bean class="com.github.pagehelper.PageInterceptor">
+                                   <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                                   <property name="properties">
+                                          <value>
+                                                 reasonable=false
+                                                 supportMethodsArguments=true
+                                                 autoRuntimeDialect=true
+                                          </value>
+                                   </property>
+                            </bean>
+                            <bean class="cn.spacewalker.tsp.common.interceptor.SqlInterceptor" />
+                     </array>
+              </property>
+       </bean>
+
+
+       <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+       <!--<property name="basePackage" value="cn.jufangbao.house.shhouse.mapper"/>-->
+       <!--</bean>-->
+
+       <bean id="bgMapperScannerConfigurer" class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+              <property name="basePackage" value="cn.spacewalker.tsp.bg.pojo.mapper"/>
+              <property name="sqlSessionFactoryBeanName" value="bgSqlSessionFactory"/>
+              <property name="properties">
+                     <value>
+                            mappers=tk.mybatis.mapper.common.Mapper
+                            <!--IDENTITY=select uuid()-->
+                            <!--ORDER=BEFORE-->
+                            style=normal
+                     </value>
+              </property>
+       </bean>
+</beans>

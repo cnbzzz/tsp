@@ -1,0 +1,185 @@
+package cn.spacewalker.tsp.common.util;
+
+import com.alibaba.fastjson.JSON;
+import com.google.common.base.Preconditions;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.Converter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.channels.FileChannel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/11 15:43
+ * Copyright (c) 2017 www.space-walker.cn
+ */
+public class CommUtils {
+
+    private static Logger log = LogManager.getLogger();
+
+    private static String YYMMDD = "yyyy-MM-dd";
+
+    private static String HHMMSS = "HH:mm:ss";
+
+    private static String YYMMDDHHMMSS = YYMMDD + " " + HHMMSS;
+
+    private static String GBT32960_DATE_FORMAT = "yyyyMMddHHmmss";
+
+    static {
+        ConvertUtils.register(new Converter() {
+
+            public Object convert(Class type, Object value) {
+                String str = value.toString();
+                if(str.length() == 10){
+                    return str2date(str);
+                }else if(str.length() == 19 || str.length() == 21){
+                    return str2timestamp(str);
+                }else{
+                    return  null;
+                }
+            }
+        }, Date.class);
+    }
+
+    public static int getRandom(int min, int max)
+    {
+        Random random = new Random();
+        return random.nextInt(max) % (max - min + 1) + min;
+    }
+
+    public static String date2str(Date date) {
+        return date2str(date, YYMMDD);
+    }
+
+    public static Date str2gbt32960date(String gatherTime) {
+        String[] split = StringUtils.split(gatherTime, " ");
+        Preconditions.checkArgument(split.length == 6, "bad gatherTime [%s]", gatherTime);
+        String newDatestr = "";
+        for (int i = 0; i < 6; i++) {
+            String str = split[i];
+            if (str.length() == 1) {
+                str = "0" + str;
+            }
+            newDatestr += str;
+        }
+        newDatestr = "20"+newDatestr;
+        System.err.println(newDatestr);
+        return str2date(newDatestr, GBT32960_DATE_FORMAT);
+    }
+
+    public static String timestamp2str(Date date) {
+        return date2str(date, YYMMDDHHMMSS);
+    }
+
+    public static Date str2date(String str) {
+        return str2date(str, YYMMDD);
+    }
+
+    public static Date str2timestamp(String str) {
+        return str2date(str, YYMMDDHHMMSS);
+    }
+
+    private static String date2str(Date date, String format) {
+        SimpleDateFormat sf = new SimpleDateFormat(format);
+        return sf.format(date);
+    }
+
+    private static Date str2date(String str, String format) {
+        SimpleDateFormat sf = new SimpleDateFormat(format);
+        try {
+            return sf.parse(str);
+        } catch (ParseException e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    public static Properties loadProp(String path) {
+        Properties prop = new Properties();
+        try (InputStream inputStream = CommUtils.class.getResourceAsStream(path);) {
+            prop.load(new InputStreamReader(inputStream, "UTF-8"));
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return prop;
+    }
+
+    public static String urlParamEncode(String param) throws UnsupportedEncodingException {
+        return URLEncoder.encode(param, "UTF-8");
+    }
+
+    public static String urlParamDecode(String param) throws UnsupportedEncodingException {
+        return URLDecoder.decode(param, "UTF-8");
+    }
+
+    public static String genRandomCode() {
+        int seed = 999999;
+        Random random = new Random();
+        int i = random.nextInt(seed);
+        return String.format("%06d", i);
+    }
+
+    public static void nioTransferCopy(File source, File target) {
+        try (
+                FileInputStream inStream = new FileInputStream(source);
+                FileOutputStream outStream = new FileOutputStream(target);
+                FileChannel in = inStream.getChannel();
+                FileChannel out = outStream.getChannel();
+        ) {
+            in.transferTo(0, in.size(), out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void nioTransferCopy(InputStream source, File target) {
+        try (
+                FileInputStream inStream = (FileInputStream) source;
+                FileOutputStream outStream = new FileOutputStream(target);
+                FileChannel in = inStream.getChannel();
+                FileChannel out = outStream.getChannel();
+        ) {
+            in.transferTo(0, in.size(), out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> List<T> readJson(String path, Class<T> clazz) {
+        try {
+            path = CommUtils.class.getClassLoader().getResource(path).getPath();
+            path = CommUtils.urlParamDecode(path);
+            String json = FileUtils.readFileToString(new File(path), "UTF-8");
+            List<T> list = JSON.parseArray(json, clazz);
+            return list;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+//
+//    public static void close(Closeable closeable) {
+//        try(closeable) {
+//            closeable.close();
+//        }
+//    }
+
+    public static void main(String[] args) {
+        int i = 10;
+        while(i-- > 0){
+            System.err.println(i+"   "+getRandom(60, 90));
+        }
+    }
+}

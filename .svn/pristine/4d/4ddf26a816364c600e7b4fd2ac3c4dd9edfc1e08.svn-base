@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MVehFuelcellMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MVehFuelcell">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="soc" jdbcType="INTEGER" property="soc" />
+    <result column="fuelCellVoltage" jdbcType="INTEGER" property="fuelCellVoltage" />
+    <result column="fuelCellCurrent" jdbcType="INTEGER" property="fuelCellCurrent" />
+    <result column="hydMaxConc" jdbcType="INTEGER" property="hydMaxConc" />
+    <result column="dcStatus" jdbcType="INTEGER" property="dcStatus" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="fuelCellProbeTemper" jdbcType="LONGVARCHAR" property="fuelCellProbeTemper" />
+  </resultMap>
+</mapper>

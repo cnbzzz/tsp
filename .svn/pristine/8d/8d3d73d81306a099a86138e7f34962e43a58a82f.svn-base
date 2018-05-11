@@ -1,0 +1,17 @@
+package cn.spacewalker.tsp.bg.pojo.mapper;
+
+import cn.spacewalker.tsp.bg.pojo.model.TVehUploadrealtime;
+import org.apache.ibatis.annotations.Param;
+import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+import java.util.Map;
+
+public interface TVehUploadrealtimeMapper extends Mapper<TVehUploadrealtime> {
+
+    List<Map<String, String>> listRepVehInfo();
+
+    List<Map<String, String>> listRepErrorInfoByFormnum(@Param("formnum") String formnum);
+
+    Map<String, String> countDataUploadsum();
+}

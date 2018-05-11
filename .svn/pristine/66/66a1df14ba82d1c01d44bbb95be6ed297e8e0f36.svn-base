@@ -1,0 +1,32 @@
+package cn.spacewalker.tsp.bg.etl.service.impl;
+
+import cn.spacewalker.tsp.bg.etl.service.IEtlService;
+import cn.spacewalker.tsp.bg.pojo.mapper.TVehChargestortempeMapper;
+import cn.spacewalker.tsp.bg.pojo.mapper.TVehDataMapper;
+import cn.spacewalker.tsp.common.base.BaseServiceImpl;
+import cn.spacewalker.tsp.common.datasource.MultipleDataSource;
+import cn.spacewalker.tsp.ft.pojo.mapper.MRepErrorlogMapper;
+import org.apache.ibatis.session.SqlSession;
+
+import javax.annotation.Resource;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/17 21:04
+ * Copyright (c) 2017 www.space-walker.cn
+ */
+public class EtlServiceImpl extends BaseServiceImpl implements IEtlService {
+
+    @Resource
+    private TVehDataMapper vehDataMapper;
+
+    @Resource
+    private MRepErrorlogMapper errorlogMapper;
+
+
+
+    public void testMultipleDataSource(){
+        vehDataMapper.selectAll();
+        errorlogMapper.selectAll();
+    }
+}

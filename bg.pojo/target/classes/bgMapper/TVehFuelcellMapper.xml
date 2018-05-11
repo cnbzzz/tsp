@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehFuelcellMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehFuelcell">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="fuelCellVoltage" jdbcType="INTEGER" property="fuelCellVoltage" />
+    <result column="fuelCellCurrent" jdbcType="INTEGER" property="fuelCellCurrent" />
+    <result column="fuelCellPower" jdbcType="INTEGER" property="fuelCellPower" />
+    <result column="fuelCellProbeCount" jdbcType="INTEGER" property="fuelCellProbeCount" />
+    <result column="hydMaxTemper" jdbcType="INTEGER" property="hydMaxTemper" />
+    <result column="hydMaxTemperProbe" jdbcType="INTEGER" property="hydMaxTemperProbe" />
+    <result column="hydMaxConc" jdbcType="INTEGER" property="hydMaxConc" />
+    <result column="hydMaxConcSensorNum" jdbcType="INTEGER" property="hydMaxConcSensorNum" />
+    <result column="hydMaxPress" jdbcType="INTEGER" property="hydMaxPress" />
+    <result column="hydMaxPressSensorNum" jdbcType="INTEGER" property="hydMaxPressSensorNum" />
+    <result column="dcStatus" jdbcType="INTEGER" property="dcStatus" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formnum" jdbcType="VARCHAR" property="formnum" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="fuelCellProbeTemper" jdbcType="LONGVARCHAR" property="fuelCellProbeTemper" />
+  </resultMap>
+</mapper>

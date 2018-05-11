@@ -1,0 +1,122 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_postioninfo")
+public class MRepPostioninfo extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String vin;
+
+    private String longitude;
+
+    private String latitude;
+
+    private String status;
+
+    private Date uploadTime;
+
+    private Long calcFormnum;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return longitude
+     */
+    public String getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * @param longitude
+     */
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    /**
+     * @return latitude
+     */
+    public String getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * @param latitude
+     */
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
+    /**
+     * @return status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+}

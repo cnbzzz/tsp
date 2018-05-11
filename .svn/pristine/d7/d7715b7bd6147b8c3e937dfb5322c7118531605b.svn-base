@@ -1,0 +1,265 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_chargelog")
+public class MRepChargelog extends BaseDto {
+    @Id
+    private String oid;
+
+    private String vin;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private Long preSoc;
+
+    private Long sufSoc;
+
+    private Long chargeSecond;
+
+    private Long preMile;
+
+    private Long sufMile;
+
+    private Long chargeMile;
+
+    private Long avgSpeed;
+
+    private Long intervalSecond;
+
+    private Date chargeDate;
+
+    private Date updateTime;
+
+    private Long calcFormnum;
+
+    private Date calcDate;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return startTime
+     */
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * @param startTime
+     */
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * @return endTime
+     */
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * @param endTime
+     */
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * @return preSoc
+     */
+    public Long getPreSoc() {
+        return preSoc;
+    }
+
+    /**
+     * @param preSoc
+     */
+    public void setPreSoc(Long preSoc) {
+        this.preSoc = preSoc;
+    }
+
+    /**
+     * @return sufSoc
+     */
+    public Long getSufSoc() {
+        return sufSoc;
+    }
+
+    /**
+     * @param sufSoc
+     */
+    public void setSufSoc(Long sufSoc) {
+        this.sufSoc = sufSoc;
+    }
+
+    /**
+     * @return chargeSecond
+     */
+    public Long getChargeSecond() {
+        return chargeSecond;
+    }
+
+    /**
+     * @param chargeSecond
+     */
+    public void setChargeSecond(Long chargeSecond) {
+        this.chargeSecond = chargeSecond;
+    }
+
+    /**
+     * @return preMile
+     */
+    public Long getPreMile() {
+        return preMile;
+    }
+
+    /**
+     * @param preMile
+     */
+    public void setPreMile(Long preMile) {
+        this.preMile = preMile;
+    }
+
+    /**
+     * @return sufMile
+     */
+    public Long getSufMile() {
+        return sufMile;
+    }
+
+    /**
+     * @param sufMile
+     */
+    public void setSufMile(Long sufMile) {
+        this.sufMile = sufMile;
+    }
+
+    /**
+     * @return chargeMile
+     */
+    public Long getChargeMile() {
+        return chargeMile;
+    }
+
+    /**
+     * @param chargeMile
+     */
+    public void setChargeMile(Long chargeMile) {
+        this.chargeMile = chargeMile;
+    }
+
+    /**
+     * @return avgSpeed
+     */
+    public Long getAvgSpeed() {
+        return avgSpeed;
+    }
+
+    /**
+     * @param avgSpeed
+     */
+    public void setAvgSpeed(Long avgSpeed) {
+        this.avgSpeed = avgSpeed;
+    }
+
+    /**
+     * @return intervalSecond
+     */
+    public Long getIntervalSecond() {
+        return intervalSecond;
+    }
+
+    /**
+     * @param intervalSecond
+     */
+    public void setIntervalSecond(Long intervalSecond) {
+        this.intervalSecond = intervalSecond;
+    }
+
+    /**
+     * @return chargeDate
+     */
+    public Date getChargeDate() {
+        return chargeDate;
+    }
+
+    /**
+     * @param chargeDate
+     */
+    public void setChargeDate(Date chargeDate) {
+        this.chargeDate = chargeDate;
+    }
+
+    /**
+     * @return updateTime
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+
+    /**
+     * @return calcDate
+     */
+    public Date getCalcDate() {
+        return calcDate;
+    }
+
+    /**
+     * @param calcDate
+     */
+    public void setCalcDate(Date calcDate) {
+        this.calcDate = calcDate;
+    }
+}

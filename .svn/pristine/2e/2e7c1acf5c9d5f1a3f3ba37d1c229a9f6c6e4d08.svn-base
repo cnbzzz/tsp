@@ -1,0 +1,59 @@
+package cn.spacewalker.tsp.bg.receiver.server;
+
+import cn.spacewalker.tsp.bg.receiver.service.IGbt32960ServerService;
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960MsgDto;
+import cn.spacewalker.tsp.bg.pojo.rabbitmq.Producer;
+import com.alibaba.fastjson.JSON;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerAdapter;
+import io.netty.channel.ChannelHandlerContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Resource;
+import java.util.Date;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/10 15:03
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public class Gbt32960ServerHandler extends ChannelHandlerAdapter {
+
+    @Resource
+    private IGbt32960ServerService service;
+
+    private Logger log = LogManager.getLogger(this.getClass().getName());
+
+    public void exceptionCaught(ChannelHandlerContext var1, Throwable var2) throws Exception {
+        log.error(var2.getMessage(), var2);
+    }
+
+    public void channelActive(ChannelHandlerContext var1) throws Exception{
+        log.info(String.format("[%s] channelActive...", var1.name()));
+    }
+
+    public void channelInactive(ChannelHandlerContext var1) throws Exception{
+        log.info(String.format("[%s] channelInactive...", var1.name()));
+    }
+
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        if (msg instanceof Gbt32960Msg) {
+            Gbt32960Msg gbt32960Msg = (Gbt32960Msg) msg;
+            Gbt32960MsgDto dto = service.execute(gbt32960Msg);
+
+            Producer producer = new Producer("queue");
+            String jsonString = JSON.toJSONString(dto);
+            producer.sendMessage(jsonString);
+            System.err.println(jsonString);
+        }
+
+        String currentTime = new Date().toString();
+        ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
+        ctx.writeAndFlush(resp);
+    }
+
+}

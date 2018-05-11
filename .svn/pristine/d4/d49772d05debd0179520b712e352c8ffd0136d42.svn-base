@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>故障统计</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/font-awesome.min.css" />
+		<link rel="stylesheet" href="css/pageloader.css" />
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/index3.css" />
+		<link rel="stylesheet" href="css/small-common.css" />
+	</head>
+
+	<body>
+		<div class="warrp">
+			<div class="row show-time">
+				<div class="col-md-4 weather-day">
+					<span class="weather-date"></span>
+					<span class="weather-week"></span>
+					<span class="weather-min"></span>
+					<span class="weather-text"></span>
+					<span class="weather-tq"></span>
+				</div>
+				<div class="col-md-4">
+					<h1>新能源车智能网联云端平台</h1>
+				</div>
+				<div class="col-md-4">
+					<div class="btn-back">
+						<span class="fa fa-desktop"></span>
+						<span>返回主屏</span>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 15px;">
+				<div class="col-md-4">
+					<div class="row index-car-detil">
+						<div class="col-md-5">
+							<span class='car-sums-span'>车辆总数量</span>
+						</div>
+						<div class="col-md-7">
+							<span class="ds-digi-other" style="display: inline-block;margin-top: -10px;"><span class="ds-digi car-sum"></span>辆</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 index-car-detil2">
+							<p class='ds-digi-other'>车辆总行驶里程</p>
+							<p><span class="ds-digi car-accmile"></span>公里</p>
+						</div>
+						<div class="col-md-12 index-car-detil2">
+							<p class='ds-digi-other'>车辆总行驶时间</p>
+							<p><span class="ds-digi car-drivedSconde"></span>小时</p>
+						</div>
+						<div class="col-md-9 index-car-detil2">
+							<div class="progress-span">
+								<span class="progress-span-left">离线数量</span>
+								<span class="progress-span-right"><span class="car-outline"></span>辆</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-commom car-outline-precent" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:30%;"></div>
+								</div>
+							</div>
+							<div class="progress-span">
+								<span class="progress-span-left">正在行驶数量</span>
+								<span class="progress-span-right"><span class="car-drived"></span>辆</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-commom car-drived-precent" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>
+								</div>
+							</div>
+							<div class="progress-span">
+								<span class="progress-span-left">正在充电数量</span>
+								<span class="progress-span-right"><span class="car-charing"></span>辆</span>
+								<div class="progress">
+									<div class="progress-bar progress-bar-commom car-charing-precent" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="commom-div">
+						<div class="commom-header">
+							电量实时统计
+						</div>
+						<div class="commom-h-middle"></div>
+						<div class="commom-h-right"></div>
+						<div class="commom-m-middle">
+							<div id="echarts-pie-two"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="commom-div">
+						<div class="commom-header">
+							充电间隔发布
+						</div>
+						<div class="commom-h-middle"></div>
+						<div class="commom-h-right"></div>
+						<div class="commom-m-middle">
+							<div id="echarts-linbar-two"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="commom-div index-common-div">
+						<div class="commom-header">
+							30天的统计图
+						</div>
+						<div class="commom-h-middle"></div>
+						<div class="commom-h-right"></div>
+						<div class="commom-m-middle">
+							<div id="echarts-linbar-three"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="col-md-6" style="padding-left:0;">
+						<div class="commom-div index3-commom-div">
+							<div class="commom-header">
+								车辆故障监控
+							</div>
+							<div class="commom-h-middle" style="width: 49.5%;"></div>
+							<div class="commom-h-right" style="left: 98.3%;"></div>
+							<div class="commom-m-middle _height">
+								<div id="echarts-radar-one"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" style="padding: 0;">
+						<div class="commom-div index3-commom-div">
+							<div class="commom-header">
+								在线车辆信息
+							</div>
+							<div class="commom-h-middle"></div>
+							<div class="commom-h-right"></div>
+							<div class="commom-m-middle _height1">
+								<ul class="index3-ul">
+									<li>
+										<div class="index3-car-id">
+											车牌号
+										</div>
+										<div class="index3-car-soc">
+											电量
+										</div>
+										<div class="index3-car-status">
+											车辆状态
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tip_small">
+			<div class="small-commom-div">
+				<div class="small-car-maps active">
+					<span class="small-car-text">车辆位置监控</span>
+				</div>
+				<div class="small-car-error">
+					<span class="small-car-text">车辆故障监控</span>
+				</div>
+				<div class="small-car-status">
+					<span class="small-car-text">实时状态监控</span>
+				</div>
+				<div class="small-car-cell">
+					<span class="small-car-text">实时电池监控</span>
+				</div>
+				<div class="small-car-top"></div>
+				<div class="cbh"></div>
+				<div class="small-call-context small-car-context-maps">
+					<div class="small-div">
+						<p class="small-carplate small-car-vehid">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data small-car-accmile">11</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data small-car-termcode">11</div>
+							</li>
+
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data small-car-speed">11</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data small-car-crankspeed">11</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data small-car-lnglat">11</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small-div">
+						<div class="top_right"></div>
+						<div id="maps"></div>
+						<div class="bottom-left"></div>
+					</div>
+					<div class="cbh"></div>
+				</div>
+				<div class="small-call-context small-car-context-error">
+					<div class="small_div1">
+						<p class="small-carplate small-car-vehid">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data small-car-accmile">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data small-car-termcode">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data small-car-speed">56km/h</div>
+							</li>
+						</ul>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data small-car-crankspeed">932rpm</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data small-car-lnglat">N:34°21,E:69°21</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">SOC</div>
+								<div class="ul-li-div-data small-car-soc">40%</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small_div2">
+						<table class="table table-bordered">
+							<tr>
+								<td>发动机零部件故障</td>
+								<td><img src="img/green.png" /></td>
+								<td></td>
+								<td>供油系统故障</td>
+								<td><img src="img/green.png" /></td>
+							</tr>
+							<tr>
+								<td>发动机通讯故障</td>
+								<td><img src="img/yellow.png" /></td>
+								<td></td>
+								<td>冷却系统故障</td>
+								<td><img src="img/green.png" /></td>
+							</tr>
+							<tr>
+								<td>发动机附件故障</td>
+								<td><img src="img/green.png" /></td>
+								<td></td>
+								<td>润滑系统故障</td>
+								<td><img src="img/green.png" /></td>
+							</tr>
+							<tr>
+								<td>勇气系统故障</td>
+								<td><img src="img/green.png" /></td>
+								<td></td>
+								<td>后处理故障</td>
+								<td><img src="img/green.png" /></td>
+							</tr>
+							<tr>
+								<td>排气系统系统故障</td>
+								<td><img src="img/green.png" /></td>
+								<td></td>
+								<td>未知故障</td>
+								<td><img src="img/green.png" /></td>
+							</tr>
+						</table>
+					</div>
+					<div class="cbh"></div>
+					<div class="small-common-div">
+						<div class="small_btns">
+							<div class="small_btn active small_btn_all">
+								<div class="btn-left"></div>
+								<div class="btn-middle">全部</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_motor">
+								<div class="btn-left"></div>
+								<div class="btn-middle">可充电储能装置</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_battery">
+								<div class="btn-left"></div>
+								<div class="btn-middle">驱动电机故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_driver">
+								<div class="btn-left"></div>
+								<div class="btn-middle">发动机故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_other">
+								<div class="btn-left"></div>
+								<div class="btn-middle">其他故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<!--<div class="small_btn small_btn_a">
+								<div class="btn-left"></div>
+								<div class="btn-middle">一级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_b">
+								<div class="btn-left"></div>
+								<div class="btn-middle">二级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_c">
+								<div class="btn-left"></div>
+								<div class="btn-middle">三级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_dealwith">
+								<div class="btn-left"></div>
+								<div class="btn-middle">已处理</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_untreated">
+								<div class="btn-left"></div>
+								<div class="btn-middle">未处理</div>
+								<div class="btn-right"></div>
+							</div>
+						-->
+						</div>
+
+						<!--<div class="small_time_div">
+							<span class="small_timetext">开始时间 </span><span class="small_starttime">2017-07-19 14:20:30</span>
+							<span class="small_timetext">结束时间 </span><span  class="small_endtime">2017-07-19 14:20:30</span>
+						</div>-->
+						<div class="cbh"></div>
+						<ul class="small_ul2 small_ul_erro">
+							<li>
+								<div>故障时间</div>
+								<div>故障类型</div>
+								<div>故障等级</div>
+								<div>故障名称</div>
+								<div>发动机号</div>
+								<div>发生位置</div>
+							</li>
+							<div class="cbh"></div>
+						</ul>
+					</div>
+					<div class="cbh"></div>
+				</div>
+				<div class="small-call-context small-car-context-status">
+					<div class="small_div1">
+						<p class="small-carplate small-car-vehid">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data small-car-accmile">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data small-car-termcode">DS38713942</div>
+							</li>
+
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data small-car-speed">56km/h</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data small-car-crankspeed">932rpm</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data small-car-lnglat">N:34°21,E:69°21</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">SOC</div>
+								<div class="ul-li-div-data small-car-soc">40%</div>
+							</li>
+						</ul>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">电池状态</div>
+								<div class="ul-li-div-data">充电中</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">电池电压</div>
+								<div class="ul-li-div-data small-car-cellvoltage">80V</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">电池电流</div>
+								<div class="ul-li-div-data small-car-cellcurrent">40A</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">驱动电机控制器温度</div>
+								<div class="ul-li-div-data small-car-ctrltemper">80°</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">驱动电机温度</div>
+								<div class="ul-li-div-data small-car-motortemper">40°</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small4-1">
+						<div class="small-common-div">
+							<div>
+								<span class="small_alert">温度异常警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">电池高温警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">SOC低警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">单体电池过压警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">单体电池欠压警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">SOC过高警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">SOC跳变警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">绝缘警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">DC-DC温度警报</span>
+								<img src="img/green.png" />
+							</div>
+							<div>
+								<span class="small_alert">制动系统警报</span>
+								<img src="img/green.png" />
+							</div>
+						</div>
+					</div>
+					<div class="cbh"></div>
+					<div class="small4-2">
+						<div class="small-common-div">
+							<p class="small-carplate">月行驶里程统计</p>
+							<div id="small-echarts-line-one"></div>
+						</div>
+						<div class="small-common-div">
+							<p class="small-carplate">年行驶里程统计</p>
+							<div id="small-echarts-line-two"></div>
+						</div>
+					</div>
+					<div class="cbh"></div>
+				</div>
+				<div class="small-call-context small-car-context-cell">
+					<div class="small_div1">
+						<p class="small-carplate small-car-vehid">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data small-car-accmile">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data small-car-termcode">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data small-car-speed">56km/h</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data small-car-crankspeed">932rpm</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data small-car-lnglat">N:34°21,E:69°21</div>
+							</li>
+						</ul>
+					</div>
+					<div class="small_div2">
+						<div class="dash-text1">
+							<div id="dash1"></div>
+							<p>电量</p>
+						</div>
+						<div class="dash-text1">
+							<div id="dash2"></div>
+							<p>电压</p>
+						</div>
+						<div class="dash-text1">
+							<div id="dash3"></div>
+							<p>电流</p>
+						</div>
+						<div class="dash-text2 dash-text">
+							<div id="dash4"></div>
+							<p>温度</p>
+						</div>
+						<div class="dash-text2">
+							<div id="dash5"></div>
+							<p>氢气浓度</p>
+						</div>
+						<div class="dash-text2">
+							<div id="dash6"></div>
+							<p>高压DC/DC状态</p>
+						</div>
+
+					</div>
+					<div class="cbh"></div>
+					<div class="small-common-div" style="margin-right: 20px;">
+						<p class="small-common-div-title">充电状态行驶里程数统计</p>
+						<ul class="small_ul2 small_charing">
+							<li>
+								<div>
+									日期
+								</div>
+								<div>
+									充电时间
+								</div>
+								<div>
+									SOC充电前
+								</div>
+								<div>
+									SOC充电后
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="small-common-div small_charing_count">
+						<p class="small-common-div-title">充放电次数统计</p>
+						<ul class="small_ul2 small_socCount">
+							<li>
+								<div>
+									里程数(km)
+								</div>
+								<div>
+									平均车速(km/h)
+								</div>
+								<div>
+									SOC充电前
+								</div>
+								<div>
+									SOC充电后
+								</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+						</ul>
+					</div>
+					<div class="cbh"></div>
+				</div>
+			</div>
+		</div>
+		<div class="small_maps-show">
+			<div id="bonfire-pageloader">
+				<!-- BEGIN THE ICON -->
+				<div class="bonfire-pageloader-icon">
+					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+						<path id="loading-12-icon" d="M291,82.219c0,16.568-13.432,30-30,30s-30-13.432-30-30s13.432-30,30-30S291,65.65,291,82.219z
+						 M261,404.781c-15.188,0-27.5,12.312-27.5,27.5s12.312,27.5,27.5,27.5s27.5-12.312,27.5-27.5S276.188,404.781,261,404.781z
+						 M361.504,113.167c-4.142,7.173-13.314,9.631-20.487,5.489c-7.173-4.141-9.631-13.313-5.49-20.487
+						c4.142-7.173,13.314-9.631,20.488-5.489C363.188,96.821,365.645,105.994,361.504,113.167z M188.484,382.851
+						c-14.348-8.284-32.697-3.368-40.98,10.98c-8.285,14.349-3.367,32.696,10.98,40.981c14.35,8.283,32.697,3.367,40.98-10.981
+						C207.75,409.482,202.834,391.135,188.484,382.851z M421.33,184.888c-8.368,4.831-19.07,1.965-23.901-6.404
+						c-4.832-8.368-1.965-19.07,6.404-23.902c8.368-4.831,19.069-1.964,23.9,6.405C432.566,169.354,429.699,180.056,421.33,184.888z
+						 M135.399,329.767c-8.285-14.35-26.633-19.266-40.982-10.982c-14.348,8.285-19.264,26.633-10.979,40.982
+						c8.284,14.348,26.632,19.264,40.981,10.98C138.767,362.462,143.683,344.114,135.399,329.767z M436.031,277.249
+						c-11.044,0-20-8.953-20-19.999c0-11.045,8.955-20.001,20.001-20.001c11.044,0,19.999,8.955,19.999,20.002
+						C456.031,268.295,447.078,277.249,436.031,277.249z M115.97,257.251c-0.001-16.57-13.433-30.001-30.001-30.002
+						c-16.568,0.001-29.999,13.432-30,30.002c0.001,16.566,13.433,29.998,30.001,30C102.538,287.249,115.969,273.817,115.97,257.251z
+						 M401.333,364.248c-10.759-6.212-14.446-19.97-8.234-30.73c6.212-10.759,19.971-14.446,30.731-8.233
+						c10.759,6.211,14.445,19.971,8.232,30.73C425.852,366.774,412.094,370.46,401.333,364.248z M135.398,184.736
+						c8.285-14.352,3.368-32.698-10.98-40.983c-14.349-8.283-32.695-3.367-40.981,10.982c-8.282,14.348-3.366,32.696,10.981,40.981
+						C108.768,204,127.115,199.082,135.398,184.736z M326.869,421.328c-6.902-11.953-2.807-27.242,9.148-34.145
+						s27.243-2.806,34.146,9.149c6.902,11.954,2.806,27.243-9.15,34.145C349.059,437.381,333.771,433.284,326.869,421.328z
+						 M188.482,131.649c14.352-8.286,19.266-26.633,10.982-40.982c-8.285-14.348-26.631-19.264-40.982-10.98
+						c-14.346,8.285-19.264,26.633-10.98,40.982C155.787,135.017,174.137,139.932,188.482,131.649z" />
+					</svg>
+				</div>
+				<!-- END THE ICON -->
+			</div>
+		</div>
+	</body>
+	<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=您申请的key值"></script>
+	<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+	<script type="text/javascript" src="js/chart/echarts.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript">
+		var df_vin = ''; //全局变量--隐藏的vin值
+		var myPie = null;
+		var maps = [];
+		$(document).ready(function() {
+//			$('.tip-show').hide();
+			maps = new AMap.Map("maps", {
+				resizeEnable: true,
+				center: [116.397428, 39.90923], //地图中心点
+				zoom: 13 //地图显示的缩放级别
+			});
+			//车辆行驶基本信息、电量实时统计、车辆故障监控
+			getIndex();
+			//车辆充电状态
+			getCharing();
+			//车辆30天统计状态
+			getMonthCount();
+			getCarList();
+			
+            setInterval('getIndex()',df_time);
+            setInterval('getCharing()',df_time);
+            setInterval('getMonthCount()',df_time);
+            setInterval('getCarList()',df_time);
+            setInterval('getSmall(df_vin)',df_time);
+//          setInterval('getSmallEcharts(df_vin)',df_time);
+            setInterval('getSmallDash(df_vin)',df_time);
+			var f_height = $('._height').height();
+			$('._height1').height(f_height);
+
+			$('.tip_small').on('click', function(e) {
+				if(($(e.target).children().is('.small-commom-div'))) {
+                    $('.small-car-context-maps').hide();
+                    $('.small-car-context-error').hide();
+                    $('.small-car-context-status').hide();
+                    $('.small-car-context-cell').hide();
+				    $('.tip_small').hide();
+				} else {
+					$('.tip_small').show();
+				}
+			});
+			//固定small中内容的高度
+			$('.small-call-context').height('520px');
+			$('.small-car-context-maps').show();
+			var all_width = $('body').width();
+			var small_width = $('.small-commom-div').width()
+			var marginLeft = (all_width - small_width) / 2;
+			$('.small-commom-div').css('margin-top', '90px');
+			$('.small-commom-div').css('margin-left', marginLeft);
+			$('.small-car-maps').find('.small-car-text').on('click', function() {
+				$('.small-car-maps').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-maps').show();
+			});
+			$('.small-car-error').find('.small-car-text').on('click', function() {
+				$('.small-car-error').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-error').show();
+			});
+			$('.small-car-status').find('.small-car-text').on('click', function() {
+				$('.small-car-status').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-status').show();
+				getSmallEcharts(df_vin);
+			});
+			$('.small-car-cell').find('.small-car-text').on('click', function() {
+				$('.small-car-cell').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-cell').show();
+				getSmallDash(df_vin);
+			});
+			$('.tip-show').hide();
+		});
+
+		function getIndex() {
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/index",
+				async: true,
+				dataType: 'json',
+				success: function(reslut) {
+					var batterysum = reslut.data.batterysum; //多车电池统计
+					var datauploadsum = reslut.data.datauploadsum; //采集统计
+					var errorsum = reslut.data.errorsum; //故障统计
+					var vehsum = reslut.data.vehsum; //多出统计
+
+					//车辆总数量
+					$('.car-sum').html(vehsum.vehCount);
+					//车辆行驶总里程
+					$('.car-accmile').html(vehsum.accMile/10);
+					//车辆行驶总时间
+					$('.car-drivedSconde').html(parseInt(vehsum.drivedSeconds / 3600));
+					//车辆离线数
+					$('.car-outline').html(vehsum.offlineVehCount);
+					//车辆离线百分比
+					$('.car-outline-precent').css('width', (vehsum.offlineVehCount / vehsum.vehCount) * 100 + '%');
+					//车辆行驶数
+					$('.car-drived').html(vehsum.drvingVehCount);
+					//车辆行驶百分比
+					$('.car-drived-precent').css('width', (vehsum.drvingVehCount / vehsum.vehCount) * 100 + '%');
+					//车辆充电数
+					$('.car-charing').html(vehsum.charingVehCount);
+					//车辆充电百分比
+					$('.car-charing-precent').css('width', (vehsum.charingVehCount / vehsum.vehCount) * 100 + '%');
+
+					var radarData = [];
+					var charingerro = errorsum.charingError;
+					var drivemotorerro = errorsum.driveMotorError;
+					var engineerro = errorsum.engineError;
+					var othererro = errorsum.otherError;
+					var totalerrocount = errorsum.totalErrorCount;
+					radarData.push({
+						'value': [charingerro, drivemotorerro, engineerro, othererro],
+						'name': '车辆故障监控'
+					});
+					var radarMax = [charingerro, drivemotorerro, engineerro, othererro]
+					radarMax.sort(function(a, b) {
+						return a - b
+					}); //按升序排序数组大小
+					getRadar(radarMax[radarMax.length - 1], radarData);
+
+					var pieData = [];
+					var percent40 = batterysum.percent40;
+					var percent4060 = batterysum.percent4060;
+					var percent6080 = batterysum.percent6080;
+					var percent80 = batterysum.percent80;
+					var lengData = [];
+					percent40 && lengData.push('40%以下');
+					percent40 && pieData.push({'value':percent40 || 0, 'name':'40%以下'});
+					
+					percent4060 && lengData.push('40%~60%');
+					percent4060 && pieData.push({'value':percent4060 || 0, 'name':'40%~60%'});
+					
+					percent6080 && lengData.push('60%~80%');
+					percent6080 && pieData.push({'value':percent6080 || 0, 'name':'60%~80%'});
+					
+					percent80 && lengData.push('80%以上');
+					percent80 && pieData.push({'value':percent80 || 0, 'name':'80%以上'});
+					
+					myPie = myPie || getPie('echarts-pie-two',lengData,'-3%','3%',['60%','40%'],60,pieData);
+					
+					if(!pieData){
+						showNoData(myPie,['50%','75%']);
+					} else{
+						myPie = getPie('echarts-pie-two',lengData,'-3%','25%',['70%','40%'],60,pieData);
+					}
+					$('.tip-show').hide();
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+		}
+
+		//充电间隔发布
+		function getCharing() {
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/queryChargingintervalsum",
+				async: true,
+				dataType: 'json',
+				success: function(reslut) {
+					var twoday = reslut.data.interval2dayCount;
+					var threeday = reslut.data.interval3dayCount;
+					var fourday = reslut.data.interval4dayCount;
+					var fiveday = reslut.data.interval5dayCount;
+					var sixday = reslut.data.interval6dayCount;
+					var sevenday = reslut.data.interval7dayCount;
+					//充电间隔发布柱形图
+					var xData = ['2天', '3天', '4天', '5天', '6天', '7天'];
+					var barData = [twoday || 0, threeday || 0, fourday || 0, fiveday || 0, sixday || 0, sevenday || 0];
+					getLineBar('echarts-linbar-two', xData, barData);
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+
+		}
+
+		//30天的统计图
+		function getMonthCount() {
+			var length = getNowFormatDate().length;
+			var nowDate = getNowFormatDate().substr(0, length - 8);
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/listVehinfoCurve",
+				async: true,
+				data: {
+					'datetime': nowDate + ' 00:00:00',
+					'interval': 24 * 3600,
+					'limit': 30
+				},
+				dataType: 'json',
+				success: function(reslut) {
+					var xAxisData = [];
+					var dataAcc = [];
+					var dataVehcount = [];
+					//					console.log(JSON.stringify(reslut))
+					for(i in reslut.data) {
+						var dateTime = reslut.data[i].datetime;
+						var accMile = reslut.data[i].accMile/10;
+						var vehCount = reslut.data[i].vehCount;
+						xAxisData[i] = dateTime.substr(5, 5);
+						dataAcc[i] = accMile;
+						dataVehcount[i] = vehCount;
+					}
+					//					console.log(xAxisData)
+					getLineBar2('echarts-linbar-three', xAxisData, dataAcc, dataVehcount);
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+
+		}
+
+		function getLineBar2(id, xAxisData, data1, data2) {
+			var myLineBar = echarts.init(document.getElementById(id));
+			var option = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'shadow',
+						label: {
+							show: true,
+							backgroundColor: '#ccc'
+						}
+					}
+				},
+				legend: {
+					data: ['行驶总里程', '车辆总数'],
+					textStyle: {
+						color: '#fdfdfd'
+					},
+					right: '5%',
+					top: '-2%'
+				},
+				grid: {
+					height: '70%',
+					width: '90%',
+					bottom: '15%',
+					right: '2%'
+				},
+				xAxis: {
+					data: xAxisData,
+					axisLine: {
+						lineStyle: {
+							color: '#fdfdfd'
+						}
+					},
+					type: 'category',
+					axisLabel: {
+						textStyle: {
+							color: '#fdfdfd',
+							fontStyle: 'italic'
+						},
+						interval: 3
+					}
+				},
+				yAxis: {
+					splitLine: {
+						show: true,
+						lineStyle: {
+							color: '#62fafc',
+							opacity: .85
+						}
+
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#fdfdfd'
+						}
+					},
+					type: 'value',
+					name: '(十万辆)',
+					nameGap:25,
+					nameLocation: 'middle',
+					nameTextStyle: {
+						color: '#fdfdfd'
+					}
+				},
+				series: [{
+					name: '车辆总数',
+					type: 'bar',
+					barWidth: 5,
+					itemStyle: {
+						normal: {
+							barBorderRadius: 5,
+							color: new echarts.graphic.LinearGradient(
+								0, 0, 0, 1, [{
+										offset: 0,
+										color: '#62fafc'
+									},
+									{
+										offset: 1,
+										color: '#0057ff'
+									}
+								]
+							)
+						}
+					},
+					label: {
+						normal: {
+							show: false,
+							position: 'inside'
+						}
+					},
+					data: data1
+				}, {
+					name: '行驶总里程',
+					type: 'line',
+					smooth: true,
+					showAllSymbol: true,
+					symbol: 'emptyCircle',
+					symbolSize: 10,
+					itemStyle: {
+						normal: {
+							color: '#05fcfe',
+							opacity: .5
+						}
+					},
+					lineStyle: {
+						color: '#fdfdfd',
+						width: 1
+					},
+					data: data2
+				}]
+
+			};
+			myLineBar.setOption(option);
+		}
+
+		//雷达图
+		function getRadar(max, radarData) {
+			var myRadar = echarts.init(document.getElementById('echarts-radar-one'));
+			var option = {
+				tooltip: {
+					trigger: 'axis'
+				},
+				radar: {
+					center: ['55%', '50%'],
+					nameGap: 0,
+					indicator: [{
+							text: '驱动电机',
+							max: max
+						},
+						{
+							text: '燃料电池',
+							max: max
+						},
+						{
+							text: '发动机',
+							max: max
+						},
+						{
+							text: '其他',
+							max: max
+						}
+					],
+					splitNumber: 5,
+					name: {
+						textStyle: {
+							color: '#fdfdfd',
+							fontsize: '12px'
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#05fbfd',
+							width: 1
+						},
+					},
+					splitLine: {
+						lineStyle: {
+							color: ['#3daaab', 'transparent'],
+							width: 1,
+							opacity: .5
+						}
+					},
+					splitArea: {
+						areaStyle: {
+							color: ['#05fbfd', 'transparent'],
+							opacity: .3
+						}
+					}
+				},
+				series: [{
+					type: 'radar',
+					tooltip: {
+						trigger: 'item'
+					},
+					symbol: 'circle',
+					symbolSize: 5,
+					itemStyle: {
+						normal: {
+							color: '#e3e300',
+							borderColor: '#e3e300'
+						}
+					},
+					data: radarData
+				}, ]
+			};
+			myRadar.setOption(option);
+		}
+
+		function getCarList() {
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/listVehinfo",
+				async: true,
+				data: {
+					'limit': 9
+				},
+				dataType: 'json',
+				success: function(reslut) {
+					$('.index3-ul li').not($('.index3-ul li:first-child')).detach();
+					$('.index3-ul p').detach();
+					if (reslut.data.length > 0) {
+						for(var i = 0; i < reslut.data.length; i++) {
+							var vin = reslut.data[i].vin;
+							var carid = reslut.data[i].vehId;
+							var soc = reslut.data[i].soc;
+							var status = reslut.data[i].status;
+							var li_div = '<li onclick="getCarListClick(this)">' +
+								'<input type="hidden" value="' + vin + '" />' +
+								'<div class="index3-car-id">' + carid + '</div>' +
+								'<div class="index3-car-soc">' + soc + '</div>' +
+								'<div class="index3-car-status">' + status + '</div>' +
+								'</li>';							
+							$('.index3-ul').append(li_div);
+						}
+						
+					} else{
+						$('.index3-ul').append(pHtml);
+					}
+					
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+		}
+		function getCarListClick(vin){
+			df_vin = vin.childNodes[0].value;
+			$('.tip_small').show();
+			$('.small-car-context-maps').show();
+			$('.small-car-maps').addClass('active').siblings().removeClass('active');
+			getSmall(df_vin);
+			getSmallerro(df_vin);
+		}
+
+		//small基本的信息
+		function getSmall(vin) {
+			console.log('getSmall(vin)='+vin)
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/queryVehinfo",
+				async: true,
+				dataType: 'json',
+				data: {
+					'vin': vin
+				},
+				success: function(reslut) {
+					var datas = reslut.data;
+					var lng = datas.longitude;
+					var lat = datas.latitude;
+					var center = [lng, lat];
+					var lnglat = ['N:' + lng.substr(0, 6) + '°', 'E:' + lat.substr(0, 5) + '°'];
+					$('.small-car-vehid').html(datas.vehId || '');
+					$('.small-car-accmile').html(datas.accMile/10 || '');
+					$('.small-car-termcode').html(datas.termCode || '');
+					$('.small-car-speed').html((datas.speed/10 || '') + 'km/h');
+					$('.small-car-crankspeed').html((datas.crankshaftSpeed|| '') + 'rpm');
+					$('.small-car-lnglat').html(lnglat.join(',') || '');
+					$('.small-car-soc').html(datas.soc || '');
+					$('.small-car-cellvoltage').html((datas.fuelCellVoltage/10 || '')+ 'V');
+					$('.small-car-cellcurrent').html(((datas.fuelCellCurrent - 1000)/10 || '') + 'A');
+					$('.small-car-ctrltemper').html((datas.driveMotorCtrlTemper || '')+'°');
+					$('.small-car-motortemper').html((datas.driveMotorTemper || '')+'°');
+					//初始化地图对象，加载地图
+					$('.small_maps-show').show();
+					maps.setZoomAndCenter(13, center);
+					maps.clearMap();
+					//添加点标记，并使用自己的icon
+					new AMap.Marker({
+						map: maps,
+						position: center,
+						icon: new AMap.Icon({
+							size: new AMap.Size(40,40), //图标大小
+							image: "img/car.png"
+						})
+					});
+					$('.small_maps-show').hide();
+					/*small中的地图-end*/
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/listChargelog",
+				async: true,
+				data: {
+					'vin': vin,
+					'limit':5
+				},
+				dataType: 'json',
+				success: function(reslut) {
+					$('.small_charing li').not($('.small_charing li:first-child')).detach();
+					$('.small_socCount li').not($('.small_socCount li:first-child')).detach();
+					$('.small_charing p').detach();
+					$('.small_socCount p').detach();
+					var datas = reslut.data;
+			
+					if(datas.length > 0){
+						for(var i = 0; i < datas.length; i++) {
+							var avgSpeed = datas[i].avgSpeed || 0;
+							var preSoc = (datas[i].preSoc || 0) +'%';
+							var sufSoc = (datas[i].sufSoc || 0) +'%';
+							var chargeDate = format(parseInt(datas[i].chargeDate || 0));
+							var chargeSecond = ((datas[i].chargeSecond || 0) / 3600) +'h';
+							var chargeMile = datas[i].chargeMile|| 0;
+							var li_charing = '<li>' +
+								'<div>' + chargeDate + '</div>' +
+								'<div>' + chargeSecond + '</div>' +
+								'<div>' + preSoc + '</div>' +
+								'<div>' + sufSoc + '</div>' +
+								'</li>';
+							var li_socCount = '<li>' +
+								'<div>' + chargeMile + '</div>' +
+								'<div>' + avgSpeed + '</div>' +
+								'<div>' + preSoc + '</div>' +
+								'<div>' + sufSoc + '</div>' +
+								'</li>';;
+							$('.small_charing').append(li_charing);
+							$('.small_socCount').append(li_socCount);
+						}
+					}else{
+						$('.small_charing').append(pHtml);
+						$('.small_socCount').append(pHtml);
+					}
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+		}
+
+		//small中的年月曲线图
+		function getSmallEcharts(vin) {
+			console.log('getSmallEcharts(vin)='+vin)
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/listVehinfoDayCurve",
+				async: true,
+				data: {
+					'vin': vin
+				},
+				dataType: 'json',
+				success: function(reslut) {
+					var xAxisData = [];
+					var dataAcc = [];
+					console.log(JSON.stringify(reslut))
+					for(i in reslut.data) {
+						var dateTime = reslut.data[i].datetime;
+						var accMile = reslut.data[i].accMile;
+						var vehCount = reslut.data[i].vehCount;
+						xAxisData[i] = dateTime.substr(5, 5);
+						dataAcc[i] = accMile/10;
+					}
+					getLine('small-echarts-line-one', xAxisData,2, '(km)', '行驶里程', dataAcc);
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/listVehinfoMonthCurve",
+				async: true,
+				data: {
+					'vin': vin
+				},
+				dataType: 'json',
+				success: function(reslut) {
+					var xAxisData = [];
+					var dataAcc = [];
+					console.log(JSON.stringify(reslut))
+					for(var i = 0; i < reslut.data.length; i++) {
+						var dateTime = reslut.data[i].datetime;
+						var accMile = reslut.data[i].accMile;
+						xAxisData.push(dateTime);
+						dataAcc.push(accMile/10);
+					}
+					getLine('small-echarts-line-two', xAxisData,1, '(km)', '行驶里程', dataAcc);
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+		}
+	
+		//small中的仪表盘
+		function getSmallDash(vin){
+			console.log('getSmallDash(vin)='+vin)
+			$.ajax({
+				type: "post",
+				url: df_ip + "/tsp/queryVehinfo",
+				async: true,
+				data: {
+					'vin': vin
+				},
+				dataType: 'json',
+				success: function(reslut) {					
+					console.log(JSON.stringify(reslut))
+					var reslutData = reslut.data;					
+					var data_dash1 =[{'value':reslutData.soc,'name':''}] ;
+					getDash('dash1','电量',0,100,10,colors_common,6,precent_format,'{value}%',data_dash1);
+					
+					//仪表盘上显示的值
+					var fuelCellVoltage_show =reslutData.fuelCellVoltage/10; 
+					//仪表上实际刻度的值
+					var fuelCellVoltage = reslutData.fuelCellVoltage/10;
+					if(fuelCellVoltage <0){
+						fuelCellVoltage = 0;
+						fuelCellVoltage_show = 0;
+					}else if (fuelCellVoltage <= 300) {
+						fuelCellVoltage = fuelCellVoltage/15;
+					} else if(fuelCellVoltage <= 600){
+						fuelCellVoltage = (fuelCellVoltage-300)*0.2+20;
+					}else if(fuelCellVoltage <= 1000){
+						fuelCellVoltage = (fuelCellVoltage-600)/20+80;
+					}else{
+						fuelCellVoltage = 100;
+						fuelCellVoltage_show = 1000;
+					}
+					var data_dash2 =[{'value':fuelCellVoltage,'name':'V'}];
+					getDash('dash2','电压',0,100,5,colors_v,8,v_format,fuelCellVoltage_show+'V',data_dash2);
+					
+					//仪表盘上显示的值
+					var fuelCellCurrent_show = (reslutData.fuelCellCurrent - 1000)/10;
+					//仪表上实际刻度的值
+					var fuelCellCurrent = (reslutData.fuelCellCurrent - 1000)/10;
+					if (fuelCellCurrent < -100) {
+						fuelCellCurrent =fuelCellCurrent/100-39;
+					}else if(fuelCellCurrent <= 100){
+						fuelCellCurrent = fuelCellCurrent/2.5;
+					}else{
+						fuelCellCurrent =(fuelCellCurrent/100)+39;
+					}
+					
+					var data_dash3 =[{'value':fuelCellCurrent,'name':'A'}] ;
+					getDash('dash3','电流',-50,50,10,colors_a,8,a_format,fuelCellCurrent_show+'A',data_dash3);
+
+//					var data_dash4 = reslutData.fuelCellProbeTemper;
+					var fuelCellProbeTemper = ((reslutData.fuelCellProbeTemper-40)/10).toFixed(0);
+					;
+					var data_dash4 = [{'value':fuelCellProbeTemper,'name':'℃'}] ;;
+					getDash('dash4','温度',-90,90,9,colors_C,8,C_format,'{value}℃',data_dash4);
+					
+					var hydMaxConc = (reslutData.hydMaxConc/1000).toFixed(0);
+					var data_dash5 = [{'value':hydMaxConc,'name':'g/kg'}];
+					getDash('dash5','氢气浓度',0,50,10,colors_hy,8,hy_format,hydMaxConc+'g/kg',data_dash5);
+					
+					var data_dash6 = 0;
+					switch (reslutData.dcStatus){
+						case '工作' : data_dash6 = 1;
+						break;
+						case '断开' : data_dash6 = 2;
+						break;
+						case '异常' : data_dash6 = 3;
+						break;
+						default: data_dash6 = 0;
+						break;
+					}
+					
+					getDash('dash6','dcStatus',0,3,3,colors_DC,8,DC_format,reslutData.dcStatus,data_dash6);
+				},
+				error: function(reslut) {
+					alert(reslut.status + ' 数据获取失败');
+					$('.tip-show').hide();
+					console.log('reslut.status:' + reslut.status)
+				}
+			});
+		}
+	
+	</script>
+
+</html>

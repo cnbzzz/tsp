@@ -1,0 +1,138 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_vehinfo")
+public class MRepVehinfo extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String iccid;
+
+    private String vin;
+
+    private String model;
+
+    private String termCode;
+
+    private String vehId;
+
+    private Integer status;
+
+    private Date lastUpTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return iccid
+     */
+    public String getIccid() {
+        return iccid;
+    }
+
+    /**
+     * @param iccid
+     */
+    public void setIccid(String iccid) {
+        this.iccid = iccid == null ? null : iccid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return model
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * @param model
+     */
+    public void setModel(String model) {
+        this.model = model == null ? null : model.trim();
+    }
+
+    /**
+     * @return termCode
+     */
+    public String getTermCode() {
+        return termCode;
+    }
+
+    /**
+     * @param termCode
+     */
+    public void setTermCode(String termCode) {
+        this.termCode = termCode == null ? null : termCode.trim();
+    }
+
+    /**
+     * @return vehId
+     */
+    public String getVehId() {
+        return vehId;
+    }
+
+    /**
+     * @param vehId
+     */
+    public void setVehId(String vehId) {
+        this.vehId = vehId == null ? null : vehId.trim();
+    }
+
+    /**
+     * @return status
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * @return lastUpTime
+     */
+    public Date getLastUpTime() {
+        return lastUpTime;
+    }
+
+    /**
+     * @param lastUpTime
+     */
+    public void setLastUpTime(Date lastUpTime) {
+        this.lastUpTime = lastUpTime;
+    }
+}

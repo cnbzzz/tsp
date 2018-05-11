@@ -1,0 +1,243 @@
+package cn.spacewalker.tsp.bg.tbox.simulator.message;
+
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import cn.spacewalker.tsp.bg.pojo.dto.UploadRealTimeDto;
+import cn.spacewalker.tsp.bg.pojo.model.*;
+import cn.spacewalker.tsp.bg.pojo.utils.Gbt32960Msg2Bytes;
+import cn.spacewalker.tsp.bg.tbox.constant.CommandConstant;
+import cn.spacewalker.tsp.bg.tbox.constant.VehConstant;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by steven ma
+ * 2017/8/22 18:32
+ */
+
+public class UploadRealTimeMsg extends TBoxBaseMsg {
+
+    private UploadRealTimeDto realTimeDto;
+
+    //构造函数先初始化默认值
+    public UploadRealTimeMsg() {
+        realTimeDto = new UploadRealTimeDto();
+
+        //必须设置VIN
+        realTimeDto.setVin("1234567890ABCDEFG");
+        realTimeDto.setGatherTime("17 8 24 11 23 58");
+
+        realTimeDto.setVehData(setVehDefault());
+        realTimeDto.setVehDrivemotorList(setVehDrivemotorDefault());
+        realTimeDto.setVehFuelcell(setFuelCellDefault());
+        realTimeDto.setVehEngine(setVehEngineDefault());
+        realTimeDto.setVehPosition(setVehPositionDefault());
+        realTimeDto.setVehLimit(setVehLimitDefault());
+        realTimeDto.setVehError(setVehErrorDefault());
+
+
+    }
+
+
+    //外部重新设置变量
+    public void setParam(String vin, String time) {
+        realTimeDto.setVin(vin);
+        //登出时间
+        realTimeDto.setGatherTime(time);
+    }
+
+    //设置车辆位置
+    public void setPosition(String lng, String lat) {
+        lng = lng.replaceAll("\\.", "");
+        lat = lat.replaceAll("\\.", "");
+
+        realTimeDto.getVehPosition().setLongitude(lng);
+        realTimeDto.getVehPosition().setLatitude(lat);
+    }
+
+    //设置停车充电
+    public void setStopAndCharge() {
+//        if(realTimeDto.getVehData().getChargeStatus()
+//                == VehConstant.CHARGE_STATUS_NOCHARGE) {
+
+            realTimeDto.getVehData().
+                    setChargeStatus(VehConstant.CHARGE_STATUS_STOP);
+  //      }
+
+    }
+
+    //设置充电完成
+    public void setDoneCharge() {
+        realTimeDto.getVehData().
+                setChargeStatus(VehConstant.CHARGE_STATUS_DONE);
+    }
+
+    //设置未充电
+    public void setNoCharge() {
+        realTimeDto.getVehData().
+            setChargeStatus(VehConstant.CHARGE_STATUS_NOCHARGE);
+    }
+
+
+    //设置车辆总里程数
+    public void setAccMile(Long mile) {
+        realTimeDto.getVehData().setAccMile(mile);
+    }
+
+    //设置车辆状态
+    public void setVehStatus(int status) {
+        realTimeDto.getVehData().setVehStatus(status);
+    }
+
+    //随机对总里程数加个值
+    public void addAccMile() {
+        Long accMile = realTimeDto.getVehData().getAccMile();
+        accMile += (long)(Math.random() * 1000);
+
+        realTimeDto.getVehData().setAccMile(accMile);
+    }
+
+    //-----------------------------------------------------------
+    //组装成Gbt32960Msg对象发送
+    public  Gbt32960Msg getGbtMsg() {
+        Gbt32960Msg msg = setGbtMsgHead(CommandConstant.UPLOAD_RT_DATA,
+                            realTimeDto.getVin());
+        msg.setContent(Gbt32960Msg2Bytes.uploadRealTime2Bytes(realTimeDto));
+
+        return msg;
+    }
+
+
+
+    //1.整车数据(默认值)
+    private  TVehData setVehDefault() {
+        TVehData vehData = new TVehData();
+        vehData.setVehStatus(VehConstant.VEH_STATUS_START);
+        vehData.setChargeStatus(VehConstant.CHARGE_STATUS_NOCHARGE);
+        vehData.setRunMode(1);
+        vehData.setSpeed(2200);
+        Long speed = new Long(99);
+        vehData.setAccMile(speed);
+        vehData.setTotalVoltage(10000);
+        vehData.setTotalCurrent(20000);
+        vehData.setSoc(20);
+        vehData.setDcStatus(254);
+        vehData.setGear(1);
+        vehData.setInsRes(60000);
+        vehData.setBlank(60000);
+
+        return  vehData;
+
+    }
+
+    //2.驱动电机数据(默认值)
+    private static List<TVehDrivemotor> setVehDrivemotorDefault() {
+        List<TVehDrivemotor> tVehDrivemotors = new ArrayList<>();
+
+        TVehDrivemotor motor = new TVehDrivemotor();
+       // tVehDrivemotor.setDriveMotorCount(2);
+        motor.setDriveMotorIndex(1);
+        motor.setDriveMotorNum(1);
+        motor.setDriveMotorStatus(255);
+        motor.setDriveMotorCtrlTemper(250);
+        motor.setDriveMotorSpeed(250);
+        motor.setDriveMotorTorque(255);
+        motor.setDriveMotorTemper(250);
+        motor.setDriveMotorInputVoltage(255);
+        motor.setDriveMotorCurrent(254);
+
+
+        tVehDrivemotors.add(motor);
+
+        return tVehDrivemotors;
+    }
+
+    //3.燃料电池数据(默认值)
+    private static TVehFuelcell setFuelCellDefault() {
+        TVehFuelcell fuelcell = new TVehFuelcell();
+
+        fuelcell.setFuelCellVoltage(2000);
+        fuelcell.setFuelCellCurrent(2000);
+        fuelcell.setFuelCellPower(6000);
+        fuelcell.setFuelCellProbeCount(4);
+        //字符串按,号分隔
+        fuelcell.setFuelCellProbeTemper("240,239,238,237");
+        fuelcell.setHydMaxTemper(2400);
+        fuelcell.setHydMaxTemperProbe(252);
+        fuelcell.setHydMaxConc(60000);
+        fuelcell.setHydMaxConcSensorNum(251);
+        fuelcell.setHydMaxPress(252);
+        fuelcell.setHydMaxPressSensorNum(254);
+        fuelcell.setDcStatus(254);
+
+        return fuelcell;
+    }
+
+
+
+    //4.发动机数据(默认值)
+    private static TVehEngine setVehEngineDefault() {
+        TVehEngine engine = new TVehEngine();
+
+        engine.setEngineStatus(255);
+        engine.setCrankshaftSpeed(6000);
+        engine.setFuelCellPower(5000);
+
+
+        return engine;
+    }
+
+    //5.车辆位置数据(默认值)
+    private static TVehPosition setVehPositionDefault(){
+        TVehPosition position = new TVehPosition();
+        position.setPosStatus("1");
+        position.setLongitude("119981489");
+        position.setLatitude("31770646");
+
+        return position;
+    }
+
+    //6.极值数据(默认值)
+    private static TVehLimit setVehLimitDefault() {
+        TVehLimit limit = new TVehLimit();
+        limit.setMaxVoltageSubsystemNum(250);
+        limit.setMaxVoltagefullCellNum(249);
+        limit.setMaxVoltagefullCell(15000);
+        limit.setMinVoltageSubsystemNum(250);
+        limit.setMinVoltagefullCellNum(249);
+        limit.setMinVoltagefullCell(15000);
+        limit.setMaxTemperSubsystemNum(250);
+        limit.setMaxTemperProbeNum(249);
+        limit.setMaxTemper(250);
+        limit.setMinTemperSubsystemNum(240);
+        limit.setMinTemperProbeNum(250);
+        limit.setMinTemper(250);
+
+        return limit;
+    }
+
+    //7.报警数据(默认值)
+    private static TVehError setVehErrorDefault(){
+        TVehError error = new TVehError();
+        error.setMaxErrorLevel(0);
+        Long level = new Long(11111);
+        error.setCurrencyErrorLevel(level);
+
+        Long errlist = new Long(11111);
+        error.setFullCellErrorCount(0);
+        //error.setFullCellErrorList(errlist);
+
+        error.setDriveMotorErrorCount(0);
+        //error.setDriveMotorErrorList(errlist);
+
+        error.setEngineErrorCount(0);
+        //error.setEngineErrorList(errlist);
+
+        error.setOtherErrorCount(0);
+        //error.setOtherErrorList(errlist);
+
+        return error;
+    }
+
+
+}

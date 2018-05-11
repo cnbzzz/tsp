@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>车辆位置监控</title>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+   		<link rel="stylesheet" href="css/common.css"/>
+   		<link rel="stylesheet" type="text/css" href="css/small-common.css"/>
+    </head>
+    <body>
+        <div class="warrp">
+      		<div class="small-commom-div">
+				<div class="small-car-maps active">
+					<span class="small-car-text">车辆位置监控</span>
+				</div>
+				<div class="small-car-error">
+					<span class="small-car-text">车辆故障监控</span>
+				</div>
+				<div class="small-car-status">
+					<span class="small-car-text">实时状态监控</span>
+				</div>
+				<div class="small-car-cell">
+					<span class="small-car-text">实时电池监控</span>
+				</div>
+				<div class="small-car-top"></div>
+				<div class="cbh"></div>
+				<div class="small-call-context small-car-context-maps">
+					<div class="small-div">
+						<p class="small-carplate">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">上报时间</div>
+								<div class="ul-li-div-data">2017-03-28 14:22</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data">56km/h</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data">932rmp</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data">N:34°21,E:69°21</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small-div" >
+						<div class="top_right"></div>
+						<div id="maps"></div>
+						<div class="bottom-left"></div>
+					</div>
+					<div class="cbh"></div>
+				</div>
+				<div class="small-call-context small-car-context-error">
+					<div class="small_div1">
+						<p class="small-carplate">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">上报时间</div>
+								<div class="ul-li-div-data">2017-03-28 14:22</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data">56km/h</div>
+							</li>
+						</ul>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data">932rpm</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data">N:34°21,E:69°21</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">SOC</div>
+								<div class="ul-li-div-data">40%</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small_div2">
+						<table class="table table-bordered">
+							<tr>
+								<td>发动机零部件故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>供油系统故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>发动机通讯故障</td>
+								<td><img src="img/yellow.png"/></td>
+								<td></td>
+								<td>冷却系统故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>发动机附件故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>润滑系统故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>勇气系统故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>后处理故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>排气系统系统故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>未知故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+						</table>
+					</div>
+					<div class="cbh"></div>
+					<div class="small-common-div">
+						<div class="small_btns">
+							<div class="small_btn active small_btn_all">
+								<div class="btn-left"></div>
+								<div class="btn-middle">全部</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_motor">
+								<div class="btn-left"></div>
+								<div class="btn-middle">发动机故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_battery">
+								<div class="btn-left"></div>
+								<div class="btn-middle">电池故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_driver">
+								<div class="btn-left"></div>
+								<div class="btn-middle">驱动机故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_other">
+								<div class="btn-left"></div>
+								<div class="btn-middle">其他故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_a">
+								<div class="btn-left"></div>
+								<div class="btn-middle">一级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_b">
+								<div class="btn-left"></div>
+								<div class="btn-middle">二级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_c">
+								<div class="btn-left"></div>
+								<div class="btn-middle">三级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_dealwith">
+								<div class="btn-left"></div>
+								<div class="btn-middle">已处理</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_untreated">
+								<div class="btn-left"></div>
+								<div class="btn-middle">未处理</div>
+								<div class="btn-right"></div>
+							</div>
+						</div>
+						<div class="small_time_div">
+							<span class="small_timetext">开始时间 </span><span class="small_starttime">2017-07-19 14:20:30</span>
+							<span class="small_timetext">结束时间 </span><span  class="small_endtime">2017-07-19 14:20:30</span>
+						</div>
+						<div class="cbh"></div>
+						<ul class="small_ul2">
+							<li>
+								<div>上传时间</div>
+								<div>故障类型</div>
+								<div>故障等级</div>
+								<div>故障名称</div>
+								<div>处理状态</div>
+								<div>发动机号</div>
+								<div>发动型号</div>
+								<div>发生位置</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li><li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<div class="cbh"></div>
+						</ul>
+					</div>
+					<div class="cbh"></div>
+				</div>
+				<div class="small-call-context small-car-context-status">
+					<div class="small_div1">
+						<p class="small-carplate">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">上报时间</div>
+								<div class="ul-li-div-data">2017-03-28 14:22</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data">56km/h</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data">932rpm</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data">N:34°21,E:69°21</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">SOC</div>
+								<div class="ul-li-div-data">40%</div>
+							</li>
+						</ul>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">电池状态</div>
+								<div class="ul-li-div-data">充电中</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">电池电量</div>
+								<div class="ul-li-div-data">80%</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">电池温度</div>
+								<div class="ul-li-div-data">40°</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">电池电流</div>
+								<div class="ul-li-div-data">40A</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">驱动电机控制器温度</div>
+								<div class="ul-li-div-data">80°</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">驱动电机温度</div>
+								<div class="ul-li-div-data">40°</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small4-1">
+						<div class="small-common-div">	
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div >
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div >
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div>
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+						<div >
+							<span class="small_alert">温度异常警报</span>
+							<img src="img/green.png" />	
+						</div>
+					</div>
+					</div>
+					<div class="cbh"></div>
+					<div class="small4-2">
+						<div class="small-common-div">
+							<p class="small-carplate">月行驶里程统计</p>
+							<div id="small-echarts-line-one"></div>
+						</div>
+						<div class="small-common-div">
+							<p class="small-carplate">年行驶里程统计</p>
+							<div id="small-echarts-line-two"></div>
+						</div>
+					</div>
+					<div class="cbh"></div>
+				</div>
+				<div class="small-call-context small-car-context-cell">
+					<div class="small_div1">
+						<p class="small-carplate">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">上报时间</div>
+								<div class="ul-li-div-data">2017-03-28 14:22</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data">56km/h</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data">932rmp</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data">N:34°21,E:69°21</div>
+							</li>
+						</ul>
+					</div>
+					<div class="small_div2">
+						<div class="dash-text1">
+							<div id="dash1"></div>
+							<p>电量<p>
+						</div>
+						<div class="dash-text1">
+							<div id="dash2"></div>
+							<p>电压<p>
+						</div>
+						<div class="dash-text1">
+							<div id="dash3"></div>
+							<p>电流<p>
+						</div>
+						<div class="dash-text2 dash-text">
+							<div id="dash4"></div>
+							<p>温度<p>
+						</div>
+						<div class="dash-text2">
+							<div id="dash5"></div>
+							<p>氢气浓度<p>
+						</div>
+						<div class="dash-text2">
+							<div id="dash6"></div>
+							<p>高压DC/DC状态<p>
+						</div>
+						
+					</div>
+					<div class="cbh"></div>
+					<div class="small-common-div" style="margin-right: 20px;">
+						<p class="small-common-div-title">充电状态行驶里程数统计</p>
+						<ul class="small_ul2 small_charing">
+							<li>
+								<div>
+									日期
+								</div>
+								<div>
+									充电时间
+								</div>
+								<div>
+									SOC充电前
+								</div>
+								<div>
+									SOC充电后
+								</div>
+							</li>
+							<li>
+								<div>2017-09-14 12:30:40</div>
+								<div>2h35min</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>2017-09-14 12:30:40</div>
+								<div>2h35min</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>2017-09-14 12:30:40</div>
+								<div>2h35min</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>2017-09-14 12:30:40</div>
+								<div>2h35min</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>2017-09-14 12:30:40</div>
+								<div>2h35min</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+						</ul>
+					</div>
+					<div class="small-common-div small_charing_count">
+						<p class="small-common-div-title">充放电次数统计</p>
+						<ul class="small_ul2">
+							<li>
+								<div>
+									里程数(km)
+								</div>
+								<div>
+									平均车速(km/h)
+								</div>
+								<div>
+									SOC充电前
+								</div>
+								<div>
+									SOC充电后
+								</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+							<li>
+								<div>77.96</div>
+								<div>50.38</div>
+								<div>10.1%</div>
+								<div>21.5%</div>
+							</li>
+						</ul>
+					</div>
+					<div class="cbh"></div>
+				</div>
+      		</div>					
+    	</div>
+    </body>
+    <script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=您申请的key值"></script>
+	<script type="text/javascript" src="http://webapi.amap.com/demos/js/liteToolbar.js"></script>
+	<script src="js/chart/echarts.min.js"></script>
+	<script type="text/javascript" src="js/small-common.js" ></script> 
+	<script>
+		$(document).ready(function(){
+			//固定small中内容的高度
+			$('.small-call-context').height('520px');
+			$('.small-car-context-maps').show();
+			$('.small-car-maps').find('.small-car-text').on('click',function(){
+				$('.small-car-maps').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-maps').show();
+			});
+			$('.small-car-error').find('.small-car-text').on('click',function(){
+				$('.small-car-error').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-error').show();
+			});
+			$('.small-car-status').find('.small-car-text').on('click',function(){
+				$('.small-car-status').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-status').show();
+				getLine();
+			});
+			$('.small-car-cell').find('.small-car-text').on('click',function(){
+				$('.small-car-cell').addClass('active').siblings().removeClass('active');
+				$('.small-call-context').hide();
+				$('.small-car-context-cell').show();
+			});
+			getDash1();
+			getDash2();
+			getDash3();
+			getDash4();
+			getDash5();
+			getDash6();
+		});
+	</script>
+	
+</html>

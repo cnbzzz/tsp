@@ -1,0 +1,23 @@
+package cn.spacewalker.tsp.bg.pojo.mapper;
+
+import cn.spacewalker.tsp.bg.pojo.model.TVehChargestorvoltitem;
+import cn.spacewalker.tsp.bg.pojo.model.TVehErroritem;
+import cn.spacewalker.tsp.bg.pojo.model.TVehUploadrealtime;
+import cn.spacewalker.tsp.common.base.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
+
+public interface TVehUploadrealtimeMapper extends BaseMapper<TVehUploadrealtime> {
+
+    List<Map<String, String>> listRepVehInfo();
+
+    List<Map<String, String>> listRepErrorInfoByFormnum(@Param("formnum") String formnum);
+
+    Map<String, String> countDataUploadsum();
+
+    void insertBatchVoltitem(List<TVehChargestorvoltitem> list);
+
+    void insertBatchErroritem(List<TVehErroritem> list);
+}

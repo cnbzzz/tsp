@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "note": "数据采集时间",
+      "type": "byteArray",
+      "val": [
+        "17",
+        "7",
+        "24",
+        "11",
+        "23",
+        "58"
+      ]
+    }
+    ,{
+      "note": "登入流水号",
+      "type": "word",
+      "val": "65531"
+    }
+    ,{
+      "note": "iccid",
+      "type": "string",
+      "val": "1234567890ABCDEFGQWE"
+    }
+    ,{
+      "note": "可充电储能子系统数",
+      "type": "byte",
+      "val": "10"
+    }
+    ,{
+      "note": "可充电储能系统编码长度",
+      "type": "byte",
+      "val": "3"
+    }
+    ,{
+      "note": "可充电储能系统编码",
+      "type": "string",
+      "val": "qwertyuiopqwertyuiopqwertyuiop"
+    }
+  ]
+}

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>实时故障监控</title>
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+   		<link rel="stylesheet" href="css/common.css" />
+   		<link rel="stylesheet" href="css/small-common.css" />
+   		<link rel="stylesheet" href="css/small3.css"/>
+	</head>
+	<body>
+		<div class="warrp">
+			<div class="common-div">
+				<div class="commom-header">
+					实时故障监控
+				</div>
+				<div class="commom-h-middle"></div>
+				<div class="commom-h-right"></div>
+				<div class="commom-m-middle">
+					<div class="small_div1">
+						<p class="small-carplate">苏D&nbsp;&nbsp;40275</p>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">总里程</div>
+								<div class="ul-li-div-data">13742公里</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">终端编号</div>
+								<div class="ul-li-div-data">DS38713942</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">上报时间</div>
+								<div class="ul-li-div-data">2017-03-28 14:22</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前速度</div>
+								<div class="ul-li-div-data">56km/h</div>
+							</li>
+						</ul>
+						<ul class="small_ul3">
+							<li>
+								<div class="ul-li-div-name">转速</div>
+								<div class="ul-li-div-data">932rpm</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">当前位置</div>
+								<div class="ul-li-div-data">N:34°21,E:69°21</div>
+							</li>
+							<li>
+								<div class="ul-li-div-name">SOC</div>
+								<div class="ul-li-div-data">40%</div>
+							</li>
+						</ul>
+						<div class="cbh"></div>
+					</div>
+					<div class="small_div2">
+						<table class="table table-bordered">
+							<tr>
+								<td>发动机零部件故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>供油系统故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>发动机通讯故障</td>
+								<td><img src="img/yellow.png"/></td>
+								<td></td>
+								<td>冷却系统故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>发动机附件故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>润滑系统故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>勇气系统故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>后处理故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+							<tr>
+								<td>排气系统系统故障</td>
+								<td><img src="img/green.png"/></td>
+								<td></td>
+								<td>未知故障</td>
+								<td><img src="img/green.png"/></td>
+							</tr>
+						</table>
+					</div>
+					<div class="cbh"></div>
+					<div class="small-common-div">
+						<div class="small_btns">
+							<div class="small_btn active small_btn_all">
+								<div class="btn-left"></div>
+								<div class="btn-middle">全部</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_motor">
+								<div class="btn-left"></div>
+								<div class="btn-middle">发动机故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_battery">
+								<div class="btn-left"></div>
+								<div class="btn-middle">电池故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_driver">
+								<div class="btn-left"></div>
+								<div class="btn-middle">驱动机故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_other">
+								<div class="btn-left"></div>
+								<div class="btn-middle">其他故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_a">
+								<div class="btn-left"></div>
+								<div class="btn-middle">一级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_b">
+								<div class="btn-left"></div>
+								<div class="btn-middle">二级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_c">
+								<div class="btn-left"></div>
+								<div class="btn-middle">三级故障</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_dealwith">
+								<div class="btn-left"></div>
+								<div class="btn-middle">已处理</div>
+								<div class="btn-right"></div>
+							</div>
+							<div class="small_btn small_btn_untreated">
+								<div class="btn-left"></div>
+								<div class="btn-middle">未处理</div>
+								<div class="btn-right"></div>
+							</div>
+						</div>
+						<div class="small_time_div">
+							<span class="small_timetext">开始时间 </span><span class="small_starttime">2017-07-19 14:20:30</span>
+							<span class="small_timetext">结束时间 </span><span  class="small_endtime">2017-07-19 14:20:30</span>
+						</div>
+						<div class="cbh"></div>
+						<ul class="small_ul2">
+							<li>
+								<div>上传时间</div>
+								<div>故障类型</div>
+								<div>故障等级</div>
+								<div>故障名称</div>
+								<div>处理状态</div>
+								<div>发动机号</div>
+								<div>发动型号</div>
+								<div>发生位置</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li><li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<li>
+								<div>2017-06-30 12:43:45</div>
+								<div>发动机故障</div>
+								<div>一级</div>
+								<div>发动机零部件故障</div>
+								<div>待处理</div>
+								<div>DS-435462</div>
+								<div>DS-435462</div>
+								<div>N:34°31,E:69°12</div>
+							</li>
+							<div class="cbh"></div>
+						</ul>
+					</div>
+					<div class="cbh"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="js/chart/echarts.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('.small_btn').on('click',function(){
+			    $(this).addClass('active').siblings().removeClass('active');
+			});
+			getDash1();
+			getDash2();
+			getDash3();
+			getDash4();
+			getDash5();
+			getDash6();
+		});
+		function getDash1(){
+			var myDash = echarts.init(document.getElementById('dash1'));
+			var option = {
+				backgroundColor: 'transparent',
+			    tooltip : {
+			        formatter: "{a} <br/> {b} {c}%"
+			    },
+			    series : [
+			        {
+			            name:'电流',
+			            type:'gauge',
+			            min:0,
+			            max:100,
+			            splitNumber:10,
+			            radius: '100%',
+			            axisLine: {            // 坐标轴线
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: [[0.2, '#82f706'],[0.8, '#00f3f0'],[1, '#fb0609']],
+			                    width: 3,
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式
+			                    color:'#fdfdfd',
+			                    fontSize:10,
+			                    shadowBlur: 10
+		               		},
+		               		formatter:function(v){
+			                    switch (v + '') {
+			                        case '0' : return '0';
+			                        case '10' : return '10%';
+			                        case '20':return '20%';
+			                        case '30' : return '30%';
+			                        case '40':return '40%';
+			                        case '50' : return '50%';
+			                        case '60' : return '60%';
+			                        case '70':return '70%';
+			                        case '80' : return '80%';
+			                        case '90':return '90%';
+			                        case '100':return '100%';
+			                    }
+			                }
+			            },
+			            axisTick: {            // 坐标轴小标记
+			                length :5,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto',
+			                    shadowBlur: 10
+			                }
+			                
+			            },
+			            splitLine: {           // 分隔线
+			                length :10,         // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+			                     fontWeight: 'bolder',
+			                     color: 'auto'
+			                }
+			            },
+			            pointer: {           // 分隔线
+			                // shadowColor : '#fff', //默认透明
+			                shadowBlur: 5,
+			                width:3,
+			                length:'60%'
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:'#62fafc'
+			            	}
+			            },
+			            title : {
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    fontSize: 20,
+			                    fontStyle: 'italic',
+			                    color: '#fdfdfd',
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            detail : {
+//			                backgroundColor: 'rgba(0,0,0,0.3)',
+//			                borderWidth: 1,
+//			                borderColor: '#fff',
+			                // shadowColor : '#fff', //默认透明
+//			                shadowBlur: 5,
+//			                height:20,
+//			                width:60,
+			                formatter:'{value}%',
+			                offsetCenter: [0, '50%'],       // x, y，单位px
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    color: 'auto',
+			                    fontSize:17
+			                }
+			            },
+			            data:[{value:10, name: ''}]
+			        }
+			      
+			    ]
+			};
+			myDash.setOption(option);
+		}
+		
+		function getDash2(){
+			var myDash = echarts.init(document.getElementById('dash2'));
+			var option = {
+				backgroundColor: 'transparent',
+			    tooltip : {
+			        formatter: "{a} <br/> {b} {c}%"
+			    },
+			    series : [
+			        {
+			            name:'电压',
+			            type:'gauge',
+			            min:0,
+			            max:1000,
+			            splitNumber:10,
+			            radius: '100%',
+			            axisLine: {            // 坐标轴线
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: [[0.1, '#82f706'],[0.8, '#00f3f0'],[1, '#fb0609']],
+			                    width: 3,
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式
+			                    color:'#fdfdfd',
+			                    fontSize:10,
+			                    shadowBlur: 10
+		               		},
+		               		formatter:function(v){
+			                    switch (v + '') {
+			                        case '0' : return '0';
+			                        case '100' : return '100V';
+			                        case '200':return '200V';
+			                        case '300' : return '300V';
+			                        case '400':return '400V';
+			                        case '500' : return '500V';
+			                        case '600' : return '600V';
+			                        case '700':return '700V';
+			                        case '800' : return '800V';
+			                        case '900':return '900V';
+			                        case '1000':return '1000V'
+			                    }
+			                }
+			            },
+			            axisTick: {            // 坐标轴小标记
+			                length :5,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto',
+			                    shadowBlur: 10
+			                }
+			                
+			            },
+			            splitLine: {           // 分隔线
+			                length :10,         // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+			                     fontWeight: 'bolder',
+			                     color: 'auto'
+			                }
+			            },
+			            pointer: {           // 分隔线
+			                // shadowColor : '#fff', //默认透明
+			                shadowBlur: 5,
+			                width:3,
+			                length:'60%'
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:'#62fafc'
+			            	}
+			            },
+			            title : {
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    fontSize: 20,
+			                    fontStyle: 'italic',
+			                    color: '#fdfdfd',
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            detail : {
+//			                backgroundColor: 'rgba(0,0,0,0.3)',
+//			                borderWidth: 1,
+//			                borderColor: '#fff',
+			                // shadowColor : '#fff', //默认透明
+//			                shadowBlur: 5,
+//			                height:20,
+//			                width:60,
+			                formatter:'{value}V',
+			                offsetCenter: [0, '50%'],       // x, y，单位px
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    color: 'auto',
+			                    fontSize:17
+			                }
+			            },
+			            data:[{value:100, name: ''}]
+			        }
+			      
+			    ]
+			};
+			myDash.setOption(option);
+		}
+	
+		function getDash3(){
+			var myDash = echarts.init(document.getElementById('dash3'));
+			var option = {
+				backgroundColor: 'transparent',
+			    tooltip : {
+			        formatter: "{a} <br/> {b} {c}%"
+			    },
+			    series : [
+			        {
+			            name:'电流',
+			            type:'gauge',
+			            min:0,
+			            max:2000,
+			            splitNumber:10,
+			            radius: '100%',
+			            axisLine: {            // 坐标轴线
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: [[0.2, '#82f706'],[0.82, '#00f3f0'],[1, '#fb0609']],
+			                    width: 3,
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式
+			                    color:'#fdfdfd',
+			                    fontSize:10,
+			                    shadowBlur: 10
+		               		},
+		               		formatter:function(v){
+			                    switch (v + '') {
+			                        case '0' : return '0';
+			                        case '200' : return '200A';
+			                        case '400':return '400A';
+			                        case '600' : return '600A';
+			                        case '800':return '800A';
+			                        case '1000' : return '1000A';
+			                        case '1200' : return '1200A';
+			                        case '1400':return '1400A';
+			                        case '1600' : return '1600A';
+			                        case '1800':return '1800A';
+			                        case '2000':return '2000A'
+			                    }
+			                }
+			            },
+			            axisTick: {            // 坐标轴小标记
+			                length :5,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto',
+			                    shadowBlur: 10
+			                }
+			                
+			            },
+			            splitLine: {           // 分隔线
+			                length :10,         // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+			                     fontWeight: 'bolder',
+			                     color: 'auto'
+			                }
+			            },
+			            pointer: {           // 分隔线
+			                // shadowColor : '#fff', //默认透明
+			                shadowBlur: 5,
+			                width:3,
+			                length:'60%'
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:'#62fafc'
+			            	}
+			            },
+			            title : {
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    fontSize: 20,
+			                    fontStyle: 'italic',
+			                    color: '#fdfdfd',
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            detail : {
+//			                backgroundColor: 'rgba(0,0,0,0.3)',
+//			                borderWidth: 1,
+//			                borderColor: '#fff',
+			                // shadowColor : '#fff', //默认透明
+//			                shadowBlur: 5,
+//			                height:20,
+//			                width:60,
+			                formatter:'{value}A',
+			                offsetCenter: [0, '50%'],       // x, y，单位px
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    color: 'auto',
+			                    fontSize:17
+			                }
+			            },
+			            data:[{value:100, name: ''}]
+			        }
+			      
+			    ]
+			};
+			myDash.setOption(option);
+		}
+		
+		function getDash4(){
+			var myDash = echarts.init(document.getElementById('dash4'));
+			var option = {
+				backgroundColor: 'transparent',
+			    tooltip : {
+			        formatter: "{a} <br/> {b} {c}%"
+			    },
+			    series : [
+			        {
+			            name:'温度',
+			            type:'gauge',
+			            min:-90,
+			            max:90,
+			            splitNumber:18,
+			            radius: '100%',
+			            axisLine: {            // 坐标轴线
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: [[0.2, '#82f706'],[0.82, '#00f3f0'],[1, '#fb0609']],
+			                    width: 3,
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式
+			                    color:'#fdfdfd',
+			                    fontSize:8,
+			                    shadowBlur: 10
+		               		},
+		               		formatter:function(v){
+			                    switch (v + '') {
+			                        case '-90' : return '-90°';
+			                        case '-80' : return '-80°';
+			                        case '-70':return '-70°';
+			                        case '-60' : return '-60°';
+			                        case '-50':return '-50°';
+			                        case '-40' : return '-40°';
+			                        case '-30' : return '-30°';
+			                        case '-20':return '-20°';
+			                        case '-10' : return '-10°';
+			                        case '0':return '0°';
+			                        case '10' : return '10°';
+			                        case '20':return '20°';
+			                        case '30' : return '30°';
+			                        case '40':return '40°';
+			                        case '50' : return '50°';
+			                        case '60' : return '60°';
+			                        case '70':return '70°';
+			                        case '80' : return '80°';
+			                        case '90':return '90°'
+			                    }
+			                }
+			            },
+			            axisTick: {            // 坐标轴小标记
+			                length :5,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto',
+			                    shadowBlur: 10
+			                }
+			                
+			            },
+			            splitLine: {           // 分隔线
+			                length :10,         // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+			                     fontWeight: 'bolder',
+			                     color: 'auto'
+			                }
+			            },
+			            pointer: {           // 分隔线
+			                // shadowColor : '#fff', //默认透明
+			                shadowBlur: 5,
+			                width:3,
+			                length:'60%'
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:'#62fafc'
+			            	}
+			            },
+			            title : {
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    fontSize: 20,
+			                    fontStyle: 'italic',
+			                    color: '#fdfdfd',
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            detail : {
+//			                backgroundColor: 'rgba(0,0,0,0.3)',
+//			                borderWidth: 1,
+//			                borderColor: '#fff',
+			                // shadowColor : '#fff', //默认透明
+//			                shadowBlur: 5,
+//			                height:20,
+//			                width:60,
+			                formatter:'{value}°',
+			                offsetCenter: [0, '50%'],       // x, y，单位px
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    color: 'auto',
+			                    fontSize:17
+			                }
+			            },
+			            data:[{value:10, name: ''}]
+			        }
+			      
+			    ]
+			};
+			myDash.setOption(option);
+		}
+		
+		function getDash5(){
+			var myDash = echarts.init(document.getElementById('dash5'));
+			var option = {
+				backgroundColor: 'transparent',
+			    tooltip : {
+			        formatter: "{a} <br/> {b} {c}%"
+			    },
+			    series : [
+			        {
+			            name:'氢气浓度',
+			            type:'gauge',
+			            min:0,
+			            max:100,
+			            splitNumber:10,
+			            radius: '100%',
+			            axisLine: {            // 坐标轴线
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: [[0.2, '#82f706'],[0.8, '#00f3f0'],[1, '#fb0609']],
+			                    width: 3,
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式
+			                    color:'#fdfdfd',
+			                    fontSize:10,
+			                    shadowBlur: 10
+		               		},
+		               		formatter:function(v){
+			                    switch (v + '') {
+			                        case '0' : return '0';
+			                        case '10' : return '10%';
+			                        case '20':return '20%';
+			                        case '30' : return '30%';
+			                        case '40':return '40%';
+			                        case '50' : return '50%';
+			                        case '60' : return '60%';
+			                        case '70':return '70%';
+			                        case '80' : return '80%';
+			                        case '90':return '90%';
+			                        case '100':return '100%';
+			                    }
+			                }
+			            },
+			            axisTick: {            // 坐标轴小标记
+			                length :5,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto',
+			                    shadowBlur: 10
+			                }
+			                
+			            },
+			            splitLine: {           // 分隔线
+			                length :10,         // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+			                     fontWeight: 'bolder',
+			                     color: 'auto'
+			                }
+			            },
+			            pointer: {           // 分隔线
+			                // shadowColor : '#fff', //默认透明
+			                shadowBlur: 5,
+			                width:3,
+			                length:'60%'
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:'#62fafc'
+			            	}
+			            },
+			            title : {
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: '600',
+			                    fontSize: 10,
+			                    fontStyle: 'normal',
+			                    color: '#fdfdfd',
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            detail : {
+//			                backgroundColor: 'rgba(0,0,0,0.3)',
+//			                borderWidth: 1,
+//			                borderColor: '#fff',
+			                // shadowColor : '#fff', //默认透明
+//			                shadowBlur: 5,
+//			                height:20,
+//			                width:60,
+			                formatter:'{value}%',
+			                offsetCenter: [0, '50%'],       // x, y，单位px
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    color: 'auto',
+			                    fontSize:17
+			                }
+			            },
+			            data:[{value:90, name: 'mg/km'}]
+			        }
+			      
+			    ]
+			};
+			myDash.setOption(option);
+		}
+		
+		function getDash6(){
+			var myDash = echarts.init(document.getElementById('dash6'));
+			var option = {
+				backgroundColor: 'transparent',
+			    tooltip : {
+			        formatter: "{a} <br/> {b} {c}%"
+			    },
+			    series : [
+			        {
+			            name:'高压DC/DC状态',
+			            type:'gauge',
+			            min:0,
+			            max:2,
+			            splitNumber:2,
+			            radius: '100%',
+			            axisLine: {            // 坐标轴线
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: [[0.2, '#82f706'],[0.8, '#00f3f0'],[1, '#fb0609']],
+			                    width: 3,
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式
+			                    color:'#fdfdfd',
+			                    fontSize:10,
+			                    shadowBlur: 10
+		               		},
+		               		formatter:function(v){
+			                    switch (v + '') {
+			                        case '0' : return '未工作';
+			                        case '1' : return '状态';
+			                        case '2':return '工作中'
+			                    }
+			                }
+			            },
+			            axisTick: {            // 坐标轴小标记
+			                length :5,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto',
+			                    shadowBlur: 10
+			                }
+			                
+			            },
+			            splitLine: {           // 分隔线
+			                length :10,         // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+			                     fontWeight: 'bolder',
+			                     color: 'auto'
+			                }
+			            },
+			            pointer: {           // 分隔线
+			                // shadowColor : '#fff', //默认透明
+			                shadowBlur: 5,
+			                width:3,
+			                length:'60%'
+			            },
+			            itemStyle:{
+			            	normal:{
+			            		color:'#62fafc'
+			            	}
+			            },
+			            title : {
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: '600',
+			                    fontSize: 10,
+			                    fontStyle: 'normal',
+			                    color: '#fdfdfd',
+			                    // shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                }
+			            },
+			            detail : {
+//			                backgroundColor: 'rgba(0,0,0,0.3)',
+//			                borderWidth: 1,
+//			                borderColor: '#fff',
+			                // shadowColor : '#fff', //默认透明
+//			                shadowBlur: 5,
+//			                height:20,
+//			                width:60,
+							show:false,
+			                offsetCenter: [0, '50%'],       // x, y，单位px
+			                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			                    fontWeight: 'bolder',
+			                    color: 'auto',
+			                    fontSize:17
+			                }
+			            },
+			            data:[{value:2, name: ''}]
+			        }
+			      
+			    ]
+			};
+			myDash.setOption(option);
+		}
+
+	</script>
+</html>

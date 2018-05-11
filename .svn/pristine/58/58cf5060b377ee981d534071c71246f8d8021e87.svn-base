@@ -1,0 +1,70 @@
+package cn.spacewalker.tsp.bg.receiver.service.impl;
+
+import cn.spacewalker.tsp.bg.pojo.mapper.TRepVehinfoMapper;
+import cn.spacewalker.tsp.bg.pojo.model.TRepVehinfo;
+import cn.spacewalker.tsp.bg.receiver.service.ICommandService;
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import cn.spacewalker.tsp.bg.pojo.mapper.TVehSignoutMapper;
+import cn.spacewalker.tsp.bg.pojo.model.TVehSignout;
+import cn.spacewalker.tsp.bg.pojo.utils.Gbt32960ReadByteBuf;
+import com.google.common.base.Preconditions;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/21 11:50
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public class VehSignOutServiceImpl implements ICommandService {
+
+    @Resource
+    private TVehSignoutMapper mapper;
+
+    @Resource
+    private TRepVehinfoMapper repVehinfoMapper;
+
+    @Override
+    public TVehSignout handler(Gbt32960Msg msg) {
+        Preconditions.checkArgument(msg != null, "msg is null");
+        byte[] bytes = msg.getContent();
+        Preconditions.checkArgument(bytes != null && bytes.length == 8, "bytes is not legal");
+
+        Gbt32960ReadByteBuf buf = new Gbt32960ReadByteBuf(bytes);
+        int year = buf.readByte2Int();
+        int month = buf.readByte2Int();
+        int day = buf.readByte2Int();
+        int hour = buf.readByte2Int();
+        int minute = buf.readByte2Int();
+        int second = buf.readByte2Int();
+        String signOutTime = String.format("%s%s%s%s%s%s", year, month, day, hour, minute, second);
+
+        int signOutFormNum = buf.readWord();
+
+        TVehSignout data = new TVehSignout();
+        data.setSignOutTime(signOutTime);
+        data.setSignOutFormNum(signOutFormNum);
+        String vin = msg.getVin();
+        data.setVin(msg.getVin());
+        String formNum = msg.getFormNum();
+        data.setFormNum(formNum);
+        data.setOid(formNum);
+
+        mapper.insertSelective(data);
+
+        TRepVehinfo param = new TRepVehinfo();
+        param.setVin(msg.getVin());
+
+        List<TRepVehinfo> select = repVehinfoMapper.select(param);
+        if(select.size() > 0){
+            TRepVehinfo vehinfo = select.get(0);
+            vehinfo.setIsOnline(0);
+            repVehinfoMapper.updateByPrimaryKeySelective(vehinfo);
+        }
+
+        return data;
+    }
+}

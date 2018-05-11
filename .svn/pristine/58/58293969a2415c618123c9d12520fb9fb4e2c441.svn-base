@@ -1,0 +1,66 @@
+package cn.spacewalker.tsp.bg.tbox.client;
+
+import cn.spacewalker.tsp.bg.tbox.config.TboxConfig;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/10 17:16
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+@Component
+public class TBoxClient {
+
+
+    private Logger log = LogManager.getLogger(this.getClass().getName());
+
+    static final String PRO_HOST = "112.74.180.11";
+    static final String DEV_HOST = "127.0.0.1";
+    static final String BB_HOST = "192.168.1.102";
+
+    static final String HOST = System.getProperty("host", DEV_HOST);
+    static final int PORT = Integer.parseInt(System.getProperty("port", "9103"));//9103,8080
+
+    @Autowired
+    private TboxConfig config;
+
+    public void start() throws Exception {
+
+        log.info("IP:{} Port:{}",
+                config.getIp(),
+                config.getPort());
+        // Configure the client.
+        EventLoopGroup group = new NioEventLoopGroup();
+        try {
+            Bootstrap b = new Bootstrap();
+            b.group(group)
+                    .channel(NioSocketChannel.class)
+                    .option(ChannelOption.TCP_NODELAY, true)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(new TBoxEncoder());
+                            ch.pipeline().addLast(new TBoxClientHandler());
+                        }
+                    });
+
+            ChannelFuture future = b.connect(HOST, PORT).sync();
+            future.channel().closeFuture().sync();
+        } finally {
+            group.shutdownGracefully();
+        }
+    }
+
+}

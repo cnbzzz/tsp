@@ -1,0 +1,70 @@
+package cn.spacewalker.tsp.bg.receiver.server;
+
+import cn.spacewalker.tsp.bg.pojo.dto.Gbt32960Msg;
+import com.google.common.base.Preconditions;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+
+import java.io.UnsupportedEncodingException;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/7/12 11:09
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ * Best wishes to little ranran
+ */
+public class Gbt32960MsgDecoder extends LengthFieldBasedFrameDecoder {
+
+    public Gbt32960MsgDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip, boolean failFast) {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip, failFast);
+    }
+
+
+    @Override
+    protected Object decode(ChannelHandlerContext ctx, ByteBuf byteBuf) throws Exception{
+        ByteBuf backUpByteBuf = byteBuf.copy();
+
+        ByteBuf in = (ByteBuf)super.decode(ctx, byteBuf);
+
+        if(in == null){
+            return null;
+        }
+
+        String startSymbol = getString(in, 2);
+
+        int commandSymbol = in.readByte() & 0xFF; //hex
+
+        int responseSymbol = in.readByte() & 0xFF; //hex
+
+        String vin = getString(in, 17); //vin
+
+        int encryptWay = in.readByte() & 0xFF; //hex
+
+        int contentLength = in.readShort();
+
+        Preconditions.checkState(in.readableBytes() >= contentLength, "消息体长度不够[%s]字节，只有[%s]字节", contentLength, in.readableBytes());
+
+        ByteBuf readBuf = in.readBytes(contentLength);
+        byte[] content = new byte[readBuf.readableBytes()];
+        readBuf.readBytes(content);
+
+        int checkPoint = byteBuf.readByte() & 0xFF; //由于LengthFieldBasedFrameDecoder只会分割到body的长度，最后一位也从源数据拿
+
+        int rawDataLength = 23 + contentLength + 1;
+        ByteBuf buf = backUpByteBuf.readBytes(rawDataLength);
+        byte[] rawData = new byte[rawDataLength];
+        buf.readBytes(rawData);
+
+        Gbt32960Msg gbt32960Msg = new Gbt32960Msg(startSymbol, commandSymbol, responseSymbol, vin, encryptWay, contentLength, content, checkPoint, rawData);
+        return gbt32960Msg;
+    }
+
+    private String getString(ByteBuf in, int size) throws UnsupportedEncodingException {
+        ByteBuf buf = in.readBytes(size);
+        byte[] req = new byte[buf.readableBytes()];
+        buf.readBytes(req);
+        return new String(req, "gbk");
+    }
+}

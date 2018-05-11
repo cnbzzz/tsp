@@ -1,0 +1,115 @@
+.index2-commom-header{
+	width: 210px;
+}
+.index2-commom-h-middle{
+	left:210px;
+	width: 50%;
+}
+.index2-commom-h-middle2{
+	width: 88%;
+}
+.index2-commom-h-right2{
+	left: 99.55%;
+}
+.red{
+	float: right;
+	background: url(../img/red.png) no-repeat center center;
+	background-size: 100% 100%;
+	width: 15px;
+	height: 15px;
+	margin-top: 2px;
+	border: none;
+}
+.yellow{
+	float: right;
+	background: url(../img/yellow.png) no-repeat center center;
+	background-size: 100% 100%;
+	width: 15px;
+	height: 15px;
+	margin-top: 2px;
+	border: none;
+}
+.green{
+	float: right;
+	background: url(../img/green.png) no-repeat center center;
+	background-size: 100% 100%;
+	width: 15px;
+	height: 15px;
+	margin-top: 2px;
+	border: none;
+}
+.index2-DA{
+	font-size: 14.24px;
+	line-height: 180%;
+	border-bottom: 1px solid #62FAFC;
+}
+.index2-DA-text,.index2-DA img{
+	display: inline-block;
+}
+.index2-DA-text{
+	border-right: 1px solid #62FAFC;
+	width: 80%;
+	padding-left: 25px;
+	padding-bottom: 5px;
+}
+.index2-DA:last-child{
+	border-bottom: none;
+	padding-bottom: 10px;
+}
+.index2-DA-text:last-child{
+	padding-bottom: 0;
+}
+.index2-DA img{
+	margin-left: 25px;
+	width: 15px;
+	height: 15px;
+}
+
+
+#echarts-pie-one{
+	height: 300px;
+	width: 100%;
+}
+.pie-table{
+	width: 100%;
+	max-width: 100%;
+	background-color: transparent;
+	border-spacing: 0;
+	border-collapse: collapse;	
+	margin-bottom: 0;
+	margin-top: -30px;
+	color: #fdfdfd;
+	font-size: 16px;
+	border: none;
+}
+.pie-table span{
+	padding:0 10px;
+	border-radius: 50%;
+}
+.pie-table-td1{
+	/*box-shadow: 0 0 0 1px #13369b inset;*/
+	background-color: #13369a;
+}
+.pie-table-td2{
+	/*box-shadow: 0 0 0 3px #B1E0E6 inset;*/
+	background-color: #05fcfe;
+}
+.pie-table-td3{
+	/*box-shadow: 0 0 0 3px #B1E0E6 inset;*/
+	background-color: #01cde3;
+}
+.pie-table-td4{
+	/*box-shadow: 0 0 0 3px #B1E0E6 inset;*/
+	background-color: #398efe;
+}
+.pie-table td{
+	padding: 5px 0;
+	text-align: center;
+}
+.row-col{
+	margin-top:-80px;
+}
+#echarts-line-one{
+	width: 100%;
+	height: 180px;
+}

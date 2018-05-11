@@ -1,0 +1,170 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_veh_fuelcell")
+public class MVehFuelcell extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String vin;
+
+    private Integer soc;
+
+    private Integer fuelCellVoltage;
+
+    private Integer fuelCellCurrent;
+
+    private Integer hydMaxConc;
+
+    private Integer dcStatus;
+
+    private Date uploadTime;
+
+    private Long calcFormnum;
+
+    private String fuelCellProbeTemper;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return soc
+     */
+    public Integer getSoc() {
+        return soc;
+    }
+
+    /**
+     * @param soc
+     */
+    public void setSoc(Integer soc) {
+        this.soc = soc;
+    }
+
+    /**
+     * @return fuelCellVoltage
+     */
+    public Integer getFuelCellVoltage() {
+        return fuelCellVoltage;
+    }
+
+    /**
+     * @param fuelCellVoltage
+     */
+    public void setFuelCellVoltage(Integer fuelCellVoltage) {
+        this.fuelCellVoltage = fuelCellVoltage;
+    }
+
+    /**
+     * @return fuelCellCurrent
+     */
+    public Integer getFuelCellCurrent() {
+        return fuelCellCurrent;
+    }
+
+    /**
+     * @param fuelCellCurrent
+     */
+    public void setFuelCellCurrent(Integer fuelCellCurrent) {
+        this.fuelCellCurrent = fuelCellCurrent;
+    }
+
+    /**
+     * @return hydMaxConc
+     */
+    public Integer getHydMaxConc() {
+        return hydMaxConc;
+    }
+
+    /**
+     * @param hydMaxConc
+     */
+    public void setHydMaxConc(Integer hydMaxConc) {
+        this.hydMaxConc = hydMaxConc;
+    }
+
+    /**
+     * @return dcStatus
+     */
+    public Integer getDcStatus() {
+        return dcStatus;
+    }
+
+    /**
+     * @param dcStatus
+     */
+    public void setDcStatus(Integer dcStatus) {
+        this.dcStatus = dcStatus;
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+
+    /**
+     * @return fuelCellProbeTemper
+     */
+    public String getFuelCellProbeTemper() {
+        return fuelCellProbeTemper;
+    }
+
+    /**
+     * @param fuelCellProbeTemper
+     */
+    public void setFuelCellProbeTemper(String fuelCellProbeTemper) {
+        this.fuelCellProbeTemper = fuelCellProbeTemper == null ? null : fuelCellProbeTemper.trim();
+    }
+}

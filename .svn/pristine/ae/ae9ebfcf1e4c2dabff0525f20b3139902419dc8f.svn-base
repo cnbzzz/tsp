@@ -1,0 +1,36 @@
+package cn.spacewalker.tsp.bg.tbox.simulator.service.impl;
+
+import cn.spacewalker.tsp.bg.tbox.constant.ActionConstant;
+import cn.spacewalker.tsp.bg.tbox.simulator.model.Vehicle;
+import cn.spacewalker.tsp.bg.tbox.simulator.service.ScriptService;
+import io.netty.channel.ChannelHandlerContext;
+
+/**
+ * Created by steven ma
+ * 2017/8/24 9:39
+ */
+
+public class OneVehServiceImpl implements ScriptService {
+
+    @Override
+    public void action(ChannelHandlerContext ctx) {
+        System.out.println("Run:OneVehServiceImpl....");
+
+        String vin = "1222567890ABCDEFG";
+        String iccid = "3234567890ABCDEFGQWE";
+        String time = "17 08 23 11 58 19";
+
+        Vehicle vehicle = new Vehicle(vin, iccid, time, ctx);
+
+        vehicle.login();
+
+        vehicle.doAction(ActionConstant.START);
+        vehicle.doAction(ActionConstant.STOP_AND_CHARGE);
+        vehicle.doAction(ActionConstant.CHARGE_DONE);
+        vehicle.doAction(ActionConstant.MOVE);
+        vehicle.doAction(ActionConstant.MOVE);
+        vehicle.doAction(ActionConstant.STOP);
+
+        vehicle.logout();
+    }
+}

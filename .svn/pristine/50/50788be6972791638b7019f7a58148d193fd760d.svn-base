@@ -1,0 +1,106 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_positionsum")
+public class MRepPositionsum extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String region;
+
+    private Integer vehStatus;
+
+    private Long num;
+
+    private Date calcDate;
+
+    private Date updatTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return region
+     */
+    public String getRegion() {
+        return region;
+    }
+
+    /**
+     * @param region
+     */
+    public void setRegion(String region) {
+        this.region = region == null ? null : region.trim();
+    }
+
+    /**
+     * @return vehStatus
+     */
+    public Integer getVehStatus() {
+        return vehStatus;
+    }
+
+    /**
+     * @param vehStatus
+     */
+    public void setVehStatus(Integer vehStatus) {
+        this.vehStatus = vehStatus;
+    }
+
+    /**
+     * @return num
+     */
+    public Long getNum() {
+        return num;
+    }
+
+    /**
+     * @param num
+     */
+    public void setNum(Long num) {
+        this.num = num;
+    }
+
+    /**
+     * @return calcDate
+     */
+    public Date getCalcDate() {
+        return calcDate;
+    }
+
+    /**
+     * @param calcDate
+     */
+    public void setCalcDate(Date calcDate) {
+        this.calcDate = calcDate;
+    }
+
+    /**
+     * @return updatTime
+     */
+    public Date getUpdatTime() {
+        return updatTime;
+    }
+
+    /**
+     * @param updatTime
+     */
+    public void setUpdatTime(Date updatTime) {
+        this.updatTime = updatTime;
+    }
+}

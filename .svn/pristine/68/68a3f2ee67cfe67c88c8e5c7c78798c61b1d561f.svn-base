@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>位置监控</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/index4.css"/>
+    <link rel="stylesheet" href="css/pageloader.css"/>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+<div class="warrp">
+    <div class="row show-time">
+        <div class="col-md-4 weather-day">
+            <span class="weather-date"></span>
+            <span class="weather-week"></span>
+            <span class="weather-min"></span>
+            <span class="weather-text"></span>
+            <span class="weather-tq"></span>
+        </div>
+        <div class="col-md-4">
+            <h1>新能源车智能网联云端平台</h1>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-back">
+                <span class="fa fa-desktop"></span>
+                <span>返回主屏</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="echarts-map-two"></div>
+        </div>
+        <div class="col-md-4" id="regionVeh">
+            <div class="commom-div">
+                <div class="commom-header">
+                    <span>车辆分布图</span>
+                </div>
+                <div class="commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle">
+                    <div id="echarts-pie-three" style="margin-top: -40px;"></div>
+
+                    <div class="index4-progress" v-for="item in veh.list">
+                        <span class="progress-name">{{item.region}}</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-1" role="progressbar"
+                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                            :style="{ width: calcPercent(item.drivingCount, item.totalCount, 85) + '%' }"></div>
+                            <div class="progress-bar progress-2" role="progressbar"
+                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                            :style="{ width: calcPercent(item.chargingCount, item.totalCount, 85) + '%' }"></div>
+                            <div class="progress-bar progress-3" role="progressbar"
+                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                            :style="{ width: calcPercent(item.offlineCount, item.totalCount, 85) + '%' }"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=您申请的key值"></script>
+<script type="text/javascript" src="http://webapi.amap.com/demos/js/liteToolbar.js"></script>
+<script type="text/javascript" src="js/chart/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="js/geomap.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/bzzz.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var vue = initVue('regionVeh', {'veh': {'list': []}});
+        var heatMap = getMap();
+        var pie = getPie();
+
+        var url = baseUrl + "/listVehHeatMapData";
+        showHeatMap(url, heatMap);
+        setInterval(function (url, heatMap) {
+            showHeatMap(url, heatMap);
+        }, 5000, url, heatMap);
+
+        var url = baseUrl + "/listVehRegionPercent";
+        showVehPie(url, pie, vue).always(function(){
+            $('.tip-show').hide();
+        });
+        setInterval(function (url, heatMap, vue) {
+            showVehPie(url, heatMap, vue);
+        }, 5000, url, pie, vue);
+    });
+
+	
+	$(document).ajaxStop(function() {		
+		$('.tip-show').hide();
+	});
+    //生成地图
+    function getMap() {
+        var myMap = echarts.init(document.getElementById('echarts-map-two'));
+        var option = {
+            visualMap: {
+                min: 0,
+                max: 400,
+                splitNumber: 4,
+                show: false,
+                inRange: {
+                    color: ['#62fafc', '#04c9fe', '#018cff', '#0055ff']
+                },
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            geo: {
+                top: '1%',
+                right: '1%',
+                left: 0,
+                bottom: 0,
+                map: 'china',
+                label: {
+                    emphasis: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        areaColor: 'rgba(135, 172,203,.6)',
+                        borderColor: 'rgba(205,229,240,0.8)',
+                        borderWidth: 1.5
+                    },
+                    emphasis: {
+                        areaColor: '#78a3c6'
+                    }
+                }
+            },
+            series: [{
+                name: 'AQI',
+                type: 'heatmap',
+                coordinateSystem: 'geo',
+                pointSize: 5,
+                blurSize: 5,
+                data: []
+            }]
+        };
+        myMap.setOption(option);
+        return myMap;
+    }
+
+    //生成饼图
+    function getPie() {
+        var myPie = echarts.init(document.getElementById('echarts-pie-three'));
+        var option = {
+            tooltip: {
+                show: true,
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#13369a', '#05fcfe', '#01cde3'],
+            series: [
+                {
+                    name: '流量统计',
+                    type: 'pie',
+                    radius: ['48%', '20%'],
+                    center: ['50%', '50%'],
+                    selectedOffset: 15,
+                    label: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 12,
+                                color: '#fdfdfd'
+                            },
+                            formatter: "{b}({d}%)"
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: '#fdfdfd'
+                            },
+                            length: 60
+                        }
+                    },
+                    data: [],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.9)',
+                            color: '#fdfdfd'
+                        }
+                    }
+                }
+            ]
+        };
+        myPie.setOption(option);
+        return myPie;
+    }
+</script>
+</html>

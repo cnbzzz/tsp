@@ -1,0 +1,331 @@
+package cn.spacewalker.tsp.bg.pojo.utils;
+
+import cn.spacewalker.tsp.bg.pojo.dto.*;
+import cn.spacewalker.tsp.bg.pojo.model.*;
+import com.google.common.base.Preconditions;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
+
+/**
+ * This file is part of lightsaber Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/4 15:45
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public class Gbt32960Msg2Bytes {
+
+    public static byte[] msg2Bytes(Gbt32960MsgDto msg){
+        Preconditions.checkArgument(msg != null, "msg is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeString(msg.getStartSymbol(), null);
+        int commandSymbol = msg.getCommandSymbol();
+        buf.writeByte((byte) commandSymbol);
+        buf.writeByte((byte) msg.getResponseSymbol());
+        buf.writeString(msg.getVin(), null);
+        buf.writeByte((byte) msg.getEncryptWay());
+
+        byte[] bytes;
+        switch (commandSymbol) {
+            case 0x01:
+                bytes = vehSignin2Bytes(msg.getVehSignin());
+                break;
+
+            case 0x02:
+                bytes = uploadRealTime2Bytes(msg.getUploadRealTimeDto());
+                break;
+
+            case 0x03:
+                bytes = uploadRealTime2Bytes(msg.getUploadRealTimeDto());
+                break;
+
+            case 0x04:
+                bytes = vehSignout2Bytes(msg.getVehSignout());
+                break;
+
+            case 0x05:
+                bytes = platformSignin2Bytes(msg.getPlatformSignin());
+                break;
+
+            case 0x06:
+                bytes = platformSignout2Bytes(msg.getPlatformSignout());
+                break;
+
+            default:
+                bytes = null;
+        }
+
+        Preconditions.checkState(bytes != null, "bytes is null. commandSymbol is [%s]", commandSymbol);
+
+        buf.writeWord(bytes.length);
+        buf.writeBytes(bytes);
+
+        byte xorByte = xorCheckPoint(buf.getBytes());
+        buf.writeByte(xorByte);
+
+        return buf.getBytes();
+    }
+
+    public static byte[] vehSignin2Bytes(TVehSignin data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeBytes(Gbt32960MsgUtils.getGatherTimeByte(data.getGatherTime()));
+        buf.writeWord(data.getSignInFormNum());
+        buf.writeString(data.getIccid(), null);
+        int n = data.getChargeNum();
+        buf.writeByte((byte) n);
+        int m = data.getSystemCodeLength();
+        buf.writeByte((byte) m);
+        buf.writeString(data.getSystemCode(), null);
+        return buf.getBytes();
+    }
+
+    public static byte[] uploadRealTime2Bytes(UploadRealTimeDto data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeBytes(Gbt32960MsgUtils.getGatherTimeByte(data.getGatherTime()));
+
+        TVehData vehData = data.getVehData();
+        if(vehData != null){
+            byte[] bytes = vehData2Bytes(vehData);
+            buf.writeBytes(bytes);
+        }
+
+        List<TVehDrivemotor> vehDrivemotorList = data.getVehDrivemotorList();
+        if(CollectionUtils.isNotEmpty(vehDrivemotorList)){
+            byte[] bytes = vehDrivemotor2Bytes(vehDrivemotorList);
+            buf.writeBytes(bytes);
+        }
+
+        TVehFuelcell vehFuelcell = data.getVehFuelcell();
+        if(vehFuelcell != null){
+            byte[] bytes = vehFuelcell2Bytes(vehFuelcell);
+            buf.writeBytes(bytes);
+        }
+
+        TVehEngine vehEngine = data.getVehEngine();
+        if(vehEngine != null){
+            byte[] bytes = vehEngine2Bytes(vehEngine);
+            buf.writeBytes(bytes);
+        }
+
+        TVehPosition vehPosition = data.getVehPosition();
+        if(vehPosition != null){
+            byte[] bytes = vehPosition2Bytes(vehPosition);
+            buf.writeBytes(bytes);
+        }
+
+        TVehLimit vehLimit = data.getVehLimit();
+        if(vehLimit != null){
+            byte[] bytes = vehLimit2Bytes(vehLimit);
+            buf.writeBytes(bytes);
+        }
+
+        TVehError vehError = data.getVehError();
+        if(vehError != null){
+            byte[] bytes = vehError2Bytes(vehError);
+            buf.writeBytes(bytes);
+        }
+
+        return buf.getBytes();
+    }
+
+    public static byte[] vehSignout2Bytes(TVehSignout data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+//        buf.writeByte((byte) 4);
+
+        buf.writeBytes(Gbt32960MsgUtils.getGatherTimeByte(data.getSignOutTime()));
+        buf.writeWord(data.getSignOutFormNum());
+
+        return buf.getBytes();
+    }
+
+    public static byte[] platformSignin2Bytes(TPlatformSignin data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+//        buf.writeByte((byte) 5);
+
+        buf.writeBytes(Gbt32960MsgUtils.getGatherTimeByte(data.getSignInTime()));
+        buf.writeWord(data.getSignInFormNum());
+        buf.writeString(data.getUserName(), null);
+        buf.writeString(data.getPasswd(), null);
+        buf.writeByte(data.getEncRule().byteValue());
+
+        return buf.getBytes();
+    }
+
+
+    public static byte[] platformSignout2Bytes(TPlatformSignout data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+//        buf.writeByte((byte) 6);
+
+        buf.writeBytes(Gbt32960MsgUtils.getGatherTimeByte(data.getSignOutTime()));
+        buf.writeWord(data.getSignOutFormNum());
+
+        return buf.getBytes();
+    }
+
+    public static byte[] vehData2Bytes(TVehData data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 1);
+
+        buf.writeByte(data.getVehStatus().byteValue());
+        buf.writeByte(data.getChargeStatus().byteValue());
+        buf.writeByte(data.getRunMode().byteValue());
+        buf.writeWord(data.getSpeed());
+        buf.writeDword(data.getAccMile());
+        buf.writeWord(data.getTotalVoltage());
+        buf.writeWord(data.getTotalCurrent());
+        buf.writeByte(data.getSoc().byteValue());
+        buf.writeByte(data.getDcStatus().byteValue());
+        buf.writeByte(data.getGear().byteValue());
+        buf.writeWord(data.getInsRes());
+        buf.writeWord(data.getBlank());
+        return buf.getBytes();
+    }
+
+    public static byte[] vehDrivemotor2Bytes(List<TVehDrivemotor> dataList){
+        Preconditions.checkArgument(dataList != null, "data is null");
+        int size = dataList.size();
+        Preconditions.checkArgument(size > 0, "dataList size is [%s]", size);
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 2);
+
+        buf.writeByte((byte) size);
+        for (TVehDrivemotor data: dataList) {
+            buf.writeByte(data.getDriveMotorNum().byteValue());
+            buf.writeByte(data.getDriveMotorStatus().byteValue());
+            buf.writeByte(data.getDriveMotorCtrlTemper().byteValue());
+            buf.writeWord(data.getDriveMotorSpeed());
+            buf.writeWord(data.getDriveMotorTorque());
+            buf.writeByte(data.getDriveMotorTemper().byteValue());
+            buf.writeWord(data.getDriveMotorInputVoltage());
+            buf.writeWord(data.getDriveMotorCurrent());
+        }
+        return buf.getBytes();
+    }
+
+    public static byte[] vehFuelcell2Bytes(TVehFuelcell data) {
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 3);
+
+        buf.writeWord(data.getFuelCellVoltage());
+        buf.writeWord(data.getFuelCellCurrent());
+        buf.writeWord(data.getFuelCellPower());
+        Integer fuelCellProbeCount = data.getFuelCellProbeCount();
+        buf.writeWord(fuelCellProbeCount);
+
+        String fuelCellProbeTemper = data.getFuelCellProbeTemper();
+        if(StringUtils.isNotBlank(fuelCellProbeTemper)){
+            String[] split = StringUtils.split(fuelCellProbeTemper, ",");
+            for (String str : split) {
+                int i = Integer.valueOf(str);
+                buf.writeByte((byte) i);
+            }
+        }
+        buf.writeWord(data.getHydMaxTemper());
+        buf.writeByte(data.getHydMaxTemperProbe().byteValue());
+        buf.writeWord(data.getHydMaxConc());
+        buf.writeByte(data.getHydMaxConcSensorNum().byteValue());
+        buf.writeWord(data.getHydMaxPress());
+        buf.writeByte(data.getHydMaxPress().byteValue());
+        buf.writeByte(data.getDcStatus().byteValue());
+        return buf.getBytes();
+    }
+
+    public static byte[] vehEngine2Bytes(TVehEngine data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 4);
+
+        buf.writeByte(data.getEngineStatus().byteValue());
+        buf.writeWord(data.getCrankshaftSpeed());
+        buf.writeWord(data.getFuelCellPower());
+
+        return buf.getBytes();
+    }
+
+    public static byte[] vehPosition2Bytes(TVehPosition data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 5);
+
+        buf.writeByte(ByteUtils.bit2Byte(data.getPosStatus()));
+        buf.writeDword(Long.valueOf(data.getLongitude()));
+        buf.writeDword(Long.valueOf(data.getLatitude()));
+
+        return buf.getBytes();
+    }
+
+    public static byte[] vehLimit2Bytes(TVehLimit data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 6);
+
+        buf.writeByte(data.getMaxVoltageSubsystemNum().byteValue());
+        buf.writeByte(data.getMaxVoltagefullCellNum().byteValue());
+        buf.writeWord(data.getMaxVoltagefullCell());
+        buf.writeByte(data.getMinVoltageSubsystemNum().byteValue());
+        buf.writeByte(data.getMinVoltagefullCellNum().byteValue());
+        buf.writeWord(data.getMinVoltagefullCell());
+
+        buf.writeByte(data.getMaxTemperSubsystemNum().byteValue());
+        buf.writeByte(data.getMaxTemperProbeNum().byteValue());
+        buf.writeByte(data.getMaxTemper().byteValue());
+        buf.writeByte(data.getMinTemperSubsystemNum().byteValue());
+        buf.writeByte(data.getMinTemperProbeNum().byteValue());
+        buf.writeByte(data.getMinTemper().byteValue());
+        return buf.getBytes();
+    }
+
+    public static byte[] vehError2Bytes(TVehError data){
+        Preconditions.checkArgument(data != null, "data is null");
+
+        Gbt32960WriteByteBuf buf = new Gbt32960WriteByteBuf();
+        buf.writeByte((byte) 7);
+
+        buf.writeByte(data.getMaxErrorLevel().byteValue());
+        buf.writeDword(data.getCurrencyErrorLevel());
+
+        buf.writeByte(data.getFullCellErrorCount().byteValue());
+        buf.writeDword(data.getFullCellErrorList());
+
+        buf.writeByte(data.getDriveMotorErrorCount().byteValue());
+        buf.writeDword(data.getDriveMotorErrorList());
+
+        buf.writeByte(data.getEngineErrorCount().byteValue());
+        buf.writeDword(data.getEngineErrorList());
+
+        buf.writeByte(data.getOtherErrorCount().byteValue());
+        buf.writeDword(data.getOtherErrorList());
+        return buf.getBytes();
+    }
+
+
+    public static byte xorCheckPoint(byte[] bytes){
+        byte xorByte = 0;
+        for (int i = 0; i < bytes.length; i++) {
+            xorByte = (byte) (xorByte ^ bytes[i]);
+        }
+
+        return xorByte;
+    }
+
+}

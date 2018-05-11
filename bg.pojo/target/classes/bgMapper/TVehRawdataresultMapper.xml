@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehRawdataresultMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehRawdataresult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formnum" jdbcType="VARCHAR" property="formnum" />
+    <result column="commondType" jdbcType="VARCHAR" property="commondType" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="retryTime" jdbcType="INTEGER" property="retryTime" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="respData" jdbcType="VARCHAR" property="respData" />
+  </resultMap>
+</mapper>

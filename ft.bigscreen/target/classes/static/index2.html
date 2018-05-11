@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>采集</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/index2.css"/>
+    <link rel="stylesheet" href="css/pageloader.css"/>
+</head>
+<body>
+<div class="warrp">
+    <div class="row show-time">
+        <div class="col-md-4 weather-day">
+            <span class="weather-date"></span>
+            <span class="weather-week"></span>
+            <span class="weather-min"></span>
+            <span class="weather-text"></span>
+            <span class="weather-tq"></span>
+        </div>
+        <div class="col-md-3">
+            <h1>新能源车智能网联云端平台</h1>
+        </div>
+        <div class="col-md-3 col-md-offset-2">
+            <div class="btn-back">
+                <span class="fa fa-desktop"></span>
+                <span>返回主屏</span>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 5px;">
+        <div class="col-md-4">
+            <div class="commom-div">
+                <div class="commom-header index2-commom-header">
+                    <span>数据采集实时监控</span>
+                </div>
+                <div class="commom-h-middle index2-commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle _height1">
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">车辆登入</span>
+                        <img src="img/yellow.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">车辆登出</span>
+                        <img src="img/green.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">实时信息上报</span>
+                        <img src="img/yellow.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">补发信息上报</span>
+                        <img src="img/green.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">平台传输数据占据</span>
+                        <img src="img/yellow.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">心跳</span>
+                        <img src="img/green.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">终端校时</span>
+                        <img src="img/yellow.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">上行数据系统预留</span>
+                        <img src="img/green.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">查询命令</span>
+                        <img src="img/yellow.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">设置命令</span>
+                        <img src="img/green.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">车载终端控制命令</span>
+                        <img src="img/yellow.png"/>
+                    </div>
+                    <div class="index2-DA">
+                        <span class="index2-DA-text">下行数据系统预留</span>
+                        <img src="img/red.png"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" id="errorsum">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="commom-div">
+                        <div class="commom-header">
+                            故障采集情况
+                        </div>
+                        <div class="commom-h-middle"></div>
+                        <div class="commom-h-right"></div>
+                        <div class="commom-m-middle">
+                            <div class="progress-span">
+                                <span class="progress-span-left">可充电储能装置故障</span>
+                                <span class="progress-span-right"><span>{{errorsum.charingError}}</span>次</span>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-commom" role="progressbar"
+                                         aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         :style="{ width: charingErrorPercent + '%' }"></div>
+                                </div>
+                            </div>
+                            <div class="progress-span">
+                                <span class="progress-span-left">发动机故障</span>
+                                <span class="progress-span-right"><span>{{errorsum.engineError}}</span>次</span>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-commom" role="progressbar"
+                                         aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100"
+                                         :style="{ width: engineErrorPercent + '%' }"></div>
+                                </div>
+                            </div>
+                            <div class="progress-span">
+                                <span class="progress-span-left">驱动电机</span>
+                                <span class="progress-span-right"><span>{{errorsum.driveMotorError}}</span>次</span>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-commom" role="progressbar"
+                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                         :style="{ width: driveMotorErrorPercent + '%' }"></div>
+                                </div>
+                            </div>
+                            <div class="progress-span">
+                                <span class="progress-span-left">其他问题</span>
+                                <span class="progress-span-right"><span>{{errorsum.otherError}}</span>次</span>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-commom" role="progressbar"
+                                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                         :style="{ width: otherErrorPercent + '%' }"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="commom-div">
+                        <div class="commom-header">
+                            故障采集统计
+                        </div>
+                        <div class="commom-h-middle"></div>
+                        <div class="commom-h-right"></div>
+                        <div class="commom-m-middle">
+                            <div id="echarts-pie-one">
+                            </div>
+                            <table class="pie-table">
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td><span class="pie-table-td1"></span></td>
+                                    <td><span class="pie-table-td2"></span></td>
+                                    <td><span class="pie-table-td3"></span></td>
+                                    <td><span class="pie-table-td4"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>类型</td>
+                                    <td>可充电储能装置</td>
+                                    <td>发动机</td>
+                                    <td>驱动电机</td>
+                                    <td>其他</td>
+                                </tr>
+                                <tr>
+                                    <td>占比</td>
+                                    <td>{{charingErrorPercent}}%</td>
+                                    <td>{{engineErrorPercent}}%</td>
+                                    <td>{{driveMotorErrorPercent}}%</td>
+                                    <td>{{otherErrorPercent}}%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 row-col">
+            <div class="commom-div">
+                <div class="commom-header">
+                    采集流量曲线
+                </div>
+                <div class="commom-h-middle index2-commom-h-middle2"></div>
+                <div class="commom-h-right  index2-commom-h-right2"></div>
+                <div class="commom-m-middle">
+                    <div id="echarts-line-one">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/chart/echarts.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+<script type="text/javascript">
+    var pie = null;
+    var line = null;
+    var vue = null;
+
+
+    $(document).ready(function () {
+        pie = getPie();
+        line = getLine();
+
+        var mheight = $('._height1').height();
+        $('.col-md-6').find('.commom-m-middle').height(mheight);
+
+        loadErrorsum();
+        listColCurve();
+
+        setInterval(function () {
+            loadErrorsum();
+            listColCurve();
+        }, 5000);
+        $('.tip-show').hide();
+    });
+
+    function listColCurve() {
+        var url = baseUrl + "/listColCurve";
+        myAjax(url, {"datetime": getNowFormatDate(), "interval": 10}, function (result) {
+            if (result.retCode == 1) {
+                var dataArr = result.data;
+                var json = json2Arr(dataArr);
+
+                var option = {
+                    xAxis: [{
+                        data: json.datetime
+                    }],
+                    series: [{data: json.currColData}]
+                }
+                line.setOption(option);
+            }
+        });
+    }
+
+    function loadErrorsum() {
+        var url = baseUrl + "/queryErrorsum";
+        myAjax(url, {}, function (result) {
+            if (result.retCode == 1) {
+
+
+                var totalErrorCount = result.data.totalErrorCount;
+                if (totalErrorCount == 0) {
+                    showNoData(pie);
+                } else {
+                    var dataArr = [];
+
+                    var charingError = result.data.charingError;
+                    var driveMotorError = result.data.driveMotorError;
+                    var engineError = result.data.engineError;
+                    var otherError = result.data.otherError;
+
+                    charingError && dataArr.push({'value':charingError || 0, 'name':'燃料电池'});
+                    driveMotorError && dataArr.push({'value':driveMotorError || 0, 'name':'驱动电机'});
+                    engineError && dataArr.push({'value':engineError || 0, 'name':'发动机'});
+                    otherError && dataArr.push({'value':otherError || 0, 'name':'其他故障'});
+
+                    var option = {
+                        series:[{
+                            data: dataArr
+                        }]
+                    }
+                    pie.setOption(option);
+                }
+
+                if (vue) {
+                    vue.errorsum = result.data;
+                }
+            }
+        });
+    }
+
+    vue = vueInit();
+
+    //采集流量统计-饼图
+    function getPie() {
+        var dataPie = document.getElementById("echarts-pie-one");
+        var myDataPie = echarts.init(dataPie);
+        var option = {
+            tooltip: {
+                show: true,
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'horizontal',
+                y: 'bottom',
+                top: '75%',
+                left: '15%',
+                data: ['驱动电机', '燃料电机', '发动机', '电池'],
+                itemGap: 4,
+                textStyle: {
+                    color: 'transparent'
+                },
+                show: false
+            },
+            color: ['#13369a', '#05fcfe', '#01cde3', '#398efe', '#4ec9fd'],
+            series: [
+                {
+                    name: '流量统计',
+                    type: 'pie',
+                    radius: ['50%', '30%'],
+                    center: ['50%', '40%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '12',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        {value: 25, name: '驱动电机'},
+                        {value: 25, name: '燃料电机'},
+                        {value: 25, name: '发动机'},
+                        {value: 25, name: '电池'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+                            color: '#fdfdfd'
+                        }
+                    }
+                }
+            ]
+        };
+        myDataPie.setOption(option);
+        return myDataPie;
+    }
+
+    //采集流量曲线-折线面积图
+    function getLine() {
+        var line = document.getElementById('echarts-line-one');
+        var myLine = echarts.init(line);
+        var data = [3, 4, 5, 4, 2, 1, 2, 6, 6, 9, 4, 5, 8, 7, 5, 6, 2, 1, 3, 2, 1, 3, 4, 2];
+        var xAxisData = ['00:00', '1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    shadowStyle: 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                top: '10%',
+                left: '1%',
+                right: '1%',
+                bottom: '4%',
+                containLabel: true,
+                width: "96%"
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fdfdfd',
+                            fontStyle: 'italic'
+                        },
+                        interval: 0
+                    },
+                    nameTextStyle: {},
+                    boundaryGap: false,
+                    data: xAxisData
+                }
+            ],
+
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '次',
+                    nameLocation: 'middle',
+                    nameTextStyle: {
+                        color: '#fdfdfd'
+                    },
+                    nameGap: 20,
+                    splitLine: {
+                        lineStyle: {
+                            color: '#3daaab',
+                            opacity: .85
+
+                        }
+                    },
+//                    boundarGap: [1, 1],
+//                    min: -1,
+//                    max: 1,
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fdfdfd'
+                        }
+                    },
+                    symbol: 'none'
+                }
+            ],
+            series: [
+                {
+                    name: '采集流量曲线',
+                    type: "line",
+                    stack: '总量',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#62fafc',
+                                opacity: .9
+                            }, {
+                                offset: 0.8,
+                                color: '#62fafc',
+                                opacity: .3
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, .1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#62fafc',
+                            barBorderWidth: 6,
+                            barBorderRadius: 0
+                        }
+                    },
+                    data: []
+                }
+            ]
+        };
+        myLine.setOption(option);
+        return myLine;
+    }
+
+    function vueInit() {
+        var vue = new Vue({
+            el: '#errorsum',
+            data: {//故障统计
+                errorsum: {
+                    "calcDate": 1503232426000,//统计时间
+                    "calcFormnum": 52856726676361220,//统计流水号
+                    "charingError": 20,//充电错误数量
+                    "driveMotorError": 20,//驱动电机错误数量
+                    "engineError": 20,//发动机错误数量
+                    "oid": "52856728376836096",//主键，唯一
+                    "otherError": 20,//其他错误数量
+                    "totalErrorCount": 100,//总错误数量
+                    "updateTime": 1503232426000//更新时间
+                }
+            },
+            computed: {
+                charingErrorPercent: function () {
+                    var err = this.errorsum;
+
+                    var charingErrorPercent = 0;
+                    if (err.totalErrorCount != 0) {
+                        charingErrorPercent = err.charingError / err.totalErrorCount * 100;
+                    }
+                    return charingErrorPercent;
+                },
+                driveMotorErrorPercent: function () {
+                    var err = this.errorsum;
+
+                    var driveMotorErrorPercent = 0;
+                    if (err.totalErrorCount != 0) {
+                        driveMotorErrorPercent = err.driveMotorError / err.totalErrorCount * 100;
+                    }
+                    return driveMotorErrorPercent;
+                },
+                engineErrorPercent: function () {
+                    var err = this.errorsum;
+
+                    var engineErrorPercent = 0;
+                    if (err.totalErrorCount != 0) {
+                        engineErrorPercent = err.engineError / err.totalErrorCount * 100;
+                    }
+                    return engineErrorPercent;
+                },
+                otherErrorPercent: function () {
+                    var err = this.errorsum;
+
+                    var count = err.totalErrorCount;
+                    var num = err.otherError;
+                    return count && num / count * 100;
+                }
+            }
+        });
+
+        return vue;
+    }
+
+</script>
+</html>

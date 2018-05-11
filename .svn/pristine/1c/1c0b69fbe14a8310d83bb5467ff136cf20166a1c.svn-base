@@ -1,0 +1,7 @@
+package cn.spacewalker.tsp.ft.pojo.mapper;
+
+import cn.spacewalker.tsp.ft.pojo.model.MVehFuelcell;
+import tk.mybatis.mapper.common.Mapper;
+
+public interface MVehFuelcellMapper extends Mapper<MVehFuelcell> {
+}

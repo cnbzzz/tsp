@@ -1,0 +1,522 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_vehinfo")
+public class MRepVehinfo extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String iccid;
+
+    private String vin;
+
+    private String model;
+
+    private String termCode;
+
+    private String vehId;
+
+    private Long accMile;
+
+    private Long driveMile;
+
+    private Integer driveTimes;
+
+    private Integer speed;
+
+    private Integer engineStatus;
+
+    private Integer crankshaftSpeed;
+
+    private Integer driveMotorSpeed;
+
+    private Integer soc;
+
+    private Integer fuelCellVoltage;
+
+    private Integer fuelCellCurrent;
+
+    private Integer hydMaxConc;
+
+    private Integer dcStatus;
+
+    private Integer charingError;
+
+    private Integer driveMotorError;
+
+    private Integer engineError;
+
+    private Integer otherError;
+
+    private String longitude;
+
+    private String latitude;
+
+    private Integer vehStatus;
+
+    private Integer batteryStatus;
+
+    private Integer status;
+
+    private Long calcFormnum;
+
+    private Date lastUpTime;
+
+    private Date createDate;
+
+    private Date calcDate;
+
+    private String fuelCellProbeTemper;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return iccid
+     */
+    public String getIccid() {
+        return iccid;
+    }
+
+    /**
+     * @param iccid
+     */
+    public void setIccid(String iccid) {
+        this.iccid = iccid == null ? null : iccid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return model
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * @param model
+     */
+    public void setModel(String model) {
+        this.model = model == null ? null : model.trim();
+    }
+
+    /**
+     * @return termCode
+     */
+    public String getTermCode() {
+        return termCode;
+    }
+
+    /**
+     * @param termCode
+     */
+    public void setTermCode(String termCode) {
+        this.termCode = termCode == null ? null : termCode.trim();
+    }
+
+    /**
+     * @return vehId
+     */
+    public String getVehId() {
+        return vehId;
+    }
+
+    /**
+     * @param vehId
+     */
+    public void setVehId(String vehId) {
+        this.vehId = vehId == null ? null : vehId.trim();
+    }
+
+    /**
+     * @return accMile
+     */
+    public Long getAccMile() {
+        return accMile;
+    }
+
+    /**
+     * @param accMile
+     */
+    public void setAccMile(Long accMile) {
+        this.accMile = accMile;
+    }
+
+    /**
+     * @return driveMile
+     */
+    public Long getDriveMile() {
+        return driveMile;
+    }
+
+    /**
+     * @param driveMile
+     */
+    public void setDriveMile(Long driveMile) {
+        this.driveMile = driveMile;
+    }
+
+    /**
+     * @return driveTimes
+     */
+    public Integer getDriveTimes() {
+        return driveTimes;
+    }
+
+    /**
+     * @param driveTimes
+     */
+    public void setDriveTimes(Integer driveTimes) {
+        this.driveTimes = driveTimes;
+    }
+
+    /**
+     * @return speed
+     */
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed
+     */
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * @return engineStatus
+     */
+    public Integer getEngineStatus() {
+        return engineStatus;
+    }
+
+    /**
+     * @param engineStatus
+     */
+    public void setEngineStatus(Integer engineStatus) {
+        this.engineStatus = engineStatus;
+    }
+
+    /**
+     * @return crankshaftSpeed
+     */
+    public Integer getCrankshaftSpeed() {
+        return crankshaftSpeed;
+    }
+
+    /**
+     * @param crankshaftSpeed
+     */
+    public void setCrankshaftSpeed(Integer crankshaftSpeed) {
+        this.crankshaftSpeed = crankshaftSpeed;
+    }
+
+    /**
+     * @return driveMotorSpeed
+     */
+    public Integer getDriveMotorSpeed() {
+        return driveMotorSpeed;
+    }
+
+    /**
+     * @param driveMotorSpeed
+     */
+    public void setDriveMotorSpeed(Integer driveMotorSpeed) {
+        this.driveMotorSpeed = driveMotorSpeed;
+    }
+
+    /**
+     * @return soc
+     */
+    public Integer getSoc() {
+        return soc;
+    }
+
+    /**
+     * @param soc
+     */
+    public void setSoc(Integer soc) {
+        this.soc = soc;
+    }
+
+    /**
+     * @return fuelCellVoltage
+     */
+    public Integer getFuelCellVoltage() {
+        return fuelCellVoltage;
+    }
+
+    /**
+     * @param fuelCellVoltage
+     */
+    public void setFuelCellVoltage(Integer fuelCellVoltage) {
+        this.fuelCellVoltage = fuelCellVoltage;
+    }
+
+    /**
+     * @return fuelCellCurrent
+     */
+    public Integer getFuelCellCurrent() {
+        return fuelCellCurrent;
+    }
+
+    /**
+     * @param fuelCellCurrent
+     */
+    public void setFuelCellCurrent(Integer fuelCellCurrent) {
+        this.fuelCellCurrent = fuelCellCurrent;
+    }
+
+    /**
+     * @return hydMaxConc
+     */
+    public Integer getHydMaxConc() {
+        return hydMaxConc;
+    }
+
+    /**
+     * @param hydMaxConc
+     */
+    public void setHydMaxConc(Integer hydMaxConc) {
+        this.hydMaxConc = hydMaxConc;
+    }
+
+    /**
+     * @return dcStatus
+     */
+    public Integer getDcStatus() {
+        return dcStatus;
+    }
+
+    /**
+     * @param dcStatus
+     */
+    public void setDcStatus(Integer dcStatus) {
+        this.dcStatus = dcStatus;
+    }
+
+    /**
+     * @return charingError
+     */
+    public Integer getCharingError() {
+        return charingError;
+    }
+
+    /**
+     * @param charingError
+     */
+    public void setCharingError(Integer charingError) {
+        this.charingError = charingError;
+    }
+
+    /**
+     * @return driveMotorError
+     */
+    public Integer getDriveMotorError() {
+        return driveMotorError;
+    }
+
+    /**
+     * @param driveMotorError
+     */
+    public void setDriveMotorError(Integer driveMotorError) {
+        this.driveMotorError = driveMotorError;
+    }
+
+    /**
+     * @return engineError
+     */
+    public Integer getEngineError() {
+        return engineError;
+    }
+
+    /**
+     * @param engineError
+     */
+    public void setEngineError(Integer engineError) {
+        this.engineError = engineError;
+    }
+
+    /**
+     * @return otherError
+     */
+    public Integer getOtherError() {
+        return otherError;
+    }
+
+    /**
+     * @param otherError
+     */
+    public void setOtherError(Integer otherError) {
+        this.otherError = otherError;
+    }
+
+    /**
+     * @return longitude
+     */
+    public String getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * @param longitude
+     */
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    /**
+     * @return latitude
+     */
+    public String getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * @param latitude
+     */
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
+    /**
+     * @return vehStatus
+     */
+    public Integer getVehStatus() {
+        return vehStatus;
+    }
+
+    /**
+     * @param vehStatus
+     */
+    public void setVehStatus(Integer vehStatus) {
+        this.vehStatus = vehStatus;
+    }
+
+    /**
+     * @return batteryStatus
+     */
+    public Integer getBatteryStatus() {
+        return batteryStatus;
+    }
+
+    /**
+     * @param batteryStatus
+     */
+    public void setBatteryStatus(Integer batteryStatus) {
+        this.batteryStatus = batteryStatus;
+    }
+
+    /**
+     * @return status
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * @return calcFormnum
+     */
+    public Long getCalcFormnum() {
+        return calcFormnum;
+    }
+
+    /**
+     * @param calcFormnum
+     */
+    public void setCalcFormnum(Long calcFormnum) {
+        this.calcFormnum = calcFormnum;
+    }
+
+    /**
+     * @return lastUpTime
+     */
+    public Date getLastUpTime() {
+        return lastUpTime;
+    }
+
+    /**
+     * @param lastUpTime
+     */
+    public void setLastUpTime(Date lastUpTime) {
+        this.lastUpTime = lastUpTime;
+    }
+
+    /**
+     * @return createDate
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * @param createDate
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    /**
+     * @return calcDate
+     */
+    public Date getCalcDate() {
+        return calcDate;
+    }
+
+    /**
+     * @param calcDate
+     */
+    public void setCalcDate(Date calcDate) {
+        this.calcDate = calcDate;
+    }
+
+    /**
+     * @return fuelCellProbeTemper
+     */
+    public String getFuelCellProbeTemper() {
+        return fuelCellProbeTemper;
+    }
+
+    /**
+     * @param fuelCellProbeTemper
+     */
+    public void setFuelCellProbeTemper(String fuelCellProbeTemper) {
+        this.fuelCellProbeTemper = fuelCellProbeTemper == null ? null : fuelCellProbeTemper.trim();
+    }
+}

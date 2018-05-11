@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pageloader.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+</head>
+<body>
+<script src="js/loading.js" type="text/javascript"></script>
+<div class="warrp">
+    <div class="row show-time">
+        <div class="col-md-4 weather-day">
+            <span class="weather-date"></span>
+            <span class="weather-week"></span>
+            <span class="weather-min"></span>
+            <span class="weather-text"></span>
+            <span class="weather-tq"></span>
+        </div>
+        <div class="col-md-4">
+            <h1>新能源车智能网联云端平台</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 href_index4">
+            <div class="row index-car-detil">
+                <div class="col-md-5">
+                    <span class="car-sums-span">车辆总数量</span>
+                </div>
+                <div class="col-md-7">
+                    <span class="ds-digi-other"><span class="ds-digi car-sum"></span>辆</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 index-car-detil2">
+                    <p class="ds-digi-other">车辆总行驶里程</p>
+                    <p><span class="ds-digi car-accmile"></span>公里</p>
+                </div>
+                <div class="col-md-12 index-car-detil2">
+                    <p class="ds-digi-other">车辆总行驶时间</p>
+                    <p><span class="ds-digi car-drivedSconde"></span>小时</p>
+                </div>
+                <div class="col-md-9 index-car-detil2" style="padding-top: 16px;">
+                    <div class="progress-span">
+                        <span class="progress-span-left">离线数量</span>
+                        <span class="progress-span-right"><span class="car-outline"></span>辆</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-commom car-outline-precent" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-span">
+                        <span class="progress-span-left">正在行驶数量</span>
+                        <span class="progress-span-right"><span class="car-drived"></span>辆</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-commom car-drived-precent" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div class="progress-span">
+                        <span class="progress-span-left">正在充电数量</span>
+                        <span class="progress-span-right"><span class="car-charing"></span>辆</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-commom car-charing-precent" role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 href_index4">
+            <div id="echarts-map-one"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="commom-div href_index2">
+                <div class="commom-header">
+                    数据采集运行
+                </div>
+                <div class="commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle commom-m-middle2 commom-upload-middle">
+                    <div class="index-upload">
+                        <p>成功采集</p>
+                        <div class="ds-digi ds-digi2">
+                            <!--<div class="index-upload-number-bottom">8888</div>-->
+                            <span class="index-upload-context index-upload-succnum">
+										<!--<span class="index-upload-number">1</span>
+										<span class="index-upload-number"></span>
+										<span class="index-upload-number"></span>-->
+									</span>
+                        </div>
+                        <span class="index-upload-text">次</span>
+                    </div>
+                    <div class="index-upload-sum">
+                        <p>总采集</p>
+                        <div class="ds-digi ds-digi2">
+                            <!--<div class="index-upload-number-bottom">8888</div>-->
+                            <span class="index-upload-context index-upload-count">
+										<!--<span class="index-upload-number">2</span>
+										<span class="index-upload-number">2</span>
+										<span class="index-upload-number">5</span>-->
+									</span>
+                        </div>
+                        <span class="index-upload-text">次</span>
+                    </div>
+                    <div class="index-upload-success">
+                        <p>成功率</p>
+                        <div class="ds-digi ds-digi2">
+                            <!--<div class="index-upload-number-bottom">888</div>-->
+                            <span class="index-upload-context index-upload-success-precent">
+										<!--<span class="index-upload-number">2</span>
+										<span class="index-upload-number">2</span>-->
+									</span>
+                        </div>
+                        <span class="index-upload-text">%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="commom-div href_index2" style="margin-top: -85px;">
+                <div class="commom-header">
+                    数据上报运行
+                </div>
+                <div class="commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle commom-m-middle2 commom-upload-middle">
+                    <div class="index-upload">
+                        <p>成功上传</p>
+                        <div class="ds-digi ds-digi2">
+                            <!--<div class="index-upload-number-bottom">8888</div>-->
+                            <span class="index-upload-context">
+										<span class="index-upload-number">0</span>
+									</span>
+                        </div>
+                        <span class="index-upload-text">次</span>
+                    </div>
+                    <div class="index-upload-sum">
+                        <p>总上传</p>
+                        <div class="ds-digi ds-digi2">
+                            <!--<div class="index-upload-number-bottom">8888</div>-->
+                            <span class="index-upload-context">
+										<span class="index-upload-number">0</span>
+									</span>
+                        </div>
+                        <span class="index-upload-text">次</span>
+                    </div>
+                    <div class="index-upload-success">
+                        <p>成功率</p>
+                        <div class="ds-digi ds-digi2">
+                            <!--<div class="index-upload-number-bottom">888</div>-->
+                            <span class="index-upload-context">
+										<span class="index-upload-number">0</span>
+									</span>
+                        </div>
+                        <span class="index-upload-text">%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="commom-div href_index3" style="margin-top: -85px;">
+                <div class="commom-header">
+                    电量实时监控
+                </div>
+                <div class="commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle commom-m-middle2">
+                    <div id="echarts-pie-four"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row href_index3">
+        <div class="col-md-6" style="margin-top: -70px;">
+            <div class="commom-div index-common-div" style="margin-right: 25px">
+                <div class="commom-header">
+                    车辆故障监控
+                </div>
+                <div class="commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle">
+                    <div id="echarts-linbar-one"></div>
+                    <div class="echarts-linbar-data">
+                        <ul class="echarts-ul">
+                            <li>
+                                <div class="li-linbar-sub">
+                                </div>
+                                <div class="li-linebar-name">
+                                    故障类型
+                                </div>
+                                <div class="li-linbar-counter">
+                                    总件数
+                                </div>
+                                <div class="li-linebar-zhangbi">
+                                    占比
+                                </div>
+                            </li>
+                            <li>
+                                <div class="li-linbar-sub">
+                                    <div class="li-linbar-sub-div li-sub-one">
+                                        1
+                                    </div>
+                                </div>
+                                <div class="li-linebar-name">
+                                    驱动机电
+                                </div>
+                                <div class="li-linbar-counter">
+                                    <span>112</span>单
+                                </div>
+                                <div class="li-linebar-zhangbi">
+                                    99%
+                                </div>
+                            </li>
+                            <li>
+                                <div class="li-linbar-sub">
+                                    <div class="li-linbar-sub-div li-sub-two">
+                                        2
+                                    </div>
+                                </div>
+                                <div class="li-linebar-name">
+                                    燃料电池
+                                </div>
+                                <div class="li-linbar-counter">
+                                    <span>112</span>单
+                                </div>
+                                <div class="li-linebar-zhangbi">
+                                    30%
+                                </div>
+                            </li>
+                            <li>
+                                <div class="li-linbar-sub">
+                                    <div class="li-linbar-sub-div li-sub-three">
+                                        3
+                                    </div>
+                                </div>
+                                <div class="li-linebar-name">
+                                    发动机
+                                </div>
+                                <div class="li-linbar-counter">
+                                    <span>112</span>单
+                                </div>
+                                <div class="li-linebar-zhangbi">
+                                    99%
+                                </div>
+                            </li>
+                            <li>
+                                <div class="li-linbar-sub">
+                                    <div class="li-linbar-sub-div li-sub-four">
+                                        4
+                                    </div>
+                                </div>
+                                <div class="li-linebar-name">
+                                    其他
+                                </div>
+                                <div class="li-linbar-counter">
+                                    <span>62</span>单
+                                </div>
+                                <div class="li-linebar-zhangbi">
+                                    8%
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="margin-top: -70px;">
+            <div class="commom-div index-common-div">
+                <div class="commom-header">
+                    实时在线状况
+                </div>
+                <div class="commom-h-middle"></div>
+                <div class="commom-h-right"></div>
+                <div class="commom-m-middle">
+                    <div id="echarts-line-two"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/chart/echarts.min.js"></script>
+<!--<script type="text/javascript" src="js/pageloader.js" ></script>-->
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=您申请的key值"></script>
+<script type="text/javascript" src="http://webapi.amap.com/demos/js/liteToolbar.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/geomap.js"></script>
+<script>
+    var myPie = null;
+    $(document).ready(function () {
+        getIndex();
+        getIntervalLinebar();
+        var mheight = $('.col-md-6').find('.commom-m-middle').first().height();
+        console.log(mheight);
+        $('.col-md-6').find('.commom-m-middle').last().height(mheight);
+        var d = $('.col-md-6').find('.commom-m-middle').last().height();
+        var heatMap = getMap();
+        var url = df_ip + "/tsp/listVehHeatMapData";
+
+        showHeatMap(url, heatMap);
+        setInterval(function (url, heatMap) {
+            showHeatMap(url, heatMap);
+        }, df_time, url, heatMap);
+        //首页的基本信息的定时函数
+        setInterval('getIndex()', df_time);
+        //折线图的定时执行
+        setInterval('getIntervalLinebar()', df_time * 2);
+        getClickHref();
+    });
+
+    //页面跳转
+    function getClickHref() {
+        //跳转到位置监控
+        $('.href_index4').on('click', function () {
+            window.location = 'index4.html';
+        });
+
+        //跳转到采集
+        $('.href_index2').on('click', function () {
+            window.location = 'index2.html';
+        });
+
+        //跳转到位置监控
+        $('.href_index3').on('click', function () {
+            window.location = 'index3.html';
+        });
+    }
+
+    //首页的基本信息
+    function getIndex() {
+        $('.index-upload-succnum').css('min-height', '48px');
+        $('.index-upload-succnum').empty();
+        $('.index-upload-count').empty();
+        $('.index-upload-success-precent').empty();
+        $.ajax({
+            type: "post",
+            url: df_ip + "/tsp/index",
+            async: true,
+            dataType: 'json',
+            success: function (reslut) {
+                var batterysum = reslut.data.batterysum; //多车电池统计
+                var datauploadsum = reslut.data.datauploadsum; //采集统计
+                var errorsum = reslut.data.errorsum; //故障统计
+                var vehsum = reslut.data.vehsum; //多出统计
+
+                //车辆总数量
+                $('.car-sum').html(vehsum.vehCount || 0);
+                //车辆行驶总里程
+                $('.car-accmile').html(vehsum.accMile || 0);
+                //车辆行驶总时间
+                $('.car-drivedSconde').html(parseInt(vehsum.drivedSeconds / 3600) || 0);
+                //车辆离线数
+                $('.car-outline').html(vehsum.offlineVehCount || 0);
+                //车辆离线百分比
+                $('.car-outline-precent').css('width', (vehsum.offlineVehCount / vehsum.vehCount) * 100 + '%');
+                //车辆行驶数
+                $('.car-drived').html(vehsum.drvingVehCount || 0);
+                //车辆行驶百分比
+                $('.car-drived-precent').css('width', (vehsum.drvingVehCount / vehsum.vehCount) * 100 + '%');
+                //车辆充电数
+                $('.car-charing').html(vehsum.charingVehCount || 0);
+                //车辆充电百分比
+                $('.car-charing-precent').css('width', (vehsum.charingVehCount / vehsum.vehCount) * 100 + '%');
+                var lispan = '';
+                //数据采集运行-成功上传次数
+//                    var succUpData =String(datauploadsum.succUpData || 0);
+                var succUpData = String(datauploadsum.totalColData || 0);
+                for (var i = 0; i < succUpData.length; i++) {
+                    lispan = '<span class="index-upload-number">' + succUpData.substring(i, i + 1) + '</span>';
+                    $('.index-upload-succnum').append(lispan);
+                    lispan = '';
+                }
+                //数据采集运行-总上传次数
+                var totalColData = String(datauploadsum.totalColData || 0);
+                for (var i = 0; i < totalColData.length; i++) {
+                    lispan = '<span class="index-upload-number">' + totalColData.substring(i, i + 1) + '</span>';
+                    $('.index-upload-count').append(lispan);
+                    lispan = '';
+                }
+                var successprecent = String(succUpData / totalColData * 100 || 0);
+                for (var i = 0; i < successprecent.length; i++) {
+                    lispan = '<span class="index-upload-number">' + successprecent.substring(i, i + 1) + '</span>';
+                    $('.index-upload-success-precent').append(lispan);
+                    lispan = '';
+                }
+                var lineData = [];
+                var charingerro = errorsum.charingError;
+                var drivemotorerro = errorsum.driveMotorError;
+                var engineerro = errorsum.engineError;
+                var othererro = errorsum.otherError;
+                var totalerrocount = errorsum.totalErrorCount;
+                lineData.push(charingerro, drivemotorerro, engineerro, othererro);
+                for (var i = 0; i < lineData.length; i++) {
+                    var temp = 0;
+                    if (totalerrocount != 0) {
+                        temp = (lineData[i] / totalerrocount).toFixed(2) * 100
+                    }
+                    $('.li-linbar-counter:eq(' + (i + 1) + ')').html(lineData[i]);
+                    $('.li-linebar-zhangbi:eq(' + (i + 1) + ')').html(temp + '%');
+                }
+                var xData = ['驱动电机', '燃料电池', '发动机', '其他'];
+                getLineBar('echarts-linbar-one', xData, lineData);
+
+                var pieData = [];
+                var percent40 = batterysum.percent40;
+                var percent4060 = batterysum.percent4060;
+                var percent6080 = batterysum.percent6080;
+                var percent80 = batterysum.percent80;
+                var lengData = [];
+                percent40 && lengData.push('40%以下');
+                percent40 && pieData.push({'value': percent40 || 0, 'name': '40%以下'});
+
+                percent4060 && lengData.push('40%~60%');
+                percent4060 && pieData.push({'value': percent4060 || 0, 'name': '40%~60%'});
+
+                percent6080 && lengData.push('60%~80%');
+                percent6080 && pieData.push({'value': percent6080 || 0, 'name': '60%~80%'});
+
+                percent80 && lengData.push('80%以上');
+                percent80 && pieData.push({'value': percent80 || 0, 'name': '80%以上'});
+
+                myPie = myPie || getPie('echarts-pie-four', lengData, '-8%', '16%', ['60%', '40%'], 30, pieData);
+
+                if (!pieData) {
+                    showNoData(myPie, ['50%', '75%']);
+                } else {
+                    myPie = getPie('echarts-pie-four', lengData, '-8%', '16%', ['60%', '30%'], 30, pieData);
+                }
+            },
+            error: function (reslut) {
+                alert(reslut.retCode + ' 数据获取失败');
+                //					$('.tip-show').toggle();
+                console.log('reslut.retCode:' + reslut.retCode)
+            }
+        });
+    }
+
+    //折线图的信息
+    function getIntervalLinebar() {
+        var lineAear = getLineAear();
+        var url = baseUrl + "/listVehsumByTime";
+        myAjax(url, {"datetime": getNowFormatDate(), "interval": 10}, function (result) {
+            if (result.retCode == 1) {
+                var dataArr = result.data;
+                var json = json2Arr(dataArr);
+
+                var option = {
+                    xAxis: [{
+                        data: json.datetime
+                    }],
+                    series: [
+                        {type: "line", data: json.model1OnlineCount}
+                        , {type: "line", data: json.onlineVehCount}
+                    ]
+                }
+                lineAear.setOption(option);
+                console.log("aaabbccc");
+            }
+        });
+    }
+
+    //生成地图
+    function getMap() {
+        var myMap = echarts.init(document.getElementById('echarts-map-one'));
+        var option = {
+            visualMap: {
+                min: 0,
+                max: 400,
+                splitNumber: 4,
+                show: false,
+                inRange: {
+                    color: ['#62fafc', '#04c9fe', '#018cff', '#0055ff']
+                },
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            geo: {
+                height: '400px',
+                width: '100%',
+                map: 'china',
+                label: {
+                    emphasis: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        areaColor: 'rgba(135, 172,203,.6)',
+                        borderColor: 'rgba(205,229,240,0.8)',
+                        borderWidth: 1.5
+                    },
+                    emphasis: {
+                        areaColor: '#78a3c6'
+                    }
+                }
+            },
+            series: [{
+                name: 'AQI',
+                type: 'heatmap',
+                coordinateSystem: 'geo',
+                pointSize: 10,
+                blurSize: 20,
+                data: convertData(heatData)
+            }]
+        };
+        myMap.setOption(option);
+        return myMap;
+    }
+
+    //生成实时在线折线面积图
+    function getLineAear() {
+        var myLineAear = echarts.init(document.getElementById('echarts-line-two'));
+        var xAxisData = ['13:00', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55'];
+        //			var data = {0:[2,1,3,5,9,6,7,8,3,9,8,5],1:[2,1,3,6,4,9,6,4,9,7,6,5],2:[3,4,6,5,8,9,5,7,6,8,8,5],3:[1,4,6,5,1,2,3,10,2,5,7,5]};
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    shadowStyle: 'line',// 默认为直线，可选为：'line' | 'shadow'
+                    lineStyle: {
+                        color: '#FdFdFd'
+                    }
+                }
+            },
+            legend: {
+                show: true,
+                top: '3%',
+                data: ['5座', '全部'],
+                textStyle: {
+                    fontSize: 12,
+                    color: '#FdFdFd'
+                },
+                right: '3%',
+                top: '-5%'
+            },
+            grid: {
+                height: '80%',
+                width: '93.5%',
+                left: '2%',
+                right: '-3%',
+                bottom: '2%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fdfdfd',
+                            fontStyle: 'italic'
+                        },
+                        rotate: 0,
+                        interval: 0
+                    },
+                    nameTextStyle: {},
+                    boundaryGap: false,
+                    data: xAxisData
+                }
+            ],
+
+            yAxis: [
+                {
+                    tpye: 'value',
+                    name: '(辆)',
+                    nameLocation: 'middle',
+                    nameTextStyle: {
+                        color: '#fdfdfd'
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    nameGap: 20,
+                    splitLine: {
+                        lineStyle: {
+                            color: '#3daaab',
+                            opacity: .85
+
+                        }
+                    },
+                    boundarGap: [0, 0.01],
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fdfdfd'
+                        }
+                    },
+                    symbol: 'none'
+                }
+            ],
+            series: [
+                {
+                    name: '5座',
+                    type: "line",
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1,
+                            color: '#fdfdfd'
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#43a9f1',
+                                opacity: .9
+                            }, {
+                                offset: 0.8,
+                                color: '#43a9f1',
+                                opacity: .3
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, .1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#43a9f1',
+                            barBorderWidth: 6,
+                            barBorderRadius: 0
+                        }
+                    }
+                    //			            ,data:data[1]
+                },
+                {
+                    name: '全部',
+                    type: "line",
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            width: 1,
+                            color: '#fdfdfd'
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#37a3a5',
+                                opacity: .9
+                            }, {
+                                offset: 0.8,
+                                color: '#37a3a5',
+                                opacity: .3
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, .1)',
+                            shadowBlur: 10
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#37a3a5',
+                            barBorderWidth: 6,
+                            barBorderRadius: 0
+                        }
+                    }
+                    //			            ,data:data[3]
+                }
+            ]
+        };
+        myLineAear.setOption(option);
+        return myLineAear;
+    }
+</script>
+</html>

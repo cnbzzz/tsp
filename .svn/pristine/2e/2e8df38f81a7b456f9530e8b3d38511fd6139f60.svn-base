@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepVehsumMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepVehsum">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="vehCount" jdbcType="BIGINT" property="vehCount" />
+    <result column="accMile" jdbcType="BIGINT" property="accMile" />
+    <result column="drivedSeconds" jdbcType="BIGINT" property="drivedSeconds" />
+    <result column="termCode" jdbcType="VARCHAR" property="termCode" />
+    <result column="onlineVehCount" jdbcType="BIGINT" property="onlineVehCount" />
+    <result column="drvingVehCount" jdbcType="BIGINT" property="drvingVehCount" />
+    <result column="charingVehCount" jdbcType="BIGINT" property="charingVehCount" />
+    <result column="model1OnlineCount" jdbcType="BIGINT" property="model1OnlineCount" />
+    <result column="model2OnlineCount" jdbcType="BIGINT" property="model2OnlineCount" />
+    <result column="model3OnlineCount" jdbcType="BIGINT" property="model3OnlineCount" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="listOnlineVeh" resultType="cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto">
+  SELECT
+      FROM_UNIXTIME(
+          (
+              FLOOR(
+                  UNIX_TIMESTAMP(calcDate) / #{interval}
+              )
+          ) * #{interval},
+          '%Y-%m-%d %H:%i:%s'
+      ) datetime,
+      SUM(model1OnlineCount) AS model1OnlineCount,
+      SUM(model2OnlineCount) AS model2OnlineCount,
+      SUM(model3OnlineCount) AS model3OnlineCount,
+      SUM(onlineVehCount) AS onlineVehCount
+  FROM
+      m_rep_vehsum
+  WHERE
+      UNIX_TIMESTAMP(calcDate) &gt; UNIX_TIMESTAMP(#{startDatetime})
+  GROUP BY
+      FROM_UNIXTIME(
+          (
+              FLOOR(
+                  UNIX_TIMESTAMP(calcDate) / #{interval}
+              )
+          ) * #{interval},
+          '%Y-%m-%d %H:%i:%s'
+      )
+  ORDER BY
+      datetime
+  </select>
+</mapper>

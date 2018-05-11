@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="bzzz <bzzz@space-walker.com>">
+    <title>Demo</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.3.4/vue.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form id="dictItemForm">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 form-group">
+                <label for="dictid">dictid</label>
+                <input type="text" class="form-control" id="dictid" name="dictid" placeholder="请输入..."/>
+            </div>
+
+            <div class="col-sm-12 col-md-4 form-group">
+                <label for="dictname">dictname</label>
+                <input type="text" class="form-control" id="dictname" name="dictname" placeholder="请输入..."/>
+            </div>
+
+            <div class="col-sm-12 col-md-4 form-group">
+                <label for="groupid">groupid</label>
+                <input type="text" class="form-control" id="groupid" name="groupid" placeholder="请输入..."/>
+            </div>
+
+            <!--<div class="col-sm-12 col-md-4 form-group">-->
+            <!--<label for="sort">sort</label>-->
+            <!--<input type="number" class="form-control" id="sort" name="sort" min="1" max="10" placeholder="请输入..."/>-->
+            <!--</div>-->
+
+            <!--<div class="col-sm-12 col-md-4 form-group">-->
+            <!--<label for="status">status</label>-->
+            <!--<input type="number" class="form-control" id="status" name="status" min="0" max="2"-->
+            <!--placeholder="请输入..."/>-->
+            <!--</div>-->
+
+            <!--<div class="col-sm-12 col-md-4 form-group">-->
+            <!--<label for="cdate">cdate</label>-->
+            <!--<input type="date" class="form-control" id="cdate" name="cdate" placeholder="请输入..."/>-->
+            <!--</div>-->
+
+            <div class="col-sm-12 col-md-offset-4 col-md-4 form-group">
+                <button type="button" style="width: 100%" class="btn btn-primary btn-lg" id="ok">确定</button>
+            </div>
+
+            <div class="col-sm-12 col-md-4 form-group">
+                <button type="button" style="width: 100%" class="btn btn-default btn-lg" id="clear">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table" id="dictItemList">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>dictid</th>
+                <th>dictname</th>
+                <th>groupid</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(dictItem, idx) in dictItems">
+                <th scope="row">{{idx + 1}}</th>
+                <td>{{dictItem.dictid}}</td>
+                <td>{{dictItem.dictname}}</td>
+                <td>{{dictItem.groupid}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    var baseUrl = "http://localhost:9102";
+
+    $(function () {
+        $("#clear").click(function () {
+            document.getElementById("dictItemForm").reset();
+        });
+
+        $("#ok").click(function () {
+            var data = $("#dictItemForm").serializeObject();
+
+            if (!data.dictid) {
+                alert("dictid is null.");
+                $("#dictid").focus();
+                return false;
+            }
+
+            if (!data.dictname) {
+                alert("dictname is null.");
+                $("#dictname").focus();
+                return false;
+            }
+
+            if (!data.groupid) {
+                alert("groupid is null.");
+                $("#groupid").focus();
+                return false;
+            }
+
+            var url = baseUrl + "/edit";
+
+            myAjax(url, data, function (data) {
+                if (data.retCode == 1) {
+                    $("#clear").click();
+                    loadList();
+                } else {
+                    alert("保存失败...");
+                }
+            });
+        });
+
+        loadList();
+    });
+
+    var vue = new Vue({
+        el: '#dictItemList',
+        data: {
+            dictItems: []
+        }
+    });
+
+    function loadList() {
+        var url = baseUrl + "/list";
+        myAjax(url, {}, function (data) {
+            if (data.retCode == 1) {
+                vue.dictItems = data.data;
+            } else {
+                alert('加载失败...');
+            }
+        });
+    }
+
+    function myAjax(url, param, succ, fail) {
+        $.ajax({
+            url: url,
+            type: 'POST', //GET
+            async: true,    //或false,是否异步
+            data: param,
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            beforeSend: function (xhr) {
+                console.log(xhr);
+                console.log('发送前');
+            },
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                console.log(textStatus);
+                console.log(jqXHR);
+                succ && succ(data);
+            },
+            error: function (xhr, textStatus) {
+                console.log('错误');
+                console.log(xhr);
+                console.log(textStatus);
+                fail && fail(xhr, textStatus);
+            },
+            complete: function () {
+                console.log('结束');
+            }
+        });
+    }
+
+    $.fn.serializeObject = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (!this.value) {
+                return true;
+            }
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    $.fn.fillFormData = function (form, obj) {
+        var formEL = $(form);
+        $.each(obj, function (index, item) {
+            formEL.find("[name=" + index + "]").val(item);
+        });
+    }
+</script>
+</body>
+</html>

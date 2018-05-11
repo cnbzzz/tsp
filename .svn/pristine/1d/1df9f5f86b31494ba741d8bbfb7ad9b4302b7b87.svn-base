@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehLimitMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehLimit">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="maxVoltageSubsystemNum" jdbcType="INTEGER" property="maxVoltageSubsystemNum" />
+    <result column="maxVoltagefullCellNum" jdbcType="INTEGER" property="maxVoltagefullCellNum" />
+    <result column="maxVoltagefullCell" jdbcType="INTEGER" property="maxVoltagefullCell" />
+    <result column="minVoltageSubsystemNum" jdbcType="INTEGER" property="minVoltageSubsystemNum" />
+    <result column="minVoltagefullCellNum" jdbcType="INTEGER" property="minVoltagefullCellNum" />
+    <result column="minVoltagefullCell" jdbcType="INTEGER" property="minVoltagefullCell" />
+    <result column="maxTemperSubsystemNum" jdbcType="INTEGER" property="maxTemperSubsystemNum" />
+    <result column="maxTemperProbeNum" jdbcType="INTEGER" property="maxTemperProbeNum" />
+    <result column="maxTemper" jdbcType="INTEGER" property="maxTemper" />
+    <result column="minTemperSubsystemNum" jdbcType="INTEGER" property="minTemperSubsystemNum" />
+    <result column="minTemperProbeNum" jdbcType="INTEGER" property="minTemperProbeNum" />
+    <result column="minTemper" jdbcType="INTEGER" property="minTemper" />
+    <result column="etlStatus" jdbcType="INTEGER" property="etlStatus" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formnum" jdbcType="VARCHAR" property="formnum" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+  </resultMap>
+</mapper>

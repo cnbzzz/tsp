@@ -1,0 +1,522 @@
+package cn.spacewalker.tsp.bg.etl.service.impl;
+
+import cn.spacewalker.tsp.bg.etl.service.IEtlService;
+import cn.spacewalker.tsp.bg.pojo.mapper.TVehUploadrealtimeMapper;
+import cn.spacewalker.tsp.bg.pojo.utils.SnowflakeIdWorker;
+import cn.spacewalker.tsp.common.base.BaseServiceImpl;
+import cn.spacewalker.tsp.common.util.CommUtils;
+import cn.spacewalker.tsp.ft.pojo.mapper.*;
+import cn.spacewalker.tsp.ft.pojo.model.*;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.entity.Example;
+
+import javax.annotation.Resource;
+import javax.persistence.Table;
+import java.util.*;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/17 21:04
+ * Copyright (c) 2017 www.space-walker.cn
+ */
+public class EtlServiceImpl extends BaseServiceImpl implements IEtlService {
+
+    @Resource
+    private TVehUploadrealtimeMapper vehUploadrealtimeMapper;
+
+    @Resource
+    private MRepVehinfoMapper vehinfoMapper;
+
+    @Resource
+    private MRepErrorlogMapper errorlogMapper;
+
+    @Resource
+    private MRepDrivinglogMapper drivinglogMapper;
+
+    @Resource
+    private MRepChargelogMapper chargelogMapper;
+
+    @Resource
+    private MRepDatauploadsumMapper datauploadsumMapper;
+
+    @Resource
+    private MRepVehsumMapper vehsumMapper;
+
+    @Resource
+    private MRepErrorsumMapper errorsumMapper;
+
+    @Resource
+    private MRepBatterysumMapper batterysumMapper;
+
+    @Resource
+    private MRepChargingintervalsumMapper chargingintervalsumMapper;
+
+    @Resource
+    private MRepPositionsumMapper positionsumMapper;
+
+    @Resource
+    private MRepCalclogMapper calclogMapper;
+
+    @Resource
+    private MRepLastvehinfoMapper lastvehinfoMapper;
+
+    @Resource
+    private MRepDrivingcalcMapper drivingcalcMapper;
+
+    public void etlTask() throws Exception {
+        try {
+            etlVehinfo();
+            etlVehsum();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    public void etlVehinfo() throws Exception {
+        Date date = new Date();
+        drivinglogMapper.insertDrivingCalcByMinute(CommUtils.timestamp2str(date));
+        List<MRepCalclog> calclogList = getFtListByExample(calclogMapper, MRepCalclog.class, null);
+
+        String lastFormnum = CollectionUtils.isNotEmpty(calclogList) ? calclogList.get(0).getLastFormnum() : "0";
+
+        List<Map<String, String>> vehMapList = vehUploadrealtimeMapper.listRepVehInfo(lastFormnum);
+        Long succColData = Long.valueOf(vehMapList.size());
+
+        long l1 = System.currentTimeMillis();
+        etlVehGroup(vehMapList);
+        long l2 = System.currentTimeMillis();
+        System.err.println("........................."+ (l2 - l1));
+
+        if(CollectionUtils.isNotEmpty(vehMapList)){
+            Map<String, String> map = vehMapList.get(vehMapList.size() - 1);
+            lastFormnum = map.get("calcFormnum");
+        }
+        insertColData(date, lastFormnum, succColData);
+    }
+
+    private void etlVehGroup(List<Map<String, String>> vehMapList) throws Exception {
+        List<MRepVehinfo> vehinfoList = new ArrayList<>();
+        for (int i = 0; i < vehMapList.size(); i++) {
+            Map<String, String> map = vehMapList.get(i);
+            MRepVehinfo vehinfo = new MRepVehinfo();
+            BeanUtils.copyProperties(vehinfo, map);
+            vehinfo.setOid(SnowflakeIdWorker.genId());
+            vehinfoList.add(vehinfo);
+        }
+
+        long l1 = System.currentTimeMillis();
+        if(CollectionUtils.isNotEmpty(vehinfoList)){
+            drivinglogMapper.insertVehinfoList(vehinfoList);
+        }
+        long l2 = System.currentTimeMillis();
+        System.err.println("11112........................."+ (l2 - l1));
+
+
+        for (int i = 0; i < vehinfoList.size(); i++) {
+            MRepVehinfo vehinfo = vehinfoList.get(i);
+
+            insertDrivingcalc(vehinfo);
+
+            MRepLastvehinfo lastvehinfo = updateLastVehinfo(vehinfo);
+
+            getRepDrivinglog(vehinfo);
+
+            Long driveTimes = drivinglogMapper.queryDriveTimes(vehinfo.getVin());
+            lastvehinfo.setDriveTimes(driveTimes);
+            lastvehinfoMapper.updateByPrimaryKeySelective(lastvehinfo);
+
+            getChargelog(vehinfo);
+
+            String formnum = vehinfo.getCalcFormnum();
+            List<Map<String, String>> errorMapList = vehUploadrealtimeMapper.listRepErrorInfoByFormnum(formnum);
+
+            List<MRepErrorlog> errorlogList = new ArrayList<>();
+            for (Map<String, String> errorMap : errorMapList) {
+                MRepErrorlog errorlog = new MRepErrorlog();
+                BeanUtils.copyProperties(errorlog, errorMap);
+                errorlog.setOid(SnowflakeIdWorker.genId());
+
+                errorlogList.add(errorlog);
+            }
+
+            if(CollectionUtils.isNotEmpty(errorlogList)){
+                drivinglogMapper.insertErrorlogList(errorlogList);
+            }
+        }
+    }
+
+    private void insertDrivingcalc(MRepVehinfo vehinfo) throws Exception {
+        String vin = vehinfo.getVin();
+        List<MRepLastvehinfo> lastvehinfoList = getFtListByExample(lastvehinfoMapper, MRepLastvehinfo.class, Arrays.asList(String.format("vin = '%s'", vin)));
+        MRepLastvehinfo lastvehinfo = CollectionUtils.isNotEmpty(lastvehinfoList) ? lastvehinfoList.get(0) : null;
+        String gatherTime = vehinfo.getGatherTime();
+        if(StringUtils.isNotBlank(gatherTime) && lastvehinfo != null){
+            Date gatherDate = CommUtils.str2gbt32960date(gatherTime);
+            String str = CommUtils.timestamp2str(gatherDate);
+            String day = formatDay(str);
+            String minute = formatMinute(str);
+            List<MRepDrivingcalc> drivingcalcList = getFtListByExample(drivingcalcMapper, MRepDrivingcalc.class, Arrays.asList(String.format("vin = '%s'", vin), String.format("calcDay = '%s'",  day), String.format("calcMin = '%s'", minute)));
+            Long drivingMile = vehinfo.getAccMile() - lastvehinfo.getAccMile();
+            if(drivingcalcList.size() > 0){
+                MRepDrivingcalc drivingcalc = drivingcalcList.get(0);
+                drivingcalc.setDrivingMile(drivingMile);
+                drivingcalcMapper.updateByPrimaryKeySelective(drivingcalc);
+            } else{
+                insertDrivingCalc(gatherDate, drivingMile, vin);
+            }
+        }
+    }
+
+    private MRepLastvehinfo updateLastVehinfo(MRepVehinfo vehinfo) throws Exception {
+        String vin = vehinfo.getVin();
+        List<MRepLastvehinfo> lastvehinfoList = getFtListByExample(lastvehinfoMapper, MRepLastvehinfo.class, Arrays.asList(String.format("vin = '%s'", vin)));
+        MRepLastvehinfo lastvehinfo = CollectionUtils.isNotEmpty(lastvehinfoList) ? lastvehinfoList.get(0) : new MRepLastvehinfo();
+
+        String oid = (lastvehinfo == null) ? null : lastvehinfo.getOid();
+        BeanUtils.copyProperties(lastvehinfo, vehinfo);
+        lastvehinfo.setCalcDate(new Date());
+        if (StringUtils.isNotBlank(oid)) {//是修改
+            lastvehinfo.setOid(oid);
+            lastvehinfoMapper.updateByPrimaryKey(lastvehinfo);
+        } else {
+            lastvehinfo.setCreateDate(new Date());
+            lastvehinfoMapper.insertSelective(lastvehinfo);
+        }
+        return lastvehinfo;
+    }
+
+    private void insertColData(Date date, String lastFormnum, Long succColData) {
+        MRepCalclog calclog = new MRepCalclog();
+        calclog.setOid(SnowflakeIdWorker.genId());
+        calclog.setCalcFormnum(lastFormnum);
+        calclog.setLastFormnum(lastFormnum);
+        String str = CommUtils.timestamp2str(date);
+        calclog.setCurrColData(succColData);
+        calclog.setSuccColData(succColData);
+        calclog.setCalcYear(formatYear(str));
+        calclog.setCalcMonth(formatMonth(str));
+        calclog.setCalcDay(formatDay(str));
+        calclog.setCalcHour(formatHour(str));
+        calclog.setCalcMin(formatMinute(str));
+        calclog.setCalcDate(date);
+
+        calclogMapper.insertSelective(calclog);
+    }
+
+    private void insertDrivingCalc(Date date, Long drivingMile, String vin) {
+        MRepDrivingcalc drivingcalc = new MRepDrivingcalc();
+        String oid = SnowflakeIdWorker.genId();
+        drivingcalc.setOid(oid);
+        drivingcalc.setCalcFormnum(oid);
+        String str = CommUtils.timestamp2str(date);
+        drivingcalc.setVin(vin);
+        drivingcalc.setDrivingMile(drivingMile);
+        drivingcalc.setCalcYear(formatYear(str));
+        drivingcalc.setCalcMonth(formatMonth(str));
+        drivingcalc.setCalcDay(formatDay(str));
+        drivingcalc.setCalcHour(formatHour(str));
+        drivingcalc.setCalcMin(formatMinute(str));
+        drivingcalc.setCalcDate(date);
+        drivingcalcMapper.insertSelective(drivingcalc);
+    }
+
+    public static void main(String[] args) {
+        Date date = new Date();
+        String str = CommUtils.timestamp2str(date);
+        String year = formatYear(str);
+        System.err.println(year);
+        String month = formatMonth(str);
+        System.err.println(month);
+        String day = formatDay(str);
+        System.err.println(day);
+        String hour = formatHour(str);
+        System.err.println(hour);
+        String minute = formatMinute(str);
+        System.err.println(minute);
+    }
+
+    private static String formatMinute(String str) {
+        return str.substring(11, 17) + "00";
+    }
+
+    private static String formatHour(String str) {
+        return str.substring(11, 14) + "00"+":00";
+    }
+
+    private static String formatDay(String str) {
+        return str.substring(0, 10);
+    }
+
+    private static String formatMonth(String str) {
+        return str.substring(0, 7);
+    }
+
+    private static String formatYear(String str) {
+        return str.substring(0, 4);
+    }
+
+    public void etlVehsum() throws Exception {
+        String formnum = countDataUploadsum();
+        countVehsum(formnum);
+        countErrorsum(formnum);
+        countBatterysum(formnum);
+        countChargingIntervalsum(formnum);
+        countPositionsum(formnum);
+    }
+
+    private void countPositionsum(String formnum) {
+        List<MRepPositionsum> list = drivinglogMapper.countPositionsum();
+
+        for (MRepPositionsum positionsum : list) {
+            positionsum.setOid(SnowflakeIdWorker.genId());
+            if (StringUtils.isBlank(formnum)) {
+                formnum = SnowflakeIdWorker.genId();
+            }
+            positionsum.setCalcFormnum(formnum);
+            positionsum.setUpdateTime(new Date());
+            positionsum.setCalcDate(new Date());
+            positionsumMapper.insertSelective(positionsum);
+        }
+
+
+    }
+
+    private void countChargingIntervalsum(String formnum) {
+        MRepChargingintervalsum chargingIntervalsum = drivinglogMapper.countChargingIntervalsum();
+
+        chargingIntervalsum.setOid(SnowflakeIdWorker.genId());
+        if (StringUtils.isBlank(formnum)) {
+            formnum = SnowflakeIdWorker.genId();
+        }
+        chargingIntervalsum.setCalcFormnum(formnum);
+        chargingIntervalsum.setUpdateTime(new Date());
+        chargingIntervalsum.setCalcDate(new Date());
+
+        chargingintervalsumMapper.insertSelective(chargingIntervalsum);
+    }
+
+    private void countBatterysum(String formnum) {
+        MRepBatterysum batterysum = drivinglogMapper.countBatterysum();
+
+        batterysum.setOid(SnowflakeIdWorker.genId());
+        if (StringUtils.isBlank(formnum)) {
+            formnum = SnowflakeIdWorker.genId();
+        }
+        batterysum.setCalcFormnum(formnum);
+        batterysum.setUpdateTime(new Date());
+        batterysum.setCalcDate(new Date());
+
+        batterysumMapper.insertSelective(batterysum);
+    }
+
+    private void countErrorsum(String formnum) {
+        MRepErrorsum errorsum = drivinglogMapper.countErrorsum();
+
+        errorsum.setOid(SnowflakeIdWorker.genId());
+        if (StringUtils.isBlank(formnum)) {
+            formnum = SnowflakeIdWorker.genId();
+        }
+        errorsum.setCalcFormnum(formnum);
+        errorsum.setUpdateTime(new Date());
+        errorsum.setCalcDate(new Date());
+
+        errorsumMapper.insertSelective(errorsum);
+    }
+
+    private void countVehsum(String formnum) {
+        MRepVehsum vehsum = drivinglogMapper.queryVehsum();
+
+        vehsum.setOid(SnowflakeIdWorker.genId());
+        if (StringUtils.isBlank(formnum)) {
+            formnum = SnowflakeIdWorker.genId();
+        }
+        vehsum.setCalcFormnum(formnum);
+        vehsum.setUpdateTime(new Date());
+        vehsum.setCalcDate(new Date());
+
+        vehsumMapper.insertSelective(vehsum);
+    }
+
+    private String countDataUploadsum() throws Exception {
+        Map<String, String> map = vehUploadrealtimeMapper.countDataUploadsum();
+        MRepDatauploadsum datauploadsum = new MRepDatauploadsum();
+        BeanUtils.copyProperties(datauploadsum, map);
+
+        MRepDatauploadsum preDatauploadsum = null;
+        List<MRepDatauploadsum> list = getFtListByExample(datauploadsumMapper, MRepDatauploadsum.class, null);
+        preDatauploadsum = list.size() > 0 ? list.get(0) : null;
+
+        Long totalColData = datauploadsum.getTotalColData();
+
+        Long currColData = totalColData;
+        if (preDatauploadsum != null) {
+            currColData = totalColData - preDatauploadsum.getTotalColData();
+        }
+
+        datauploadsum.setOid(SnowflakeIdWorker.genId());
+        datauploadsum.setCurrColData(currColData);
+        String formnum = SnowflakeIdWorker.genId();
+        datauploadsum.setCalcFormnum(formnum);
+        datauploadsum.setUpdateTime(new Date());
+        datauploadsum.setCalcDate(new Date());
+
+        datauploadsumMapper.insertSelective(datauploadsum);
+
+        return formnum;
+    }
+
+    private void getRepDrivinglog(MRepVehinfo vehinfo) throws Exception {
+        MRepDrivinglog currDrivinglog = null;
+        MRepDrivinglog preDrivinglog = null;
+        String vin = vehinfo.getVin();
+        List<MRepDrivinglog> drivinglogList = getFtListByExample(drivinglogMapper, MRepDrivinglog.class, Arrays.asList(String.format("vin = '%s'", vin)));
+        currDrivinglog = drivinglogList.size() > 0 ? drivinglogList.get(0) : null;
+        preDrivinglog = drivinglogList.size() > 1 ? drivinglogList.get(1) : null;
+        String vehStatus = vehinfo.getVehStatus();
+        Long accMile = vehinfo.getAccMile();
+        if (StringUtils.equals(vehStatus, "启动")) {//启动
+            if ((currDrivinglog == null) || (currDrivinglog.getDrivingEndTime() != null)) {//结束时间有值说明是一段新的里程开始
+                MRepDrivinglog drivinglog = new MRepDrivinglog();
+                String oid = SnowflakeIdWorker.genId();
+                drivinglog.setOid(oid);
+                drivinglog.setVin(vin);
+                Date drivingStartTime = CommUtils.str2gbt32960date(vehinfo.getGatherTime());
+                drivinglog.setDrivingStartTime(drivingStartTime);
+                drivinglog.setPreMile(accMile);
+                Long intervalSecond = 0l;
+                if (preDrivinglog != null) {
+                    Date preDrivingEndTime = preDrivinglog.getDrivingEndTime();
+                    if(drivingStartTime != null && preDrivingEndTime != null){
+                        long l1 = drivingStartTime.getTime();
+                        long l2 = preDrivingEndTime.getTime();
+                        intervalSecond = (l1 - l2) / 1000l;
+                    }
+                }
+                drivinglog.setIntervalSecond(intervalSecond);
+                drivinglog.setDriveDate(new Date());
+                drivinglog.setUpdateTime(new Date());
+                drivinglog.setCalcDate(new Date());
+                drivinglog.setCalcFormnum(SnowflakeIdWorker.genId());
+
+                drivinglogMapper.insertSelective(drivinglog);
+            }
+        }
+        if (StringUtils.equals(vehStatus, "熄火")) {//熄火
+            if ((currDrivinglog != null) && (currDrivinglog.getDrivingEndTime() == null)) {
+                Date drivingEndTime = CommUtils.str2gbt32960date(vehinfo.getGatherTime());
+                currDrivinglog.setDrivingEndTime(drivingEndTime);
+                currDrivinglog.setSufMile(accMile);
+                long drivingMile = currDrivinglog.getSufMile() - currDrivinglog.getPreMile();
+                currDrivinglog.setDrivingMile(drivingMile);
+                long costSecond = (currDrivinglog.getDrivingEndTime().getTime() - currDrivinglog.getDrivingStartTime().getTime()) / 1000l;
+                currDrivinglog.setDrivingSecond(costSecond);
+                long avgSpeed = 0;
+                if (costSecond != 0) {
+                    avgSpeed = (drivingMile / costSecond) * 3600;
+                }
+                currDrivinglog.setAvgSpeed(avgSpeed);
+                currDrivinglog.setUpdateTime(new Date());
+
+                drivinglogMapper.updateByPrimaryKeySelective(currDrivinglog);
+            }
+        }
+    }
+
+    private void getChargelog(MRepVehinfo vehinfo) throws Exception {
+        MRepChargelog currChargelog = null;
+        MRepChargelog preChargelog = null;
+        String vin = vehinfo.getVin();
+        List<MRepChargelog> chargelogList = getFtListByExample(chargelogMapper, MRepChargelog.class, Arrays.asList(String.format("vin = '%s'", vin)));
+        currChargelog = chargelogList.size() > 0 ? chargelogList.get(0) : null;
+        preChargelog = chargelogList.size() > 1 ? chargelogList.get(1) : null;
+        String batteryStatus = vehinfo.getBatteryStatus();
+        Long soc = vehinfo.getSoc();
+        Long mile = vehinfo.getAccMile();
+        if (StringUtils.equals(batteryStatus, "停车充电") || StringUtils.equals(batteryStatus, "行驶充电")) {//充电
+            if ((currChargelog == null) || (currChargelog.getEndTime() != null)) {//结束时间有值说明是一段新的充电开始
+                MRepChargelog chargelog = new MRepChargelog();
+                String oid = SnowflakeIdWorker.genId();
+                chargelog.setOid(oid);
+                chargelog.setVin(vin);
+                Date chargeStartTime = CommUtils.str2gbt32960date(vehinfo.getGatherTime());
+                chargelog.setStartTime(chargeStartTime);
+                chargelog.setPreSoc(soc);
+                chargelog.setPreMile(mile);
+                Long intervalSecond = 0l;
+                if (preChargelog != null) {
+                    Date endTime = preChargelog.getEndTime();
+                    long l1 = chargeStartTime.getTime();
+                    long l2 = endTime.getTime();
+                    intervalSecond = (l1 - l2) / 1000l;
+                }
+                chargelog.setIntervalSecond(intervalSecond);
+                chargelog.setChargeDate(new Date());
+                chargelog.setUpdateTime(new Date());
+                chargelog.setCalcDate(new Date());
+                chargelog.setCalcFormnum(SnowflakeIdWorker.genId());
+
+                chargelogMapper.insertSelective(chargelog);
+            }
+        }
+        if (StringUtils.equals(batteryStatus, "未充电") || StringUtils.equals(batteryStatus, "充电完成")) {//充电完成
+            if ((currChargelog != null) && (currChargelog.getEndTime() == null)) {
+                Date endTime = CommUtils.str2gbt32960date(vehinfo.getGatherTime());
+                currChargelog.setEndTime(endTime);
+                currChargelog.setSufSoc(soc);
+                currChargelog.setSufMile(mile);
+                long drivingMile = currChargelog.getSufMile() - currChargelog.getPreMile();
+                currChargelog.setChargeMile(drivingMile);
+                long costSecond = (currChargelog.getEndTime().getTime() - currChargelog.getStartTime().getTime()) / 1000l;
+                currChargelog.setChargeSecond(costSecond);
+                long avgSpeed = 0;
+                if (costSecond != 0) {
+                    avgSpeed = (drivingMile / costSecond) * 3600;
+                }
+                currChargelog.setAvgSpeed(avgSpeed);
+                currChargelog.setUpdateTime(new Date());
+
+                chargelogMapper.updateByPrimaryKeySelective(currChargelog);
+            }
+        }
+    }
+
+
+    private List getBgListByExample(Mapper mapper, Class clazz, List<String> conditionList) throws Exception {
+        Example example = new Example(clazz);
+        Example.Criteria criteria = example.createCriteria();
+
+        if (CollectionUtils.isNotEmpty(conditionList)) {
+            for (String condition : conditionList) {
+                criteria.andCondition(condition);
+            }
+        }
+        criteria.andCondition("etlStatus != 0");
+
+        example.setOrderByClause("formNum asc");
+        return mapper.selectByExample(example);
+    }
+
+
+    private List getFtListByExample(Mapper mapper, Class clazz, List<String> conditionList) throws Exception {
+        Example example = new Example(clazz);
+        Example.Criteria criteria = example.createCriteria();
+
+        if (CollectionUtils.isNotEmpty(conditionList)) {
+            for (String condition : conditionList) {
+                criteria.andCondition(condition);
+            }
+        }
+
+        if(CollectionUtils.isEmpty(conditionList)){
+            String tableName = clazz.newInstance().getClass().getAnnotation(Table.class).name();
+            criteria.andCondition(String.format("calcFormnum = (select max(calcFormnum) from %s)", tableName));
+        }
+
+        example.setOrderByClause("calcDate desc");
+        return mapper.selectByExample(example);
+    }
+}

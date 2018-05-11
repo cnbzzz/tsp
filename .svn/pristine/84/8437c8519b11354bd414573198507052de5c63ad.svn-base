@@ -1,0 +1,20 @@
+package cn.spacewalker.tsp.ft.bigscreen.index.service;
+
+import cn.spacewalker.tsp.common.base.BaseResp;
+import cn.spacewalker.tsp.ft.pojo.dto.IndexDto;
+import cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto;
+
+import java.util.List;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/14 20:29
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+public interface IIndexService {
+
+    BaseResp<IndexDto> queryIndex();
+
+    BaseResp<List<OnlineVehDto>> listVehsumByTime(String startDatetime, Integer interval);
+}

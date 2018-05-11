@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepVehsumMapper">
+    <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepVehsum">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="oid" jdbcType="VARCHAR" property="oid"/>
+        <result column="vehCount" jdbcType="BIGINT" property="vehCount"/>
+        <result column="accMile" jdbcType="BIGINT" property="accMile"/>
+        <result column="drivedSeconds" jdbcType="BIGINT" property="drivedSeconds"/>
+        <result column="termCode" jdbcType="VARCHAR" property="termCode"/>
+        <result column="onlineVehCount" jdbcType="BIGINT" property="onlineVehCount"/>
+        <result column="drvingVehCount" jdbcType="BIGINT" property="drvingVehCount"/>
+        <result column="charingVehCount" jdbcType="BIGINT" property="charingVehCount"/>
+        <result column="model1OnlineCount" jdbcType="BIGINT" property="model1OnlineCount"/>
+        <result column="model2OnlineCount" jdbcType="BIGINT" property="model2OnlineCount"/>
+        <result column="model3OnlineCount" jdbcType="BIGINT" property="model3OnlineCount"/>
+        <result column="calcFormnum" jdbcType="BIGINT" property="calcFormnum"/>
+        <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate"/>
+        <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <select id="listOnlineVeh" resultType="cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto">
+  SELECT
+      FROM_UNIXTIME(
+          (
+              FLOOR(
+                  UNIX_TIMESTAMP(calcDate) / #{interval}
+              )
+          ) * #{interval},
+          '%Y-%m-%d %H:%i:%s'
+      ) datetime,
+      SUM(model1OnlineCount) AS model1OnlineCount,
+      SUM(model2OnlineCount) AS model2OnlineCount,
+      SUM(model3OnlineCount) AS model3OnlineCount,
+      SUM(onlineVehCount) AS onlineVehCount,
+      SUM(accMile) AS accMile
+  FROM
+      m_rep_vehsum
+  WHERE
+      UNIX_TIMESTAMP(calcDate) &gt; UNIX_TIMESTAMP(#{startDatetime})
+  GROUP BY
+      FROM_UNIXTIME(
+          (
+              FLOOR(
+                  UNIX_TIMESTAMP(calcDate) / #{interval}
+              )
+          ) * #{interval},
+          '%Y-%m-%d %H:%i:%s'
+      )
+  ORDER BY
+      datetime
+  </select>
+
+    <select id="listColCurve" resultType="cn.spacewalker.tsp.ft.pojo.dto.ColCurveDto">
+        SELECT
+        FROM_UNIXTIME(
+        (
+        FLOOR(
+        UNIX_TIMESTAMP(calcDate) / #{interval}
+        )
+        ) * #{interval},
+        '%Y-%m-%d %H:%i:%s'
+        ) datetime,
+        currColData
+        FROM
+        m_rep_dataUploadSum
+        WHERE
+        UNIX_TIMESTAMP(calcDate) &gt; UNIX_TIMESTAMP(#{startDatetime})
+        GROUP BY
+        FROM_UNIXTIME(
+        (
+        FLOOR(
+        UNIX_TIMESTAMP(calcDate) / #{interval}
+        )
+        ) * #{interval},
+        '%Y-%m-%d %H:%i:%s'
+        )
+        ORDER BY
+        datetime
+    </select>
+
+    <select id="listVehRegionPercent" resultType="cn.spacewalker.tsp.ft.pojo.dto.VehRegionPercentDto">
+        SELECT
+            region,
+            SUM(drivingCount) AS drivingCount,
+            SUM(chargingCount) AS chargingCount,
+            SUM(offlineCount) AS offlineCount,
+            SUM(totalCount) AS totalCount,
+            drivingCount / totalCount * 100 AS drivingCountPercent,
+            chargingCount / totalCount * 100 AS chargingCountPercent,
+            offlineCount / totalCount * 100 AS offlineCountPercent
+        FROM
+            m_rep_positionSum
+        WHERE
+            calcFormnum = (
+                SELECT
+                    max(calcFormnum)
+                FROM
+                    m_rep_positionsum
+            )
+        GROUP BY
+            region
+    </select>
+
+
+    <select id="listVehinfoCurve" resultType="Map">
+      SELECT
+          FROM_UNIXTIME(
+              (
+                  FLOOR(
+                      UNIX_TIMESTAMP(calcDate) / #{interval}
+                  )
+              ) * #{interval},
+              '%Y-%m-%d %H:%i:%s'
+          ) datetime,
+          SUM(driveMile) AS driveMile
+      FROM
+          m_rep_vehinfo
+      WHERE
+          UNIX_TIMESTAMP(calcDate) > UNIX_TIMESTAMP(#{startDatetime})
+      GROUP BY
+          FROM_UNIXTIME(
+              (
+                  FLOOR(
+                      UNIX_TIMESTAMP(calcDate) / #{interval}
+                  )
+              ) * #{interval},
+              '%Y-%m-%d %H:%i:%s'
+          )
+      ORDER BY
+          datetime
+    </select>
+
+</mapper>

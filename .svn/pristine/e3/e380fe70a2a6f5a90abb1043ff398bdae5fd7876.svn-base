@@ -1,0 +1,12 @@
+#spring:
+#  profiles:
+#    active: dev
+
+tsp_server:
+  ip: 127.0.0.1
+  port: 8080
+
+
+
+
+

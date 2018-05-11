@@ -1,0 +1,47 @@
+package cn.spacewalker.tsp.ft.bigscreen.index.ctrl;
+
+import cn.spacewalker.tsp.common.base.BaseResp;
+import cn.spacewalker.tsp.common.util.CommUtils;
+import cn.spacewalker.tsp.ft.bigscreen.index.service.IIndexService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Date;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/14 15:40
+ * Copyright (c) 2017 www.space-walker.cn
+ *
+ */
+@RestController
+@RequestMapping("/tsp")
+public class IndexCtrl {
+
+    protected Logger log = LogManager.getLogger(this.getClass().getName());
+
+    @Resource
+    private IIndexService indexService;
+
+    @RequestMapping("/index")
+    public String index(){
+        return indexService.queryIndex().toString();
+    }
+
+    @RequestMapping("/listVehsumByTime")
+    public String listVehsumByTime(@RequestParam(value = "startDatetime", required = false) String startDatetime, @RequestParam(value = "interval", required = false) Integer interval){
+        startDatetime = StringUtils.isNotBlank(startDatetime) ? startDatetime : CommUtils.timestamp2str(new Date());
+        interval = interval != null ? interval : 10;
+        return indexService.listVehsumByTime(startDatetime, interval).toString();
+    }
+
+    @ExceptionHandler
+    public String exception(Exception e) {
+        log.error("error:{}", e);
+        // 根据不同错误转向不同页面
+        return BaseResp.failResp("服务器忙，请稍后再试").toString();
+    }
+}

@@ -1,0 +1,145 @@
+package cn.spacewalker.tsp.ft.bigscreen.index.service;
+
+import cn.spacewalker.tsp.common.base.BaseResp;
+import cn.spacewalker.tsp.ft.bigscreen.launch.BigScreenLauncher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import javax.annotation.Resource;
+
+/**h
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/15 15:29
+ * Copyright (c) 2017 www.space-walker.cn
+ */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = BigScreenLauncher.class)
+@WebAppConfiguration
+public class IndexServiceImplTest {
+
+    Logger log = LogManager.getLogger(this.getClass().getName());
+
+    @Resource
+    private IIndexService indexService;
+
+    @Test
+    public void test1(){
+        BaseResp resp = indexService.queryIndex();
+        log.info(resp);
+    }
+
+    @Test
+    public void test2(){
+        String startDatetime = "2017-08-20 20:34:00";
+        Integer interval = 5;
+        BaseResp resp = indexService.listVehsumByTime(startDatetime, interval, 8);
+        log.info(resp);
+    }
+
+    @Test
+    public void test3(){
+        String startDatetime = "2017-08-14 00:00:00";
+        Integer interval = 5;
+        BaseResp resp = indexService.listColCurve(startDatetime, interval, 10);
+        log.info(resp);
+    }
+
+    @Test
+    public void test4(){
+        BaseResp resp = indexService.queryErrorsum();
+        log.info(resp);
+    }
+
+    @Test
+    public void test5(){
+        BaseResp resp = indexService.listPositionsum();
+        log.info(resp);
+    }
+
+    @Test
+    public void test6(){
+        BaseResp resp = indexService.listVehRegionPercent();
+        log.info(resp);
+    }
+
+    @Test
+    public void test7(){
+        BaseResp resp = indexService.queryBatterysum();
+        log.info(resp);
+    }
+
+    @Test
+    public void test8(){
+        BaseResp resp = indexService.queryChargingintervalsum();
+        log.info(resp);
+    }
+
+    @Test
+    public void test9(){
+        BaseResp resp = indexService.listVehinfo(null);
+        log.info(resp);
+    }
+
+    @Test
+    public void test10(){
+        BaseResp resp = indexService.queryVehinfo("1234");
+        log.info(resp);
+    }
+
+    @Test
+    public void test11(){
+        BaseResp resp = indexService.listErrorlog("", "");
+        log.info(resp);
+    }
+
+    @Test
+    public void test12(){
+        String startDatetime = "2017-08-23 00:00:00";
+        Integer interval = 3600 * 24;
+        BaseResp resp = indexService.listVehinfoCurve(startDatetime, interval, 30);
+        log.info(resp);
+    }
+
+    @Test
+    public void test13(){
+        String vin = "6BEA0FF9FFAD4B659";
+        BaseResp resp = indexService.listChargelog(vin, 5);
+        log.info(resp);
+    }
+
+    @Test
+    public void test14(){
+        BaseResp resp = indexService.listVehHeatMapData();
+        log.info(resp);
+    }
+
+    @Test
+    public void test15(){
+        BaseResp resp = indexService.queryErrorlog("E3D8CA3566704180A", "", "", "", null);
+        log.info(resp);
+    }
+
+    @Test
+    public void test16(){
+        BaseResp resp = indexService.listVehMile("002A5AFE4CB240A88", "", null, null);
+        log.info(resp);
+    }
+
+    @Test
+    public void test17(){
+        BaseResp resp = indexService.listVehinfoDayCurve("", null, "CB9211DA35D24FCA9");
+        log.info(resp);
+    }
+
+    @Test
+    public void test18(){
+        BaseResp resp = indexService.listVehinfoMonthCurve("", null, "CB9211DA35D24FCA9");
+        log.info(resp);
+    }
+}

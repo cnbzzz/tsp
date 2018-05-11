@@ -1,0 +1,106 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_mileageinfo")
+public class MRepMileageinfo extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String vin;
+
+    private Long accMile;
+
+    private Integer driveTimes;
+
+    private Integer speed;
+
+    private Date uploadTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return accMile
+     */
+    public Long getAccMile() {
+        return accMile;
+    }
+
+    /**
+     * @param accMile
+     */
+    public void setAccMile(Long accMile) {
+        this.accMile = accMile;
+    }
+
+    /**
+     * @return driveTimes
+     */
+    public Integer getDriveTimes() {
+        return driveTimes;
+    }
+
+    /**
+     * @param driveTimes
+     */
+    public void setDriveTimes(Integer driveTimes) {
+        this.driveTimes = driveTimes;
+    }
+
+    /**
+     * @return speed
+     */
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed
+     */
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+}

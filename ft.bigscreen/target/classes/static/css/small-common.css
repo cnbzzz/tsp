@@ -1,0 +1,528 @@
+.tip_small{
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: #62FAFC;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index: 9999;
+	display: none;
+}
+.small-commom-div{
+	width: 1039px;
+	color: #62FAFC;
+}
+.small-car-maps,.small-car-error,.small-car-status,.small-car-cell,.small-car-top{
+	display: inline-block;
+	float: left;
+	color: #62FAFC;
+	font-weight: 600;
+	height: 35.2px;	
+	width: 172.59px;
+	background-position: center center;
+	background-size: 100% 100%;
+	margin-left: -28px;
+}
+.small-car-maps{
+	width: 161.14px;
+}
+.small-car-top{
+	width: 471.11px;
+	background-image: url(../img/tab3.png);
+	/*border: 1px solid #62FAFC;*/
+}
+.small-car-maps{
+	background-image: url(../img/tab1off.png);
+	margin-left: 0;	
+}
+.small-car-maps.active{
+	background-image: url(../img/tab1on.png);
+}
+.small-car-error,.small-car-status,.small-car-cell{
+	background-image: url(../img/tab2off.png);
+}
+.small-car-error.active,.small-car-status.active,.small-car-cell.active{
+	background-image: url(../img/tab2on.png);
+}
+.small-car-text{
+	font-size: 17px;
+	line-height: 100%;
+	margin-left: 30px;
+	padding-top: 9.1px;
+	padding-right: 5px;
+	padding-bottom: 9.1px;
+	display: inline-block;
+	cursor: pointer;
+}
+.small-car-maps .small-car-text{
+	padding-left: 20px;
+	margin-left: 0;
+}
+.active .small-car-text{
+	color: rgba(1,36,31,.8);
+}
+.small-call-context{
+	border: 1px solid #3daaab;
+	margin-top: 3px;
+	width: 100%;
+	display: none;
+	background-color: rgba(23,63,64,0.9);
+	padding: 15px 20px 5px;
+}
+
+/*车辆位置监控--begin*/
+.small-car-context-maps .small-div{
+	padding: 15px 0;
+	display: inline-block;
+	float: left;
+}
+.small-car-context-maps .small-div:nth-of-type(1){
+	width: 30%;
+}
+.small-car-context-maps .small-div:nth-of-type(2){
+	width: 65%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+.small-car-context-maps .top_right{
+	float: right;
+	position: relative;
+	right:-30px;
+	top: 0;
+	height: 60px;
+	width: 60px;
+	border-top: 1px solid #62FAFC;
+	border-right: 1px solid #62FAFC;
+}
+.small-car-context-maps .bottom-left{
+	float: left;
+	position: relative;
+	left: 0;
+	bottom: 105px;
+	height: 60px;
+	width: 60px;
+	border-bottom: 1px solid #62FAFC;
+	border-left: 1px solid #62FAFC;
+}
+.small_maps-show{
+	position: fixed;
+	top: 174px;
+	left: 519px;
+	height: 450px;
+	width: 648px;
+	background-color: rgba(225,225,225,0.95);
+	z-index: 999999;
+	display: none;
+}
+#maps{
+	width: 100%;
+	height: 450px;
+	position: relative;
+	top:-45px;
+	border:1px solid #fff;
+	margin:15px;
+	z-index: 888;
+}
+.small-car-context-maps .ul-li-div-name{
+	padding-right: 28.5px;
+	width: 99px;
+}
+.small-car-context-maps .ul-li-div-data{
+	width: 60%;
+}
+/*车辆位置监控--end*/
+
+/*实时故障监控--begin*/
+.small-car-context-error .small-carplate{
+	padding-bottom: 10px;
+}
+.small-car-context-error .small_div1{
+	width: 60%;
+}
+.small-car-context-error .ul-li-div-name{
+	padding-right: 28.5px;
+	width: 99px;
+}
+.small-car-context-error .ul-li-div-data{
+	width: 55%;
+	color: #FDFDFD;
+}
+.small-car-context-error .small_div1,.small-car-context-error .small_div2{
+	display: inline-block;
+	float: left;
+}
+.small-car-context-error .small_div2{
+	width: 40%;
+}
+.small_div2  img{
+	width: 15px;
+	height: 15px;
+}
+.small_div2 .table{
+	border: 1px solid #FDFDFD;
+	color: #FDFDFD;
+	margin-bottom: 0;
+	margin-top: 30px;
+}
+.small_div2  .table tr>td{
+	line-height: 120%;
+	padding: 5px 8px;
+}
+.small_div2  .table tr >td:nth-of-type(3){
+	width: 10px;
+	padding: 0;
+}
+.small-car-context-error .small-common-div{
+	margin-top: 10px;
+}
+.small_ul2{
+	width: 100%;
+}
+.small_ul2 li:first-child div{
+	font-size: 17px;
+	font-weight: 600;
+	color: #62FAFC;
+}
+.small_ul2 li div{
+	display: inline-block;
+	float: left;
+	word-spacing: 4px;
+	line-height: 166.66%;
+	/*padding-bottom: 5px;*/
+	color: #FDFDFD;
+}
+.small_ul2 li div:nth-of-type(1){
+	width: 18%;
+}
+.small_ul2 li div:nth-of-type(2){
+	width: 10%;
+}
+.small_ul2 li div:nth-of-type(3){
+	width: 10%;
+}
+.small_ul2 li div:nth-of-type(4){
+	width: 16%;
+}
+.small_ul2 li div:nth-of-type(5){
+	width: 10%;
+}
+.small_ul2 li div:nth-of-type(6){
+	width: 12%;
+}
+.small_ul2 li div:nth-of-type(7){
+	width: 12%;
+}
+.small_ul2 li div:nth-of-type(8){
+	width: 12%;
+}
+.small-car-context-error .small_btns{
+	width: 100%;
+	display: inline-block;
+	float: left;
+}
+.small-car-context-error .small_btn{
+	margin-bottom: 10.66px;
+}
+.small_time_div{
+	float: left;
+	width: 45%;
+	display: inline-block;
+}
+.small_time_div span{
+	line-height: 120%;
+	padding-bottom: 5px;
+}
+.small_time_div .small_timetext{
+	padding-right: 10px;
+}
+.small_time_div .small_starttime,.small_time_div .small_endtime{
+	border-bottom: 1px dashed #62FAFC;
+	padding-right:5px;
+	color: #FDFDFD;
+}
+.small_time_div .small_starttime{
+	padding-right: 10px;
+}
+/*实时故障监控--end*/
+
+/*实时状态监控--begin*/
+.small4-2 .small-carplate{
+	padding-bottom: 10px !important;
+	padding-top: 0;
+}
+.small-car-context-status .small-carplate{
+	padding-bottom: 28.5px;
+}
+.small-car-context-status .ul-li-div-data{
+	width: 55%;
+	color: #FDFDFD;
+}
+.small_ul3:nth-of-type(2) .ul-li-div-name{
+	width: 62%;
+}
+.small_ul3:nth-of-type(2) .ul-li-div-data{
+	width: 30%;
+}
+.small_div1{
+	width: 60%;
+}
+.small_div1,.small4-1{
+	display: inline-block;
+	float: left;
+}
+.small4-1{
+	width: 40%;
+}
+.small4-1 .small-common-div{
+	width: 100%;
+}
+.small_alert{
+	font-size: 16px;
+	line-height: 175%;
+	word-spacing:4px;
+	padding: 0 40px;
+	width: 80%;
+	display: inline-block;
+}
+.small-common-div:nth-of-type(1) img{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+}
+.small4-2{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	margin-top: 15px;
+}
+.small4-2 .small-common-div{
+	width: 49%;
+	float: left;
+	display: inline-block;
+	padding: 14.23px  21.35px 10px;
+	
+}
+.small4-2 .small-common-div:nth-of-type(2){
+	margin-left: 2%;
+}	
+.small4-2 .small-common-div >div {
+	width: 100%;
+	height: 120px;
+}
+/*实时状态监控--end*/
+
+/*实时电池监控--begin*/
+.small-car-context-cell .small_div1,.small-car-context-cell .small_div2{
+	display: inline-block;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.small-car-context-cell .small_div1{
+	width: 27%;
+}
+.small-car-context-cell .small_div2{
+	width: 73%;
+}
+.small_div2 .dash-text1,.small_div2 .dash-text2{
+	display: inline-block;
+	float: left;
+	width: 220px;
+	height: 145px;
+	/*border: 1px solid #FDFDFD;*/
+}
+.small_div2 .dash-text2{
+	margin-top: 15px;
+}
+.small-car-context-cell .small_div2  p{
+	text-align: center;
+	font-size: 17px;
+	margin-top: -10px;
+	line-height: 120%;
+}
+.dash-text1 > div,.dash-text2 > div{
+	width: 130px;
+	height: 130px;
+	margin: 0 auto;
+}
+.dash-text1:nth-of-type(1){
+	margin-left: 25px;
+}
+.dash-text{
+	margin-left: 25px;
+}
+.small-car-context-cell .small-common-div-title{
+	padding-left: 20px;
+}
+.small-car-context-cell .ul-li-div-data{
+	width: 62%;
+}
+.small-car-context-cell .small_div1{
+	display: inline-block;
+	float: left;
+}
+.small-car-context-cell .small-common-div{
+	width: 487.46px;
+	display: inline-block;
+	float: left;
+	margin-top: 10px;
+}
+.small-car-context-cell .small_ul2{
+	padding-top: 15px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+}
+.small-car-context-cell .small_ul2 li:first-child div{
+	color: #62FAFC;
+	color: 14px;
+}
+.small-car-context-cell .small_ul2 li div{
+	font-size: 14px;
+	line-height: 166.666%;
+	float: left;
+	display: inline-block;
+	line-height: 166.666%;
+	word-spacing:4px;
+	color: #FDFDFD;
+}
+.small_charing li div:first-child{
+	width: 38%;
+}
+.small_charing li div:nth-of-type(2){
+	width: 20%;
+}
+.small_charing li div:nth-of-type(3){
+	width: 20%;
+}
+.small_charing li div:nth-of-type(4){
+	width: 20%;
+}
+.small_charing_count li div:first-child{
+	width: 25%;
+}
+.small_charing_count li div:nth-of-type(2){
+	width: 35%;
+}
+.small_charing_count li div:nth-of-type(3){
+	width: 20%;
+}
+.small_charing_count li div:nth-of-type(4){
+	width: 20%;
+}
+/*实时电池监控--end*/
+
+.small_btns div{
+	display: inline-block;
+	float: left;
+}
+.small_btn{
+	margin-right: 10.67px;
+	cursor: pointer;
+}
+
+.small_btn div{
+	float: left;
+	display: inline-block;
+}
+.btn-left{
+	width: 10px;
+	height: 28.44px;
+	background-image: url(../img/tab-1.png);
+	background-size: 100% 100%;
+	background-position: center center;
+}
+.btn-middle{
+	/*width: 40.26px;*/
+	height: 28.44px;
+	background-image: url(../img/tab-2.png);
+	background-size: 100% 100%;
+	background-position: center center;
+	padding: 5.72px 3px;
+	padding-top: 5.72px;
+	padding-bottom: 5.72px;
+	font-size: 17px;
+	text-align: center;
+	line-height: 100%;
+}
+.btn-right{
+	width: 10px;
+	height: 28.44px;
+	background-image: url(../img/tab-3.png);
+	background-size: 100% 100%;
+	background-position: center center;
+}
+.small_btn.active .btn-left{
+	background-image: url(../img/tabon1.png);
+}
+.small_btn.active .btn-middle{
+	height: 28.44px;
+	background-image: url(../img/tab-2.png);
+	background-size: 100% 100%;
+	background-position: center center;
+	padding: 5.72px 3px;
+	padding-top: 5.72px;
+	padding-bottom: 5.72px;
+	font-size: 17px;
+	text-align: center;
+	line-height: 100%;
+	background-color: #62FAFC;
+	color: rgba(1,36,31,.8);
+}
+.small_btn.active .btn-right{
+	background-image: url(../img/tabon2.png);
+}
+.small_ul{
+	height: 10px;
+	width: 100%;
+}
+.small_ul li div{
+	font-size: 17px;
+	float: left;
+	display: inline-block;
+	line-height: 200%;
+	word-spacing:4px;
+}
+.ul-li-div-name{
+	padding-right: 28.5px;
+	width: 99px;
+}
+.small_ul3{
+	width: 50%;
+	vertical-align: top;
+	display: inline-block;
+	float: left;
+}
+.small_ul3 li div{
+	font-size: 17px;
+	float: left;
+	display: inline-block;
+	line-height: 200%;
+	word-spacing:4px;
+}
+.small_ul_erro{
+	min-height: 274px;
+}
+.small_ul_erro li div{
+	line-height: 177%;
+}
+.small_ul_erro li div:nth-of-type(1){
+	width: 16%;
+}
+.small_ul_erro li div:nth-of-type(2){
+	width: 16%;
+}
+.small_ul_erro li div:nth-of-type(3){
+	width: 15%;
+}
+.small_ul_erro li div:nth-of-type(4){
+	width: 18%;
+}
+.small_ul_erro li div:nth-of-type(5){
+	width: 19%;
+}
+.small_ul_erro li div:nth-of-type(6){
+	width: 16%;
+}
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.ft.pojo.mapper.MRepVehinfoMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.ft.pojo.model.MRepVehinfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="iccid" jdbcType="VARCHAR" property="iccid" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="termCode" jdbcType="VARCHAR" property="termCode" />
+    <result column="vehId" jdbcType="VARCHAR" property="vehId" />
+    <result column="accMile" jdbcType="BIGINT" property="accMile" />
+    <result column="driveMile" jdbcType="BIGINT" property="driveMile" />
+    <result column="driveTimes" jdbcType="INTEGER" property="driveTimes" />
+    <result column="speed" jdbcType="INTEGER" property="speed" />
+    <result column="engineStatus" jdbcType="INTEGER" property="engineStatus" />
+    <result column="crankshaftSpeed" jdbcType="INTEGER" property="crankshaftSpeed" />
+    <result column="driveMotorSpeed" jdbcType="INTEGER" property="driveMotorSpeed" />
+    <result column="soc" jdbcType="INTEGER" property="soc" />
+    <result column="fuelCellVoltage" jdbcType="INTEGER" property="fuelCellVoltage" />
+    <result column="fuelCellCurrent" jdbcType="INTEGER" property="fuelCellCurrent" />
+    <result column="hydMaxConc" jdbcType="INTEGER" property="hydMaxConc" />
+    <result column="dcStatus" jdbcType="INTEGER" property="dcStatus" />
+    <result column="charingError" jdbcType="INTEGER" property="charingError" />
+    <result column="driveMotorError" jdbcType="INTEGER" property="driveMotorError" />
+    <result column="engineError" jdbcType="INTEGER" property="engineError" />
+    <result column="otherError" jdbcType="INTEGER" property="otherError" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="vehStatus" jdbcType="INTEGER" property="vehStatus" />
+    <result column="batteryStatus" jdbcType="INTEGER" property="batteryStatus" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="calcFormnum" jdbcType="BIGINT" property="calcFormnum" />
+    <result column="lastUpTime" jdbcType="TIMESTAMP" property="lastUpTime" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="calcDate" jdbcType="TIMESTAMP" property="calcDate" />
+    <result column="fuelCellProbeTemper" jdbcType="LONGVARCHAR" property="fuelCellProbeTemper" />
+  </resultMap>
+</mapper>

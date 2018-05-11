@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.spacewalker.tsp.bg.pojo.mapper.TVehUploadrealtimeMapper">
+  <resultMap id="BaseResultMap" type="cn.spacewalker.tsp.bg.pojo.model.TVehUploadrealtime">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="gatherTime" jdbcType="VARCHAR" property="gatherTime" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="formnum" jdbcType="VARCHAR" property="formnum" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadTime" />
+  </resultMap>
+
+  <select id="listRepVehInfo" resultType="Map">
+SELECT
+	t1.oid AS oid,
+	t1.vin AS vin,
+	#	t9.iccid AS iccid,
+	'5座' AS model,
+	SUBSTR(t1.vin FROM 6 FOR 5) AS termCode,
+	CONCAT(
+		'待Z.',
+		SUBSTR(t1.vin FROM 11 FOR 5)
+	) AS vehId,
+	t2.accMile AS accMile,
+	t2.speed AS speed,
+	CASE t4.engineStatus
+WHEN 1 THEN
+	'启动'
+WHEN 2 THEN
+	'关闭'
+WHEN 254 THEN
+	'异常'
+ELSE
+	'无效'
+END AS engineStatus,
+ t4.crankshaftSpeed AS crankshaftSpeed,
+ SUM(t8.driveMotorSpeed) AS driveMotorSpeed,
+ MAX(t8.driveMotorCtrlTemper) AS driveMotorCtrlTemper,
+ MAX(t8.driveMotorTemper) AS driveMotorTemper,
+ t2.soc,
+ t2.totalVoltage AS fuelCellVoltage,
+ t2.totalCurrent AS fuelCellCurrent,
+ t3.hydMaxTemper AS fuelCellProbeTemper,
+ t3.hydMaxConc AS hydMaxConc,
+ CASE t3.dcStatus
+WHEN 1 THEN
+	'工作'
+WHEN 2 THEN
+	'断开'
+WHEN 254 THEN
+	'异常'
+ELSE
+	'无效'
+END AS dcStatus,
+ t6.fullCellErrorCount AS charingError,
+ t6.driveMotorErrorCount AS driveMotorError,
+ t6.engineErrorCount AS engineError,
+ t6.otherErrorCount AS otherError,
+ t5.longitude AS longitude,
+ t5.latitude AS latitude,
+ t5.city AS city,
+ t5.region AS region,
+ CASE t2.vehStatus
+WHEN 1 THEN
+	'启动'
+WHEN 2 THEN
+	'熄火'
+WHEN 254 THEN
+	'异常'
+ELSE
+	'无效'
+END AS vehStatus,
+ CASE t2.chargeStatus
+WHEN 1 THEN
+	'停车充电'
+WHEN 2 THEN
+	'行驶充电'
+WHEN 3 THEN
+	'未充电'
+WHEN 4 THEN
+	'充电完成'
+WHEN 254 THEN
+	'异常'
+ELSE
+	'无效'
+END AS batteryStatus,
+ CASE
+WHEN t2.chargeStatus = 1 THEN
+	'停车充电'
+WHEN t2.vehStatus = 1 THEN
+	'行驶中'
+ELSE
+	'离线'
+END AS `status`,
+ t1.formnum AS calcFormnum,
+ t1.uploadtime AS lastUpTime,
+ STR_TO_DATE(
+	'2017-08-20 00:00:00',
+	'%Y-%m-%d %H:%i:%s'
+) AS createDate,
+ now() AS calcDate,
+ t1.gatherTime
+FROM
+	t_veh_uploadrealtime t1
+INNER JOIN t_veh_data t2 ON t1.formnum = t2.formnum
+INNER JOIN t_veh_fuelCell t3 ON t1.formnum = t3.formnum
+INNER JOIN t_veh_engine t4 ON t1.formnum = t4.formnum
+INNER JOIN t_veh_position t5 ON t1.formnum = t5.formnum
+INNER JOIN t_veh_error t6 ON t1.formnum = t6.formnum
+INNER JOIN t_veh_limit t7 ON t1.formnum = t7.formnum
+INNER JOIN t_veh_driveMotor t8 ON t1.formnum = t8.formnum
+INNER JOIN t_veh_signin t9 ON t1.vin = t9.vin
+WHERE
+	t1.formnum > #{lastFormnum}
+GROUP BY
+	t1.formnum
+ORDER BY
+	t1.formnum ASC
+LIMIT 500
+	</select>
+	<select id="countDataUploadsum" resultType="Map">
+SELECT
+	count(t1.oid) AS totalColData,
+	count(
+
+		IF (
+			t1.uploadTime IS NOT NULL,
+			TRUE,
+			NULL
+		)
+	) AS totalUpData,
+	count(IF(t2.result = 1, TRUE, NULL)) AS succUpData
+FROM
+	t_veh_rawdata t1
+LEFT JOIN t_veh_rawdataresult t2 ON t1.formnum = t2.formnum
+	</select>
+
+	<select id="listRepErrorInfoByFormnum" resultType="Map">
+SELECT
+	t1.oid AS oid,
+	t1.vin AS vin,
+	CASE
+WHEN t2.fullCellErrorCount &gt; 0 THEN
+	'可充电储能装置'
+WHEN t2.driveMotorErrorCount &gt; 0 THEN
+	'驱动电机故障'
+WHEN t2.engineErrorCount &gt; 0 THEN
+	'发动机故障'
+ELSE
+	'其他故障'
+END AS errorType,
+ CASE
+WHEN 1 THEN
+	'一级故障'
+WHEN 2 THEN
+	'二级故障'
+WHEN 3 THEN
+	'三级故障'
+WHEN 254 THEN
+	'异常'
+ELSE
+	'无效'
+END AS errorGrade,
+ CASE
+WHEN 1 THEN
+	'一级故障'
+WHEN 2 THEN
+	'二级故障'
+WHEN 3 THEN
+	'三级故障'
+WHEN 254 THEN
+	'异常'
+ELSE
+	'无效'
+END AS errorName,
+ '未处理' AS STATUS,
+ t3.longitude AS longitude,
+ t3.latitude AS latitude,
+ date_format(now(), '%Y-%m-%d') AS errorDate,
+ now() AS updateTime,
+ t1.formnum AS calcFormnum,
+ now() AS calcDate
+FROM
+	t_veh_uploadrealtime t1,
+	t_veh_error t2,
+	t_veh_position t3
+WHERE
+	t1.formnum = t2.formnum
+AND t1.formnum = t3.formnum
+AND t1.formnum = #{formnum}
+AND t2.maxErrorLevel > 0
+GROUP BY
+	t1.formnum
+ORDER BY
+	t1.formnum ASC
+LIMIT 500
+	</select>
+
+
+	<insert id="insertBatchVoltitem" parameterType="java.util.List">
+		insert into t_veh_chargestorvoltitem (oid, batteryVoltage, vin, formnum)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.oid},#{item.batteryVoltage},#{item.vin},#{item.formnum})
+		</foreach>
+	</insert>
+
+
+	<insert id="insertBatchErroritem" parameterType="java.util.List">
+		insert into t_veh_erroritem (oid, errorCode, errorType, vin, formnum)
+		values
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.oid},#{item.errorCode},#{item.errorType},#{item.vin},#{item.formnum})
+		</foreach>
+	</insert>
+
+</mapper>

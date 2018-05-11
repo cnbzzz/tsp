@@ -1,0 +1,122 @@
+package cn.spacewalker.tsp.ft.pojo.model;
+
+import cn.spacewalker.tsp.common.base.BaseDto;
+import java.util.Date;
+import javax.persistence.*;
+
+@Table(name = "m_rep_errorinfo")
+public class MRepErrorinfo extends BaseDto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String oid;
+
+    private String vin;
+
+    private Integer charingError;
+
+    private Integer driveMotorError;
+
+    private Integer engineError;
+
+    private Integer otherError;
+
+    private Date uploadTime;
+
+    /**
+     * @return oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * @param oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid == null ? null : oid.trim();
+    }
+
+    /**
+     * @return vin
+     */
+    public String getVin() {
+        return vin;
+    }
+
+    /**
+     * @param vin
+     */
+    public void setVin(String vin) {
+        this.vin = vin == null ? null : vin.trim();
+    }
+
+    /**
+     * @return charingError
+     */
+    public Integer getCharingError() {
+        return charingError;
+    }
+
+    /**
+     * @param charingError
+     */
+    public void setCharingError(Integer charingError) {
+        this.charingError = charingError;
+    }
+
+    /**
+     * @return driveMotorError
+     */
+    public Integer getDriveMotorError() {
+        return driveMotorError;
+    }
+
+    /**
+     * @param driveMotorError
+     */
+    public void setDriveMotorError(Integer driveMotorError) {
+        this.driveMotorError = driveMotorError;
+    }
+
+    /**
+     * @return engineError
+     */
+    public Integer getEngineError() {
+        return engineError;
+    }
+
+    /**
+     * @param engineError
+     */
+    public void setEngineError(Integer engineError) {
+        this.engineError = engineError;
+    }
+
+    /**
+     * @return otherError
+     */
+    public Integer getOtherError() {
+        return otherError;
+    }
+
+    /**
+     * @param otherError
+     */
+    public void setOtherError(Integer otherError) {
+        this.otherError = otherError;
+    }
+
+    /**
+     * @return uploadTime
+     */
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    /**
+     * @param uploadTime
+     */
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+}

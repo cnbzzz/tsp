@@ -1,0 +1,96 @@
+package cn.spacewalker.tsp.ft.bigscreen.index.service.impl;
+
+import cn.spacewalker.tsp.common.base.BaseResp;
+import cn.spacewalker.tsp.common.base.BaseServiceImpl;
+import cn.spacewalker.tsp.common.util.CommUtils;
+import cn.spacewalker.tsp.ft.bigscreen.index.service.IIndexService;
+import cn.spacewalker.tsp.ft.pojo.dto.IndexDto;
+import cn.spacewalker.tsp.ft.pojo.dto.OnlineVehDto;
+import cn.spacewalker.tsp.ft.pojo.mapper.*;
+import cn.spacewalker.tsp.ft.pojo.model.*;
+import com.github.pagehelper.PageHelper;
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
+import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.entity.Example;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * This file is part of tsp Project
+ * Created by bzzz (bzzz@space-walker.cn) on 2017/8/15 15:31
+ * Copyright (c) 2017 www.space-walker.cn
+ */
+public class IndexServiceImpl extends BaseServiceImpl implements IIndexService {
+
+    @Resource
+    private MRepVehsumMapper vehsumMapper;
+
+    @Resource
+    private MRepDatauploadsumMapper datauploadsumMapper;
+
+    @Resource
+    private MRepErrorsumMapper errorsumMapper;
+
+    @Resource
+    private MRepPositionsumMapper positionsumMapper;
+
+    @Resource
+    private MRepBatterysumMapper batterysumMapper;
+
+    public BaseResp<IndexDto> queryIndex(){
+        BaseResp resp = succ();
+        try {
+            PageHelper.startPage(1, 5);
+            List<MRepVehsum> vehsumList = getListByExample(vehsumMapper, MRepVehsum.class);
+
+            List<MRepDatauploadsum> datauploadsumList = getListByExample(datauploadsumMapper, MRepDatauploadsum.class);
+
+            List<MRepErrorsum> errorsumList = getListByExample(errorsumMapper, MRepErrorsum.class);
+
+            List<MRepPositionsum> positionsumList = getListByExample(positionsumMapper, MRepPositionsum.class);
+
+            List<MRepBatterysum> batterysumList = getListByExample(batterysumMapper, MRepBatterysum.class);
+
+            IndexDto dto = new IndexDto();
+            dto.setVehsum(vehsumList.size() > 0 ? vehsumList.get(0) : null);
+            dto.setDatauploadsum(datauploadsumList.size() > 0 ? datauploadsumList.get(0) : null);
+            dto.setErrorsum(errorsumList.size() > 0 ? errorsumList.get(0) : null);
+            dto.setPositionsum(positionsumList.size() > 0 ? positionsumList.get(0) : null);
+            dto.setBatterysum(batterysumList.size() > 0 ? batterysumList.get(0) : null);
+
+            resp.setData(dto);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            resp = fail();
+        }
+        return resp;
+    }
+
+    public BaseResp<List<OnlineVehDto>> listVehsumByTime(String startDatetime, Integer interval){
+        BaseResp resp = succ();
+        try {
+            Preconditions.checkArgument(StringUtils.isNotBlank(startDatetime), "startDatetime is null");
+
+            Date date = CommUtils.str2timestamp(startDatetime);
+            Preconditions.checkArgument(date != null, "startDatetime format error, startDatetime is [%s]", startDatetime);
+
+            List<OnlineVehDto> list = vehsumMapper.listOnlineVeh(startDatetime, interval);
+
+            resp.setData(list);
+        } catch (Exception e) {
+            resp = fail();
+            log.error(e.getMessage(), e);
+        }
+
+        return resp;
+    }
+
+    private List getListByExample(Mapper mapper, Class clazz) {
+        Example example = new Example(clazz);
+        example.setOrderByClause("calcDate desc");
+        return mapper.selectByExample(example);
+    }
+}
